@@ -1,0 +1,32 @@
+.tag-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  
+    .tag-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0.8rem;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #444;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+  
+      &:hover {
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+      }
+  
+      .tag-count {
+        background-color: #0c1844;
+        color: #fff;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+      }
+    }
+  }
+  

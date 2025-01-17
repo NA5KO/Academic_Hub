@@ -1,0 +1,25 @@
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  
+    .menu-icon {
+      font-size: 1.5rem;
+      margin-right: 0.8rem;
+      color: #0c1844; 
+    }
+  
+    .menu-label {
+      font-size: 1rem;
+      color: #333;
+      font-weight: 500;
+    }
+  
+    &:hover {
+      background-color: #fffcfc;
+    }
+  }
+  
