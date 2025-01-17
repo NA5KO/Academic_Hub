@@ -1,0 +1,19 @@
+.right-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    height: 600;
+    width: 250px; 
+    position: fixed;
+    top: 200px;
+    right: 50px; 
+}
+  
+h3 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1rem;
+    color: #444;
+    font-weight: bold;
+}
