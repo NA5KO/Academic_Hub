@@ -6,17 +6,19 @@ import { AppComponent } from './app.component';
 import { LeftMenuModule } from './left-menu/left-menu.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RightMenuModule } from './right-menu/right-menu.module';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     LeftMenuModule,
-    RightMenuModule,
+    RightMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
