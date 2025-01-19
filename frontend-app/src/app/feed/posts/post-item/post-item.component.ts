@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-item',
@@ -7,4 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class PostItemComponent {
   @Input() post: any;
+
+  constructor(private router: Router) {}
+
+  goToPostDetails(postId: number): void {
+    this.router.navigate(['/post', postId]);
+  }
 }
