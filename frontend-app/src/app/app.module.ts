@@ -7,6 +7,7 @@ import { LeftMenuModule } from './left-menu/left-menu.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RightMenuModule } from './right-menu/right-menu.module';
 import { HeaderComponent } from './header/header.component';
+import { PostsModule } from './feed/posts.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HeaderComponent } from './header/header.component';
     AppRoutingModule,
     FontAwesomeModule,
     LeftMenuModule,
-    RightMenuModule
+    RightMenuModule,
+    PostsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

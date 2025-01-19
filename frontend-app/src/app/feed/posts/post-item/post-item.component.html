@@ -1,0 +1,19 @@
+<div class="post-item">
+    <div class="post-header">
+      <div class="author">{{ post.author }}</div>
+      <div class="time">{{ post.time }}</div>
+    </div>
+    <div class="post-content">
+      <p>{{ post.content }}</p>
+      <div class="tags">
+        <span *ngFor="let tag of post.tags">{{ tag }}</span>
+      </div>
+    </div>
+    <div class="post-footer">
+      <div class="interaction">
+        <span class="comments">{{ post.comments }} comments</span>
+        <span class="votes">↑ {{ post.upvotes }} ↓ {{ post.downvotes }}</span>
+      </div>
+    </div>
+  </div>
+  
