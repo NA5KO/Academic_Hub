@@ -9,6 +9,7 @@ export class PostListComponent {
   posts = [
     {
       id: 1,
+      image: '../../../../assets/nourhen.jpg', 
       author: 'Figma/Nourhen Khechine',
       time: '3 minutes ago',
       content: 'How Do I Solve This Problem on Figma?',
@@ -19,6 +20,7 @@ export class PostListComponent {
     },
     {
       id: 2,
+      image: '../../../../assets/amine.jpg', 
       author: 'K8s/Amen Dhouibi',
       time: '3 minutes ago',
       content: 'Read this article about K8s!!!',
