@@ -1,67 +1,39 @@
-.create-community-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .create-community-form {
-    background: #ffffff;
-    border: 1px solid #eaeaea;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"],
-  input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  /* Styling for the topics section */
-  .topics-container {
-    margin-top: 20px;
-  }
-  
-  .topic-checkbox {
-    margin-right: 10px;
-  }
+/* Styling for the topics section */
+.topics-container {
+  margin-top: 20px;
+  background-color: #ffcccc; /* Light red background color */
+  padding: 10px;
+  border-radius: 5px;
+}
 
-  .topic-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
-    grid-gap: 5px; /* Add spacing between grid items */
-  }
-  
-  .topic-item {
-    /* Optional: Add some padding to each item */
-    padding: 10px; 
-  }
-  
-  .continue-button {
-    background-color: #0c1844; 
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 0 auto; /* Center the button horizontally */ 
-    display: block; /* Make the button a block-level element */
-  }
-  
-  .continue-button:hover {
-    background-color: #0069d9; /* Darker blue on hover */
-  }
+.topic-checkbox {
+  margin-right: 10px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
+  grid-gap: 5px; /* Add spacing between grid items */
+}
+
+
+
+/* Styling for the labels */
+label {
+  display: inline-block;
+  width: 150px; /* Adjust the width */
+  margin-bottom: 10px;
+}
+
+/* Styling for the update button */
+button.update-button {
+  background-color: #add8e6; /* Light blue background color */
+  border: none;
+  border-radius: 15px; /* Rounded corners */
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px; /* Space between the button and the form */
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
+}
