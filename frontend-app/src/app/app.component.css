@@ -1,18 +1,34 @@
+/*  zouz  menus  visible */
 .feed-page {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    gap: 1rem;
-  }
-  
-  .left-menu {
-    grid-column: 1 / 2;
-  }
-  
-  .post-list {
-    grid-column: 2 / 3;
-  }
-  
-  .right-menu {
-    grid-column: 3 / 4;
-  }
-  
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr; 
+  gap: 1rem;
+  width: 100%; 
+  height: 100vh; 
+}
+
+/*  left menu kaahawe */
+.feed-page.with-left-menu:not(.with-right-menu) {
+  grid-template-columns: 1fr 3fr; 
+}
+
+/* right menu kahaw */
+.feed-page.with-right-menu:not(.with-left-menu) {
+  grid-template-columns: 3fr 1fr; 
+}
+
+/* famesh menus aslan*/
+.feed-page.full-width {
+  grid-template-columns: 1fr; 
+}
+
+
+.post-list {
+  grid-column: 2 / 3;
+  width: 100%; 
+}
+
+
+.feed-page.full-width .post-list {
+  grid-column: 1 / 2;
+}

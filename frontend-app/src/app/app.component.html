@@ -1,12 +1,23 @@
-<app-header></app-header>
-<div class="feed-page">
-  <div class="left-menu">
+<div [class.with-header]="showHeader">
+  <app-header *ngIf="showHeader"></app-header>
+</div>
+
+<div 
+  class="feed-page" 
+  [ngClass]="{
+    'with-left-menu': showLeftMenu, 
+    'with-right-menu': showRightMenu, 
+    'full-width': !showLeftMenu && !showRightMenu
+  }">
+  <div class="left-menu" *ngIf="showLeftMenu">
     <app-left-menu></app-left-menu>
   </div>
+
   <div class="post-list">
     <router-outlet></router-outlet>
   </div>
-  <div class="right-menu" style="color: red;">
+
+  <div class="right-menu" *ngIf="showRightMenu">
     <app-right-menu></app-right-menu>
   </div>
 </div>

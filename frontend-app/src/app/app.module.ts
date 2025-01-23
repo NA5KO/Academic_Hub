@@ -9,11 +9,16 @@ import { RightMenuModule } from './right-menu/right-menu.module';
 import { HeaderComponent } from './header/header.component';
 import { PostsModule } from './feed/posts.module';
 import { ProfileModule } from './profile/profile.module';
+import { LoginComponent } from './auth/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +27,8 @@ import { ProfileModule } from './profile/profile.module';
     LeftMenuModule,
     RightMenuModule,
     PostsModule,
-    ProfileModule
+    ProfileModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

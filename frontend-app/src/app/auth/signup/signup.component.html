@@ -1,0 +1,264 @@
+<div class="signup-container">
+    <div class="signup-box">
+      <!-- Logo Section -->
+      <img src="../../../assets/logo-without-bg.png" alt="Logo" class="logo" />
+  
+      <!-- Social Sign-Up Buttons -->
+      <button class="social-btn google-btn">
+        <i class="fab fa-google"></i> Sign Up with Google
+      </button>
+      <button class="social-btn github-btn">
+        <i class="fab fa-github"></i> Sign Up with GitHub
+      </button>
+      <div class="divider">or sign up with your details</div>
+  
+      <!-- Sign-Up Form -->
+      <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+        <!-- Username Field -->
+        <div class="form-group" [class.error]="username.invalid && username.touched">
+          <label for="username">Username*</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              minlength="3"
+              maxlength="20"
+              [(ngModel)]="formData.username"
+              #username="ngModel"
+              placeholder="Enter your username"
+            />
+          </div>
+          <div *ngIf="username.invalid && username.touched" class="error-message">
+            <span *ngIf="username.errors?.['required']">Username is required.</span>
+            <span *ngIf="username.errors?.['minlength']">Username must be at least 3 characters.</span>
+            <span *ngIf="username.errors?.['maxlength']">Username cannot exceed 20 characters.</span>
+          </div>
+        </div>
+  
+        <!-- Email Field -->
+        <div class="form-group" [class.error]="email.invalid && email.touched">
+          <label for="email">Email*</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              [(ngModel)]="formData.email"
+              #email="ngModel"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div *ngIf="email.invalid && email.touched" class="error-message">
+            <span *ngIf="email.errors?.['required']">Email is required.</span>
+            <span *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
+          </div>
+        </div>
+  
+        <!-- Password Field -->
+        <div class="form-group" [class.error]="password.invalid && password.touched">
+          <label for="password">Password*</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="6"
+              [(ngModel)]="formData.password"
+              #password="ngModel"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div *ngIf="password.invalid && password.touched" class="error-message">
+            <span *ngIf="password.errors?.['required']">Password is required.</span>
+            <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</span>
+          </div>
+        </div>
+              <!-- Confirm Password Field -->
+      <div class="form-group" [class.error]="confirmPassword.touched && (formData.confirmPassword !== formData.password)">
+        <label for="confirmPassword">Confirm Password*</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+            [(ngModel)]="formData.confirmPassword"
+            #confirmPassword="ngModel"
+            placeholder="Re-enter your password"
+          />
+        </div>
+        <div *ngIf="confirmPassword.touched && (formData.confirmPassword !== formData.password)" class="error-message">
+          <span>Passwords must match.</span>
+        </div>
+      </div>
+      <!-- Optional Fields -->
+      <div class="divider">Optional Details</div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <div class="input-wrapper">
+          <i class="fas fa-phone"></i>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            [(ngModel)]="formData.phone"
+            placeholder="Enter your phone number"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <div class="input-wrapper">
+          <i class="fas fa-map-marker-alt"></i>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            [(ngModel)]="formData.location"
+            placeholder="Enter your location"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="github">GitHub Profile</label>
+        <div class="input-wrapper">
+          <i class="fab fa-github"></i>
+          <input
+            type="url"
+            id="github"
+            name="github"
+            [(ngModel)]="formData.github"
+            placeholder="Enter GitHub URL"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="linkedin">LinkedIn Profile</label>
+        <div class="input-wrapper">
+          <i class="fab fa-linkedin"></i>
+          <input
+            type="url"
+            id="linkedin"
+            name="linkedin"
+            [(ngModel)]="formData.linkedin"
+            placeholder="Enter LinkedIn URL"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows="3"
+          [(ngModel)]="formData.bio"
+          placeholder="Write a short bio about yourself"
+        ></textarea>
+      </div>
+
+      <!-- Technical Details -->
+      <div class="divider">Technical Details</div>
+
+      <div class="form-group">
+        <label for="degree">Degree</label>
+        <div class="input-wrapper">
+          <i class="fas fa-graduation-cap"></i>
+          <input
+            type="text"
+            id="degree"
+            name="degree"
+            [(ngModel)]="formData.degree"
+            placeholder="Enter your degree"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="specialization">Specialization</label>
+        <div class="input-wrapper">
+          <i class="fas fa-briefcase"></i>
+          <input
+            type="text"
+            id="specialization"
+            name="specialization"
+            [(ngModel)]="formData.specialization"
+            placeholder="Enter your specialization"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <div class="input-wrapper">
+          <i class="fas fa-cogs"></i>
+          <input
+            type="text"
+            id="skills"
+            name="skills"
+            [(ngModel)]="formData.skills"
+            placeholder="Enter your skills (comma-separated)"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="profession">Profession</label>
+        <div class="input-wrapper">
+          <i class="fas fa-briefcase"></i>
+          <input
+            type="text"
+            id="profession"
+            name="profession"
+            [(ngModel)]="formData.profession"
+            placeholder="Enter your profession"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="program">Program</label>
+        <div class="input-wrapper">
+          <i class="fas fa-book"></i>
+          <input
+            type="text"
+            id="program"
+            name="program"
+            [(ngModel)]="formData.program"
+            placeholder="Enter your program"
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="
+          !username.valid ||
+          !email.valid ||
+          !password.valid ||
+          formData.password !== formData.confirmPassword
+        "
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <div class="links">
+      <a routerLink="/login">Already have an account? Log In</a>
+    </div>
+  </div>
+</div>

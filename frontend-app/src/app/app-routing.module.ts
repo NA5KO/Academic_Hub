@@ -7,6 +7,10 @@ import { TopCommunitiesComponent } from './feed/communities/top-communities/top-
 import { CommunityDetailsComponent } from './feed/communities/community-details/community-details.component';
 import { PostCreateComponent } from './feed/posts/post-create/post-create.component';
 import {ProfileEditComponent} from './profile/profile-edit/profile-edit.component'
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+
+// routes ynajem yabda fihom data (header m left w right menu ) si non yabda b default which is true
 const routes: Routes = [
   { path: '', component: PostListComponent },
   { path: 'post/create', component: PostCreateComponent },
@@ -15,6 +19,16 @@ const routes: Routes = [
   { path: 'communities', component: TopCommunitiesComponent },
   { path: 'community/:name', component: CommunityDetailsComponent },
   { path: 'profile/edit', component: ProfileEditComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { showHeader: false, showLeftMenu: false, showRightMenu: false },
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    data: { showHeader: false, showLeftMenu: false, showRightMenu: false },
+  },
 
 ];
 
