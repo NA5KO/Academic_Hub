@@ -1,4 +1,4 @@
-<div class="post-item" (click)="goToPostDetails(post.id)">
+<div class="post-item" (click)="goToPost(post.id)">
   <div class="post-header">
     <img src={{post.image}} alt="User avatar" />
     <div>
@@ -12,10 +12,13 @@
       <span *ngFor="let tag of post.tags">{{ tag }}</span>
     </div>
   </div>
-  <div class="post-footer">
-    <div class="interaction">
-      <span class="comments">{{ post.comments }} comments</span>
-      <span class="votes">↑ {{ post.upvotes }} ↓ {{ post.downvotes }}</span>
-    </div>
+  <div class="actions">
+    <!-- <button (click)="onUpvote(post)">👍 {{ post.upvotes }}</button> -->
+    <button>↑ {{ post.upvotes }}</button>
+    <button>↓ {{ post.downvotes }}</button>
+    <button>
+      {{ post.isSaved ? 'Unsave' : 'Save' }}
+    </button>
+    <span>{{ post.comments }} comments</span>
   </div>
 </div>

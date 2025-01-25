@@ -20,12 +20,16 @@ export class PostDetailsComponent implements OnInit {
 
   fetchPostDetails(postId: string | null): void {
     this.post = {
-      id: postId,
-      image: '../../../../assets/nourhen.jpg', 
+      id: 1,
+      image: '../../../../assets/nourhen.jpg',
       author: 'Figma/Nourhen Khechine',
       time: '3 minutes ago',
-      title: 'How Do I Solve This Problem on Figma?',
-      description: 'This is a detailed description of the post.',
+      content: 'How Do I Solve This Problem on Figma?',
+      tags: ['#Figma'],
+      comments: 3,
+      upvotes: 48,
+      downvotes: 0,
+      isSaved: false,
     };
   }
 
