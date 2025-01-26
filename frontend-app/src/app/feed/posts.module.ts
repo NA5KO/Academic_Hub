@@ -8,11 +8,12 @@ import { TopCommunitiesComponent } from './communities/top-communities/top-commu
 import { CreateCommunityComponent } from './communities/create-community/create-community.component';
 import { CommunityDetailsComponent } from './communities/community-details/community-details.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { CommunityHeaderComponent } from './communities/community-header/community-header.component';
 
 
 
 @NgModule({
-  declarations: [PostListComponent, PostItemComponent, PostDetailsComponent, TopCommunitiesComponent, CreateCommunityComponent, CommunityDetailsComponent, PostCreateComponent],
+  declarations: [PostListComponent, PostItemComponent, PostDetailsComponent, TopCommunitiesComponent, CreateCommunityComponent, CommunityDetailsComponent, PostCreateComponent, CommunityHeaderComponent],
   imports: [CommonModule,FormsModule],
   exports: [PostListComponent]
 })
