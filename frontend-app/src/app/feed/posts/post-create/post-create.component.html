@@ -1,69 +1,89 @@
 <div class="container mt-5">
-    <h2 class="text-center">Create a New Post</h2>
-    <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
-      <!-- Title -->
-      <div class="form-group mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          class="form-control"
-          placeholder="Enter a title"
-          required
-          minlength="5"
-          maxlength="100"
-          [(ngModel)]="post.title"
-          #title="ngModel"
-        />
-        <div *ngIf="title.invalid && title.touched" class="text-danger">
-          <small *ngIf="title.errors?.['required']">Title is required.</small>
-          <small *ngIf="title.errors?.['minlength']">Title must be at least 5 characters.</small>
-          <small *ngIf="title.errors?.['maxlength']">Title cannot exceed 100 characters.</small>
-        </div>
+  <h2 class="text-center">Create a New Post</h2>
+  <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+    <!-- Choose Community -->
+    <div class="form-group mb-3">
+      <label for="community" class="form-label">Choose Community</label>
+      <select
+        id="community"
+        name="community"
+        class="form-control"
+        required
+        [(ngModel)]="post.community"
+        #community="ngModel"
+      >
+        <option value="" disabled selected>Select a community</option>
+        <option *ngFor="let community of communities" [value]="community">
+          {{ community }}
+        </option>
+      </select>
+      <div *ngIf="community.invalid && community.touched" class="text-danger">
+        <small>Community selection is required.</small>
       </div>
-  
-      <!-- Description -->
-      <div class="form-group mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          class="form-control"
-          rows="5"
-          placeholder="Write a description..."
-          required
-          [(ngModel)]="post.description"
-          #description="ngModel"
-        ></textarea>
-        <div *ngIf="description.invalid && description.touched" class="text-danger">
-          <small>Description is required.</small>
-        </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        placeholder="Enter a title"
+        required
+        minlength="5"
+        maxlength="100"
+        [(ngModel)]="post.title"
+        #title="ngModel"
+      />
+      <div *ngIf="title.invalid && title.touched" class="text-danger">
+        <small *ngIf="title.errors?.['required']">Title is required.</small>
+        <small *ngIf="title.errors?.['minlength']">Title must be at least 5 characters.</small>
+        <small *ngIf="title.errors?.['maxlength']">Title cannot exceed 100 characters.</small>
       </div>
-  
-      <!-- Attach Document -->
-      <div class="form-group mb-3">
-        <label for="attachment" class="form-label">Attach a Document</label>
-        <input
-          type="file"
-          id="attachment"
-          name="attachment"
-          class="form-control"
-          accept=".pdf,.doc,.docx,.txt"
-          (change)="onFileSelected($event)"
-        />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        class="form-control"
+        rows="5"
+        placeholder="Write a description..."
+        required
+        [(ngModel)]="post.description"
+        #description="ngModel"
+      ></textarea>
+      <div *ngIf="description.invalid && description.touched" class="text-danger">
+        <small>Description is required.</small>
       </div>
-  
-      <!-- Submit Button -->
-      <div class="form-group text-center">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="postForm.invalid"
-        >
-          Create Post
-        </button>
-      </div>
-    </form>
-  </div>
-  
+    </div>
+
+    <!-- Attach Document -->
+    <div class="form-group mb-3">
+      <label for="attachment" class="form-label">Attach a Document</label>
+      <input
+        type="file"
+        id="attachment"
+        name="attachment"
+        class="form-control"
+        accept=".pdf,.doc,.docx,.txt"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group text-center">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="postForm.invalid"
+      >
+        Create Post
+      </button>
+    </div>
+  </form>
+</div>
