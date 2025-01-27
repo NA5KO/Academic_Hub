@@ -7,11 +7,23 @@ import { LeftMenuModule } from './left-menu/left-menu.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RightMenuModule } from './right-menu/right-menu.module';
 import { HeaderComponent } from './header/header.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentsComponent } from './comments/comments.component';
+import { PostComponent } from './post/post.component';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserProfileComponent,
+    UserPageComponent,
+    CommentComponent,
+    CommentsComponent,
+    PostComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,

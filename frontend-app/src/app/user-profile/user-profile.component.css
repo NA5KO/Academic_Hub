@@ -1,0 +1,88 @@
+.user-profile {
+  width: 70%; 
+  margin: 20px auto; 
+  background-color: #fff; 
+  border: 1px solid #e0e0e0; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 20px;
+  display: flex;
+  align-items: center; 
+  gap: 20px; 
+  font-family: Arial, sans-serif; 
+}
+
+.user-profile .avatar img {
+  width: 100px; 
+  height: 100px; 
+  border-radius: 40%; 
+}
+
+.user-profile .content {
+  flex-grow: 1; 
+  text-align: left; 
+}
+
+.user-profile .content h2 {
+  font-size: 1.5rem; 
+  margin-bottom: 5px; 
+  color: #333; 
+}
+
+.user-profile .content p.bio {
+  font-size: 1rem; 
+  color: #666;
+  margin-bottom: 10px; 
+}
+
+.user-profile .content p.followers {
+  font-size: 1rem;
+  margin-bottom: 10px; 
+  font-weight: bold; 
+  color: #555; 
+}
+
+.user-profile .content .details {
+  display: flex; 
+  align-items: center; 
+  gap: 15px; 
+  font-size: 0.9rem; 
+  color: #777; 
+  border-top: 1px solid #e0e0e0; 
+  padding-top: 10px; 
+}
+
+.user-profile .content .details span {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+}
+
+.user-profile button {
+  padding: 10px 20px;
+  background-color: #00133f; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 1rem; 
+}
+
+.user-profile button:hover {
+  background-color: #003080; 
+}
+
+.delete-button {
+  background-color: #C80036; 
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+  background-color: #9B002B; /* Couleur légèrement plus sombre */
+}
