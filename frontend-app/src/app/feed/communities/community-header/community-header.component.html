@@ -1,20 +1,19 @@
 <div class="community-header">
     <div class="community-banner">
-      <img src="../../../assets/background.jpeg" alt="Community Banner" class="banner-image" />
+      <img [src]="community.banner" alt="Community Banner" class="banner-image" />
     </div>
     <div class="community-details">
-      <img src="../../../assets/reddit.png" alt="Community Logo" class="community-logo" />
+      <img [src]="community.icon" alt="Community Logo" class="community-logo" />
       <div class="community-info">
-        <h2>{{ communityName }}</h2>
-        <p>{{ communityDescription }}</p>
+        <h2>{{ community.name }}</h2>
+        <p>{{ community.description }}</p>
       </div>
-      <button 
-         
-        class="edit-button" 
-        (click)="editCommunity()"
-      >
-        Edit Community
-      </button>
+      <ng-container *ngIf="isUser">
+        <button (click)="followCommunity()" class="edit-button">Follow Community</button>
+      </ng-container>
+      <ng-container *ngIf="isAdmin">
+        <button (click)="editCommunity()" class="edit-button">Edit Community</button>
+      </ng-container>
     </div>
   </div>
   

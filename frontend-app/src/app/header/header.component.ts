@@ -13,4 +13,8 @@ export class HeaderComponent {
   navigateToCreate(): void {
     this.router.navigate(['/post/create']);
   }
+
+  navigateToEditProfile(): void {
+    this.router.navigate(['profile/edit']);
+  }
 }
