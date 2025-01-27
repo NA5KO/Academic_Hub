@@ -4,6 +4,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { TagListComponent } from './components/tag-list/tag-list.component';
 import { CommunityListComponent } from './components/community-list/community-list.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,7 +16,8 @@ import { CommunityListComponent } from './components/community-list/community-li
     CommunityListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [LeftMenuComponent]
 })

@@ -13,6 +13,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 // routes ynajem yabda fihom data (header m left w right menu ) si non yabda b default which is true
 const routes: Routes = [
   { path: '', component: PostListComponent },
+  { path: 'posts', component: PostListComponent },
+  { path: 'posts/:filter', component: PostListComponent },
   { path: 'post/create', component: PostCreateComponent },
   { path: 'post/:id', component: PostDetailsComponent },
   { path: 'community', component: CreateCommunityComponent },

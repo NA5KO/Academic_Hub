@@ -12,6 +12,8 @@ import { ProfileModule } from './profile/profile.module';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
+import { RouterModule } from '@angular/router';
+import { LeftMenuComponent } from './left-menu/components/left-menu/left-menu.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +26,13 @@ import { SignupComponent } from './auth/signup/signup.component';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    LeftMenuModule,
     RightMenuModule,
     PostsModule,
     ProfileModule,
+    LeftMenuModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
