@@ -31,7 +31,6 @@ import { RouterModule } from '@angular/router';
     LeftMenuModule,
     FormsModule,
     HttpClientModule,
-    SocialLoginModule,
     HttpClientModule,
     RouterModule
   ],
