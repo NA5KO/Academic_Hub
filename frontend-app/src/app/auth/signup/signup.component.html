@@ -1,86 +1,87 @@
 <div class="signup-container">
-    <div class="signup-box">
-      <!-- Logo Section -->
-      <img src="../../../assets/logo-without-bg.png" alt="Logo" class="logo" />
-  
-      <!-- Social Sign-Up Buttons -->
-      <button class="social-btn google-btn">
-        <i class="fab fa-google"></i> Sign Up with Google
-      </button>
-      <button class="social-btn github-btn">
-        <i class="fab fa-github"></i> Sign Up with GitHub
-      </button>
-      <div class="divider">or sign up with your details</div>
-  
-      <!-- Sign-Up Form -->
-      <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-        <!-- Username Field -->
-        <div class="form-group" [class.error]="username.invalid && username.touched">
-          <label for="username">Username*</label>
-          <div class="input-wrapper">
-            <i class="fas fa-user"></i>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              required
-              minlength="3"
-              maxlength="20"
-              [(ngModel)]="formData.username"
-              #username="ngModel"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div *ngIf="username.invalid && username.touched" class="error-message">
-            <span *ngIf="username.errors?.['required']">Username is required.</span>
-            <span *ngIf="username.errors?.['minlength']">Username must be at least 3 characters.</span>
-            <span *ngIf="username.errors?.['maxlength']">Username cannot exceed 20 characters.</span>
-          </div>
+  <div class="signup-box">
+    <!-- Logo Section -->
+    <img src="../../../assets/logo-without-bg.png" alt="Logo" class="logo" />
+
+    <!-- Social Sign-Up Buttons -->
+    <button class="social-btn google-btn" id="googleLoginBtn">
+      <i class="fab fa-google"></i> Sign Up with Google
+    </button>
+    <button class="social-btn github-btn">
+      <i class="fab fa-github"></i> Sign Up with GitHub
+    </button>
+    <div class="divider">or sign up with your details</div>
+
+    <!-- Sign-Up Form -->
+    <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+      <!-- Username Field -->
+      <div class="form-group" [class.error]="username.invalid && username.touched">
+        <label for="username">Username*</label>
+        <div class="input-wrapper">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            minlength="3"
+            maxlength="20"
+            [(ngModel)]="formData.username"
+            #username="ngModel"
+            placeholder="Enter your username"
+          />
         </div>
-  
-        <!-- Email Field -->
-        <div class="form-group" [class.error]="email.invalid && email.touched">
-          <label for="email">Email*</label>
-          <div class="input-wrapper">
-            <i class="fas fa-envelope"></i>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              [(ngModel)]="formData.email"
-              #email="ngModel"
-              placeholder="Enter your email"
-            />
-          </div>
-          <div *ngIf="email.invalid && email.touched" class="error-message">
-            <span *ngIf="email.errors?.['required']">Email is required.</span>
-            <span *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
-          </div>
+        <div *ngIf="username.invalid && username.touched" class="error-message">
+          <span *ngIf="username.errors?.['required']">Username is required.</span>
+          <span *ngIf="username.errors?.['minlength']">Username must be at least 3 characters.</span>
+          <span *ngIf="username.errors?.['maxlength']">Username cannot exceed 20 characters.</span>
         </div>
-  
-        <!-- Password Field -->
-        <div class="form-group" [class.error]="password.invalid && password.touched">
-          <label for="password">Password*</label>
-          <div class="input-wrapper">
-            <i class="fas fa-lock"></i>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              minlength="6"
-              [(ngModel)]="formData.password"
-              #password="ngModel"
-              placeholder="Enter your password"
-            />
-          </div>
-          <div *ngIf="password.invalid && password.touched" class="error-message">
-            <span *ngIf="password.errors?.['required']">Password is required.</span>
-            <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</span>
-          </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group" [class.error]="email.invalid && email.touched">
+        <label for="email">Email*</label>
+        <div class="input-wrapper">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            [(ngModel)]="formData.email"
+            #email="ngModel"
+            placeholder="Enter your email"
+          />
         </div>
-              <!-- Confirm Password Field -->
+        <div *ngIf="email.invalid && email.touched" class="error-message">
+          <span *ngIf="email.errors?.['required']">Email is required.</span>
+          <span *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group" [class.error]="password.invalid && password.touched">
+        <label for="password">Password*</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minlength="6"
+            [(ngModel)]="formData.password"
+            #password="ngModel"
+            placeholder="Enter your password"
+          />
+        </div>
+        <div *ngIf="password.invalid && password.touched" class="error-message">
+          <span *ngIf="password.errors?.['required']">Password is required.</span>
+          <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</span>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
       <div class="form-group" [class.error]="confirmPassword.touched && (formData.confirmPassword !== formData.password)">
         <label for="confirmPassword">Confirm Password*</label>
         <div class="input-wrapper">
@@ -99,9 +100,27 @@
           <span>Passwords must match.</span>
         </div>
       </div>
+
       <!-- Optional Fields -->
       <div class="divider">Optional Details</div>
-      
+
+      <div class="form-group">
+        <label for="photo">Photo URL</label>
+        <div class="input-wrapper">
+          <i class="fas fa-camera"></i>
+          <input
+            type="url"
+            id="photo"
+            name="photo"
+            [(ngModel)]="formData.photo"
+            placeholder="Enter photo URL"
+          />
+        </div>
+        <div *ngIf="photoError" class="error-message">
+          <span>{{ photoError }}</span>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="phone">Phone Number</label>
         <div class="input-wrapper">

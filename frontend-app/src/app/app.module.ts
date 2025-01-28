@@ -12,6 +12,8 @@ import { ProfileModule } from './profile/profile.module';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -28,9 +30,11 @@ import { SignupComponent } from './auth/signup/signup.component';
     RightMenuModule,
     PostsModule,
     ProfileModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
