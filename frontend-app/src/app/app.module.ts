@@ -13,7 +13,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
-import { GoogleLoginProvider, SocialAuthServiceConfig ,SocialLoginModule  } from 'angularx-social-login';
+
 
 @NgModule({
   declarations: [
@@ -32,21 +32,8 @@ import { GoogleLoginProvider, SocialAuthServiceConfig ,SocialLoginModule  } from
     ProfileModule,
     FormsModule,
     HttpClientModule,
-    SocialLoginModule
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('491160602747-ovdftgsvteebotmki95c6r068mfk4op9.apps.googleusercontent.com')
-          },
-        ]
-      } as SocialAuthServiceConfig
-    }
   ],
   bootstrap: [AppComponent]
 })
