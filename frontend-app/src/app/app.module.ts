@@ -12,7 +12,6 @@ import { ProfileModule } from './profile/profile.module';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
 import { GoogleLoginProvider, SocialAuthServiceConfig ,SocialLoginModule  } from 'angularx-social-login';
 import { RouterModule } from '@angular/router';
 
