@@ -7,6 +7,13 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { User } from './user/user.model';
+import { Comment } from './comment/comment.model';
+import { Community } from './community/community.model';
+import { Post } from './post/post.model';
+import { Notification } from './notification/notification.model';
+import { AdminModule } from './admin/admin.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,10 +28,12 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
+      retryAttempts: 1,
+      entities: ['dist/**/*.entity{.ts,.js}'], 
     }),
     UserModule,
     AuthModule,
-    
+    AdminModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService],

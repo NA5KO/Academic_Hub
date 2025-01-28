@@ -1,17 +1,18 @@
-import { BaseEntity } from 'src/common/entities/BaseEntity';
-import { Post } from 'src/post/post.model';
+import { BaseEntity } from '../common/entities/BaseEntity';
+import { Post } from '../post/post.model';
+import { User } from '../user/user.model';
 import { Entity, Column, ManyToOne } from 'typeorm';
 
 
-@Entity('comment')
+@Entity('Comment')
 export class Comment extends BaseEntity {
   @Column()
   content: string;
 
   @ManyToOne(() => Post, (post) => post.comments)
   post: Post;
-
-  
-  
+ 
+  @ManyToOne(() => User, (user) => user.comments)
+  user: User;
 
 }

@@ -1,11 +1,12 @@
-import { BaseEntity } from 'src/common/entities/BaseEntity';
-import { PostType } from 'src/enums/post-type.enum';
-import { Entity, Column, OneToMany, ManyToMany, ManyToOne } from 'typeorm';
-import { Comment } from 'src/comment/comment.model';
-import { Community } from 'src/community/community.model';
+import { BaseEntity } from '../common/entities/BaseEntity';
+import { PostType } from '../enums/post-type.enum';
+import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Comment } from '../comment/comment.model';
+import { Community } from '../community/community.model';
+import { User } from '../user/user.model';
 
 
-@Entity('posts')
+@Entity('Post')
 export class Post extends BaseEntity {
   @Column()
   title: string;
@@ -16,8 +17,9 @@ export class Post extends BaseEntity {
   @Column({ nullable: true })
   authorId: number;
   
-  @Column()
+  @Column('text', { array: true, nullable: true })
   tags: string[];
+
   @Column()
   type: PostType
 
@@ -27,6 +29,7 @@ export class Post extends BaseEntity {
   @ManyToOne(() => Community, (community) => community.posts,{ cascade: true })
   community: Community;
   
-  
+  @ManyToOne(() => User, (user) => user.posts)
+  user: User;
 
 }
