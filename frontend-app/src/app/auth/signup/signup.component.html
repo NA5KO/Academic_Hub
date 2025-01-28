@@ -4,10 +4,10 @@
       <img src="../../../assets/logo-without-bg.png" alt="Logo" class="logo" />
   
       <!-- Social Sign-Up Buttons -->
-      <button class="social-btn google-btn">
+      <button class="social-btn google-btn" (click)="signUpWithGoogle()">
         <i class="fab fa-google"></i> Sign Up with Google
       </button>
-      <button class="social-btn github-btn">
+      <button class="social-btn github-btn" >
         <i class="fab fa-github"></i> Sign Up with GitHub
       </button>
       <div class="divider">or sign up with your details</div>
@@ -100,7 +100,25 @@
         </div>
       </div>
       <!-- Optional Fields -->
+
       <div class="divider">Optional Details</div>
+      
+      <div class="form-group">
+        <label for="photo">Photo URL</label>
+        <div class="input-wrapper">
+          <i class="fas fa-camera"></i>
+          <input
+            type="url"
+            id="photo"
+            name="photo"
+            [(ngModel)]="formData.photo"
+            placeholder="Enter photo URL"
+          />
+        </div>
+        <div *ngIf="photoError" class="error-message">
+          <span>{{ photoError }}</span>
+        </div>
+      </div>
       
       <div class="form-group">
         <label for="phone">Phone Number</label>
@@ -254,6 +272,7 @@
         "
       >
         Sign Up
+        
       </button>
     </form>
 
