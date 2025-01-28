@@ -10,7 +10,8 @@ export class PostDetailsComponent implements OnInit {
   post: any = {
     id: 1,
     image: '../../../../assets/nourhen.jpg',
-    author: 'Figma/Nourhen Khechine',
+    community: 'Figma',
+    author: 'Nourhen Khechine',
     time: '3 minutes ago',
     content: 'How Do I Solve This Problem on Figma?',
     tags: ['#Figma'],

@@ -34,4 +34,12 @@ export class PostItemComponent {
   goToPost(postId: number) {
     this.router.navigate(['/post', postId]);
   }
+
+  goToUserProfile(username: string) {
+    this.router.navigate(['/user', username]);
+  }
+
+  goToCommunity(community: string) {
+    this.router.navigate(['/community', community]);
+  }
 }
