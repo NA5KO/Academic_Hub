@@ -9,6 +9,7 @@ import { PostCreateComponent } from './feed/posts/post-create/post-create.compon
 import {ProfileEditComponent} from './profile/profile-edit/profile-edit.component'
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { UserPageComponent } from './profile/profile-page/user-page/user-page.component';
 
 // routes ynajem yabda fihom data (header m left w right menu ) si non yabda b default which is true
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
     component: SignupComponent,
     data: { showHeader: false, showLeftMenu: false, showRightMenu: false },
   },
+  { path: 'user/:user', component: UserPageComponent },
 
 ];
 
