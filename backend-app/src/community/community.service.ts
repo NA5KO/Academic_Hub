@@ -48,13 +48,8 @@ export class CommunityService {
       throw new Error('User is already following this community');
     }
 
-    // Add the community to the user's followed communities
     user.communities.push(community);
-
-    // Save the updated user
     await this.userRepository.save(user);
-
-    // Return the updated community
     return community;
   }
 
@@ -67,8 +62,17 @@ export class CommunityService {
     return this.communityRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} community`;
+  async findOne(communityName: string): Promise<Community> {
+    const community = await this.communityRepository.findOne({
+      where: { name: communityName },
+      relations: ['followers', 'posts'],
+    });
+
+    if (!community) {
+      throw new NotFoundException('Community not found');
+    }
+
+    return community;
   }
 
   update(id: number, updateCommunityDto: UpdateCommunityDto) {

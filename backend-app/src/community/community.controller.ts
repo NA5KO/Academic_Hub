@@ -31,9 +31,9 @@ export class CommunityController {
     return this.communityService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.communityService.findOne(+id);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.communityService.findOne(name);
   }
 
   @Patch(':id')

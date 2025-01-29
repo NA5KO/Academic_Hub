@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +13,9 @@ export class CommunitiesService {
 
   getTopCommunities(): Observable<any> {
     return this.http.get(`${this.apiUrl}/community/top`);
+  }
+
+  getCommunity(name: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/community/${name}`);
   }
 }

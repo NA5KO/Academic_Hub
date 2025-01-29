@@ -2,15 +2,13 @@
 <p>Browse Academic Hub's largest communities</p>
 
 <div *ngIf="topCommunities.length > 0" class="community-grid">
-  <div *ngFor="let community of topCommunities; let i = index" class="community-card">
-    <span class="community-rank">{{ i + 1 }}</span> 
-    <a [href]="getCommunityLink(community.name)" target="_blank">
-      <div class="community-info" style="color: #0c1844;">
-        <span class="community-name">r/{{ community.name }}</span>
-        <p class="community-description">{{ community.description }}</p>
-      </div>
-    </a>
-    <span class="member-count">{{ community.followers?.length || 0 }} members</span>
+  <div *ngFor="let community of topCommunities; let i = index" class="community-card" (click)="navigateToCommunity(community.name)">
+    <span class="community-rank">{{ i + 1 }}</span>
+    <div class="community-info" style="color: #0c1844;">
+      <span class="community-name">r/{{ community.name }}</span>
+      <p class="community-description">{{ community.description }}</p>
+    </div>
+    <span class="member-count">{{ community.followersCount }} members</span>
   </div>
 </div>
 

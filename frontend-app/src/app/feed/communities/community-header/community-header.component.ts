@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommunitiesService } from 'src/services/communities.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-community-header',
@@ -7,19 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommunityHeaderComponent implements OnInit {
 
+  constructor(private communityService: CommunitiesService, private route: ActivatedRoute) {}
+  // constructor(private authService: AuthService) {}
+
   community = {
-    name: 'Tech Community',
-    description: 'This is a community description example.',
-    banner: '../../../assets/background.jpeg',
-    icon: '../../../assets/reddit.png'
+    name: '',
+    description: '',
+    banner: '',
+    icon: '',
   };
+
 
   isAdmin: boolean = false;
   isUser: boolean = true;
 
-  // constructor(private authService: AuthService) {}
-
   ngOnInit(): void {
+    const communityName = this.route.snapshot.paramMap.get('name');
+    if(communityName){
+      this.communityService.getCommunity(communityName).subscribe((data) => {
+        console.log(data);
+        this.community = data;
+        this.community.banner= '../../../assets/background.jpeg';
+        this.community.icon='../../../assets/reddit.png';
+      });
+    }
     // this.isAdmin = this.authService.isAdmin();
     // this.isUser = this.authService.isUser();
   }
