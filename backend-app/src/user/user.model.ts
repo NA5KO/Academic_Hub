@@ -53,6 +53,7 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   photoUrl?: string; 
+  
 }
 
 
