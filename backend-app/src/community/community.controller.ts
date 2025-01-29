@@ -3,10 +3,11 @@ import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { Community } from './community.model';
+import { PostService } from '../post/post.service';
 
 @Controller('community')
 export class CommunityController {
-  constructor(private readonly communityService: CommunityService) {}
+  constructor(private readonly communityService: CommunityService, private readonly postService: PostService) {}
 
   @Post()
   create(@Body() createCommunityDto: CreateCommunityDto) {
@@ -34,6 +35,11 @@ export class CommunityController {
   @Get(':name')
   findOne(@Param('name') name: string) {
     return this.communityService.findOne(name);
+  }
+
+  @Get(':name/posts')
+  getPostsForCommunity(@Param('name') name: string) {
+    return this.postService.getPostsByCommunity(name); 
   }
 
   @Patch(':id')

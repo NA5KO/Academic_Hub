@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Community } from './community.model';
 import { User } from 'src/user/user.model';
 import { Post } from 'src/post/post.model';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Community, User, Post])
+    TypeOrmModule.forFeature([Community, User, Post]),
+    PostModule
   ],
   controllers: [CommunityController],
   providers: [CommunityService],

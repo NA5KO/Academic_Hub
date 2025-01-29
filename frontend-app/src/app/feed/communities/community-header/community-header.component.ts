@@ -19,7 +19,6 @@ export class CommunityHeaderComponent implements OnInit {
     icon: '',
   };
 
-
   isAdmin: boolean = false;
   isUser: boolean = true;
 
@@ -42,6 +41,7 @@ export class CommunityHeaderComponent implements OnInit {
     // Handle follow community logic here
   }
 
+  // mch mawjouda fl front
   editCommunity() {
     console.log('Editing community');
     // Handle community edit logic here
