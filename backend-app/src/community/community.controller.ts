@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
+import { Community } from './community.model';
 
 @Controller('community')
 export class CommunityController {
@@ -12,8 +13,21 @@ export class CommunityController {
     return this.communityService.create(createCommunityDto);
   }
 
+  @Post(':communityId/follow/:userId')
+  async followCommunity(
+    @Param('communityId') communityId: string,
+    @Param('userId') userId: string,
+  ): Promise<Community> {
+    return this.communityService.followCommunity(userId, communityId);
+  }
+
+  @Get('top')
+  async getTopCommunities(): Promise<Community[]> {
+    return this.communityService.getTopCommunities();
+  }
+
   @Get()
-  findAll() {
+  async getAll(): Promise<Community[]> {
     return this.communityService.findAll();
   }
 

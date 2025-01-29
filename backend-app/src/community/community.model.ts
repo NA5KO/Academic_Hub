@@ -26,4 +26,7 @@ export class Community extends BaseEntity {
 
   @ManyToMany(() => User, (user) => user.communities)
   followers: User[];
+
+  @Column({ default: 0 })
+  followersCount: number;
 }

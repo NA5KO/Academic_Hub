@@ -1,7 +1,7 @@
 <h3 style="margin-top: 20px; color: #c80036;"><b>Top 12 Communities</b></h3>
 <p>Browse Academic Hub's largest communities</p>
 
-<div class="community-grid">
+<div *ngIf="topCommunities.length > 0" class="community-grid">
   <div *ngFor="let community of topCommunities; let i = index" class="community-card">
     <span class="community-rank">{{ i + 1 }}</span> 
     <a [href]="getCommunityLink(community.name)" target="_blank">
@@ -10,6 +10,10 @@
         <p class="community-description">{{ community.description }}</p>
       </div>
     </a>
-    <span class="member-count">{{ community.memberCount }} members</span>
+    <span class="member-count">{{ community.followers?.length || 0 }} members</span>
   </div>
+</div>
+
+<div *ngIf="topCommunities.length === 0">
+  <p>No communities found.</p>
 </div>

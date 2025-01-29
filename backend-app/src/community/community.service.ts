@@ -1,15 +1,70 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Community } from './community.model';
+import { Repository } from 'typeorm';
+import { User } from 'src/user/user.model';
 
 @Injectable()
 export class CommunityService {
-  create(createCommunityDto: CreateCommunityDto) {
-    return 'This action adds a new community';
+
+  constructor(
+    @InjectRepository(Community)
+    private communityRepository: Repository<Community>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
+
+  async getTopCommunities(): Promise<Community[]> {
+    try {
+      const topCommunities = await this.communityRepository
+        .createQueryBuilder('community')
+        .orderBy('community.followersCount', 'DESC')
+        .limit(12)
+        .getMany();
+
+      return topCommunities;
+    } catch (error) {
+      throw new Error('Error fetching top communities: ' + error.message);
+    }
+  }
+  
+
+  async followCommunity(userId: string, communityId: string): Promise<Community> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const community = await this.communityRepository.findOne({ where: { id: communityId } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!community) {
+      throw new NotFoundException('Community not found');
+    }
+
+    // Check if the user is already following the community
+    if (user.communities.some((comm) => comm.id === communityId)) {
+      throw new Error('User is already following this community');
+    }
+
+    // Add the community to the user's followed communities
+    user.communities.push(community);
+
+    // Save the updated user
+    await this.userRepository.save(user);
+
+    // Return the updated community
+    return community;
+  }
+
+  async create(createCommunityDto: CreateCommunityDto): Promise<Community> {
+    const community = this.communityRepository.create(createCommunityDto);
+    return await this.communityRepository.save(community);
   }
 
   findAll() {
-    return `This action returns all community`;
+    return this.communityRepository.find();
   }
 
   findOne(id: number) {
