@@ -1,0 +1,19 @@
+<div class="community-header">
+    <div class="community-banner">
+      <img [src]="community.banner" alt="Community Banner" class="banner-image" />
+    </div>
+    <div class="community-details">
+      <img [src]="community.icon" alt="Community Logo" class="community-logo" />
+      <div class="community-info">
+        <h2>{{ community.name }}</h2>
+        <p>{{ community.description }}</p>
+      </div>
+      <ng-container *ngIf="isUser">
+        <button (click)="followCommunity()" class="edit-button">Follow Community</button>
+      </ng-container>
+      <ng-container *ngIf="isAdmin">
+        <button (click)="editCommunity()" class="edit-button">Edit Community</button>
+      </ng-container>
+    </div>
+  </div>
+  

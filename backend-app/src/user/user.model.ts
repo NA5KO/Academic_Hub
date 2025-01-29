@@ -1,5 +1,9 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { BaseEntity } from '../common/entities/BaseEntity';
+import { Post } from '../post/post.model';
+import { Comment } from '../comment/comment.model';
+import { Notification } from 'src/notification/notification.model';
+import { Community } from 'src/community/community.model';
 
 @Entity('User')
 export class User extends BaseEntity {
@@ -53,6 +57,19 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   photoUrl?: string; 
+
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
+
+  @ManyToMany(() => Community, (community) => community.followers, { cascade: true })
+  @JoinTable()
+  communities: Community[];
 }
 
 

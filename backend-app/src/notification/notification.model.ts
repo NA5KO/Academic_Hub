@@ -1,12 +1,14 @@
 import { BaseEntity } from 'src/common/entities/BaseEntity';
-import { Entity, Column } from 'typeorm';
+import { User } from 'src/user/user.model';
+import { Entity, Column, ManyToOne } from 'typeorm';
 
 
-@Entity('notifications')
+@Entity('Notification')
 export class Notification extends BaseEntity {
   @Column()
   message: string;
 
-  
+  @ManyToOne(() => User, (user) => user.notifications)
+  user: User;
 
 }

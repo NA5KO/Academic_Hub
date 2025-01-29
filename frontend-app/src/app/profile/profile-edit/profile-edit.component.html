@@ -1,4 +1,4 @@
-<h2>Edit Profile</h2>
+<h2 style="margin-top: 20px;">Edit Profile</h2>
 <form class="profile-edit-form" #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
   <!-- Section: Account Information -->
   <fieldset class="section">
@@ -68,5 +68,5 @@
   </fieldset>
 
   <!-- Update Button -->
-  <button class="update-button" type="submit">Update</button>
+  <button class="update-button" type="submit" [disabled]="profileForm.invalid">Update</button>
 </form>

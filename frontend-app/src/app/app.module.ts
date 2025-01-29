@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LeftMenuModule } from './left-menu/left-menu.module';
@@ -12,8 +12,7 @@ import { ProfileModule } from './profile/profile.module';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,12 +25,14 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    LeftMenuModule,
     RightMenuModule,
     PostsModule,
     ProfileModule,
+    LeftMenuModule,
     FormsModule,
     HttpClientModule,
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
   ],

@@ -1,7 +1,7 @@
 <div class="left-menu">
     <!-- Top Menu Items -->
     <div *ngFor="let menu of menuItems">
-      <app-menu-item [icon]="menu.icon" [label]="menu.label"></app-menu-item>
+      <app-menu-item [icon]="menu.icon" [label]="menu.label" [route]="menu.route" [queryParams]="menu.queryParams"></app-menu-item>
     </div>
   
     <!-- Popular Tags -->

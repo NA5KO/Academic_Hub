@@ -1,14 +1,15 @@
 import { BaseEntity } from 'src/common/entities/BaseEntity';
 import { Post } from 'src/post/post.model';
-import { Entity, Column, OneToMany } from 'typeorm';
+import { User } from 'src/user/user.model';
+import { Entity, Column, OneToMany, ManyToMany } from 'typeorm';
 
 
-@Entity('community')
+@Entity('Community')
 export class Community extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column("text", { array: true })
   keywords: string[];
 
   @Column()
@@ -22,6 +23,7 @@ export class Community extends BaseEntity {
 
   @OneToMany(() => Post, (post) => post.community, { cascade: true })
   posts: Post[];
-  
 
+  @ManyToMany(() => User, (user) => user.communities)
+  followers: User[];
 }

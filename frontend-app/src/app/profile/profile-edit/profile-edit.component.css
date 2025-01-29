@@ -12,6 +12,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background: none; /* Remove background color */
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -45,19 +46,18 @@ textarea {
 input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus {
-  border-color: rgb(16, 16, 81); /* Neon blue border color on focus */
-  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Neon blue glow */
   outline: none; /* Remove default outline */
 }
 
 /* Styling for the section titles */
 .section legend {
-  color: #f33434; /* Light red color for the section titles */
+  color: #c80036; /* Light red color for the section titles */
 }
 
 /* Styling for the update button */
 button.update-button {
-  background-color: #add8e6; /* Light blue background color */
+  background-color: #0c1844; /* Light blue background color */
+  color: #ffffff;
   border: none;
   border-radius: 15px; /* Rounded corners */
   padding: 10px 20px;

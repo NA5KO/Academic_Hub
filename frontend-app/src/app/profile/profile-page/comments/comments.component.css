@@ -1,0 +1,22 @@
+.latest-comments {
+    width: 70%;
+    margin: 20px auto; 
+    background-color: #fff; 
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    font-size: 0.9rem; 
+  }
+  
+  .latest-comments h3 {
+    font-size: 1.2rem; 
+    color: #333; 
+  }
+  
+  .latest-comments p {
+    font-size: 0.9rem; 
+    color: #555; 
+    line-height: 1.4; 
+  }
+  
