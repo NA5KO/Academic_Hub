@@ -3,7 +3,7 @@ import { User } from 'src/user/user.model';
 import { Entity, Column, ManyToOne } from 'typeorm';
 
 
-@Entity('notifications')
+@Entity('Notification')
 export class Notification extends BaseEntity {
   @Column()
   message: string;

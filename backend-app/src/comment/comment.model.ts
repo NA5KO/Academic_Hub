@@ -4,7 +4,7 @@ import { User } from 'src/user/user.model';
 import { Entity, Column, ManyToOne } from 'typeorm';
 
 
-@Entity('comment')
+@Entity('Comment')
 export class Comment extends BaseEntity {
   @Column()
   content: string;
