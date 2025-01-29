@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Req, UseGuards, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Body, Get, Req, UseGuards, Res, UploadedFile, UseInterceptors, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
@@ -36,11 +36,26 @@ export class AuthController {
   }
 
   // Google OAuth login trigger
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth() {
-    return { message: 'Redirecting to Google OAuth' };
+  @Post('google')
+  async googleAuth(@Body() oauthData: { oauthToken: string }) {
+      console.log('Google OAuth token received:', oauthData.oauthToken);
+  
+      const googleProfile = await this.authService.getGoogleUserProfile(oauthData.oauthToken);
+      if (!googleProfile) {
+          throw new UnauthorizedException('Invalid Google OAuth token');
+      }
+      // console.log('Google profile:', googleProfile);
+  
+      const user = await this.authService.validateOAuthUser(googleProfile, 'google');
+      const accessToken = this.authService.generateJwt({ sub: user.id, email: user.email });
+  
+      return {
+        message: 'Google login successful',
+        accessToken,
+      };
   }
+  
+  
 
   // Google OAuth callback
   @Get('google/callback')
@@ -49,7 +64,7 @@ export class AuthController {
     const user = req.user;
     const payload = { sub: user.id, email: user.email };
     const accessToken = this.authService.generateJwt(payload);
-    res.redirect('http://localhost:4200');
+    res.redirect(`http://localhost:4200?accessToken=${accessToken}`);
     return {
       message: 'Google login successful',
       user,
@@ -57,25 +72,5 @@ export class AuthController {
     };
   }
 
-  // GitHub OAuth login trigger
-  @Get('github')
-  @UseGuards(AuthGuard('github'))
-  async githubAuth() {
-    return { message: 'Redirecting to GitHub OAuth' };
-  }
 
-  // GitHub OAuth callback
-  @Get('github/callback')
-  @UseGuards(AuthGuard('github'))
-  async githubAuthRedirect(@Req() req: any, @Res() res) {
-    const user = req.user;
-    const payload = { sub: user.id, email: user.email };
-    const accessToken = this.authService.generateJwt(payload);
-    res.redirect('http://localhost:4200');
-    return {
-      message: 'GitHub login successful',
-      user,
-      accessToken,
-    };
-  }
 }

@@ -16,8 +16,11 @@ import { User } from './user/user.model';
 import { Post } from './post/post.model';
 import { Comment } from './comment/comment.model';
 import { Notification } from './notification/notification.model';
+import { HttpModule } from '@nestjs/axios';
+
 @Module({
-  imports: [
+  imports: [    
+    HttpModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
