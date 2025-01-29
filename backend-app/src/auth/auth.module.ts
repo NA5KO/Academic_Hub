@@ -7,10 +7,12 @@ import { GoogleStrategy } from './strategies/google-strategy';
 import { GithubStrategy } from './strategies/gtihub-strategy';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { UserModule } from 'src/user/user.module';
+import { HttpModule } from '@nestjs/axios';
 
 
 @Module({
   imports: [
+    HttpModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET|| 'default-secret-key',

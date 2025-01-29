@@ -44,12 +44,12 @@ export class AuthService {
   
   
   signUpWithGoogle(oauthData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/google/signup`, oauthData);
+    return this.http.post(`${this.apiUrl}/auth/google`, oauthData);
   }
 
   // Method to send Google OAuth data for login
   loginWithGoogle(oauthData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/google/login`, oauthData);
+    return this.http.post(`${this.apiUrl}/auth/google`, oauthData);
   }
 
   // Method for regular email/password sign-up
