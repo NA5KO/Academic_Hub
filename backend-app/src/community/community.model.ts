@@ -8,7 +8,7 @@ export class Community extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column("text", { array: true })
   keywords: string[];
 
   @Column()
