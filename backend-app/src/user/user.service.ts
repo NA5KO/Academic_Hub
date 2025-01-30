@@ -22,8 +22,6 @@ export class UserService {
     if (user) {
       // Update user if already exists
       user.username = createUserDto.username ?? user.username;
-      user.googleId = createUserDto.googleId ?? user.googleId;
-      user.githubId = createUserDto.githubId ?? user.githubId;
       user.isActive = createUserDto.isActive ?? user.isActive;
       user.phone = createUserDto.phone ?? user.phone;
       user.location = createUserDto.location ?? user.location;

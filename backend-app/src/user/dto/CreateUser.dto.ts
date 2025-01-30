@@ -10,14 +10,6 @@ export class CreateUserDto {
   username: string;
 
   @IsOptional()
-  @IsString()
-  googleId?: string;
-
-  @IsOptional()
-  @IsString()
-  githubId?: string;
-
-  @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 
