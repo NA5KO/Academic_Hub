@@ -12,6 +12,7 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
+  // all posts (discover)
   @Get()
   findAll() {
     return this.postService.findAll();
@@ -19,7 +20,7 @@ export class PostController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+    return this.postService.findOne(id);
   }
 
   @Patch(':id')
@@ -29,6 +30,6 @@ export class PostController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+    return this.postService.remove(id);
   }
 }
