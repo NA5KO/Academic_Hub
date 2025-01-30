@@ -9,7 +9,7 @@ import { PostService } from '../post/post.service';
 export class CommunityController {
   constructor(private readonly communityService: CommunityService, private readonly postService: PostService) {}
 
-  @Post()
+  @Post('/create')
   create(@Body() createCommunityDto: CreateCommunityDto) {
     return this.communityService.create(createCommunityDto);
   }

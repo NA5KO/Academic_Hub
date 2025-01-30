@@ -1,26 +1,24 @@
-import { IsArray, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsArray, IsString, IsNotEmpty, IsOptional, ArrayMinSize, IsNumber } from 'class-validator';
 
 export class CreateCommunityDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsArray()
   @IsOptional()
-  keywords: string[];
+  @IsArray()
+  @ArrayMinSize(1, { message: "At least one keyword is required" })
+  keywords: string[] = ["Computer Science"]; // Default value
 
   @IsString()
   @IsNotEmpty()
   description: string;
 
   @IsString()
-  @IsNotEmpty()
   banner: string;
 
   @IsString()
-  @IsNotEmpty()
   icon: string;
-  
-  @IsNotEmpty()
+
   followersCount: number;
 }
