@@ -13,6 +13,8 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { PostComponent } from './post/post.component';
 import { PostsComponent } from './posts/posts.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { PostsComponent } from './posts/posts.component';
     PostsComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,

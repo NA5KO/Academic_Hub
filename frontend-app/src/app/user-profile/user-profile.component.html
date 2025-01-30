@@ -18,7 +18,7 @@
   <button (click)="toggleFollow()">
     {{ isFollowing ? 'Unfollow' : 'Follow' }}
   </button>
-  <button *ngIf="isAdmin" (click)="onDeleteProfile()" class="delete-button">
+  <button *ngIf="isAdmin" (click)="deleteUser()" class="delete-button">
     🗑️ Delete Profile
-  </button>  
+  </button>
 </div>

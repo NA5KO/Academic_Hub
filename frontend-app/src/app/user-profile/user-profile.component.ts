@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,26 +8,39 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class UserProfileComponent {
   @Input() user!: {
-    name: string; 
-    bio: string; 
-    location: string; 
-    joinedDate: string; 
-    followers: number; 
+    id: string;
+    name: string;
+    bio: string;
+    location: string;
+    joinedDate: string;
+    followers: number;
     following: number;
   };
 
-  @Input() isAdmin: boolean = false; 
-  @Output() deleteUser = new EventEmitter<void>(); 
-
+  @Input() isAdmin: boolean = false;
   isFollowing = false;
 
+  constructor(private userService: UserService) {}
+
   toggleFollow() {
-    this.isFollowing = !this.isFollowing;
+    if (this.isFollowing) {
+      this.userService.unfollowUser(this.user.id).subscribe(() => {
+        this.isFollowing = false;
+        this.user.followers -= 1;
+      });
+    } else {
+      this.userService.followUser(this.user.id).subscribe(() => {
+        this.isFollowing = true;
+        this.user.followers += 1;
+      });
+    }
   }
 
-  onDeleteProfile() {
-    if (confirm(`Are you sure you want to delete ${this.user.name}'s profile?`)) {
-      this.deleteUser.emit(); 
+  deleteUser() {
+    if (confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) {
+      this.userService.deleteUser(this.user.id).subscribe(() => {
+        alert("Utilisateur supprimé avec succès !");
+      });
     }
   }
 }

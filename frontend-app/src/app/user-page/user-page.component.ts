@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class UserPageComponent {
   user = {
+    id:'1',
     name: 'Ines Zghal ',
     bio: 'bio will be here!',
     location: 'Tunisie',
