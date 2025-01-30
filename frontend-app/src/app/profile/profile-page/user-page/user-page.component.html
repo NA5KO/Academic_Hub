@@ -1,0 +1,10 @@
+<div class="user-page">
+    <div class="main-content">
+      <app-user-profile 
+      [user]="user" 
+      [isAdmin]="isAdmin" 
+      (deleteUser)="handleDeleteUser()">
+    </app-user-profile>      <app-comments></app-comments>
+        <!-- <app-posts></app-posts> -->
+    </div>
+  </div>

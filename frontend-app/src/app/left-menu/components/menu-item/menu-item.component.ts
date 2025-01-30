@@ -9,4 +9,6 @@ import { Component, Input } from '@angular/core';
 export class MenuItemComponent {
   @Input() icon!: string;
   @Input() label!: string;
+  @Input() route!: string;
+  @Input() queryParams!: { filter: string };
 }

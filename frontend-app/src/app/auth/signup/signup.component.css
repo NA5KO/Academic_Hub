@@ -1,0 +1,126 @@
+/* General Container Styling */
+.login-container, .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #2c3e50, #e74c3c);
+    font-family: 'Arial', sans-serif;
+    padding: 20px; /* Prevent fields from getting cut off on smaller screens */
+    box-sizing: border-box;
+  }
+  
+  /* Box Styling */
+  .login-box, .signup-box {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Logo */
+  .logo {
+    width: 350px;
+    margin-bottom: 20px;
+  }
+  
+  /* Input and Button Styling */
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group .input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .input-wrapper i {
+    margin-right: 10px;
+    color: #aaa;
+  }
+  
+  .input-wrapper input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 10px;
+  }
+  
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+  }
+  
+  /* Buttons */
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background-color: #333;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+  }
+  
+  
+  .github-btn {
+    background-color: #333;
+  }
+  
+  /* Additional Styling for Links and Dividers */
+  .divider {
+    margin: 20px 0;
+    color: #aaa;
+  }
+  
+  .links a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .form-group input[type="file"] {
+    border: none;
+    background: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  

@@ -1,4 +1,5 @@
 <div class="menu-item">
-  <i class={{icon}} class="menu-item"></i>
-  <span class="menu-label">{{ label }}</span>
+  <a [routerLink]="[route]" [queryParams]="queryParams" routerLinkActive="active-link" class="menu-item">
+    <i [class]="icon"></i> {{ label }}
+  </a>  
 </div>

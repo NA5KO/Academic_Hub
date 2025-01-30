@@ -1,0 +1,39 @@
+/* Styling for the topics section */
+.topics-container {
+  margin-top: 20px;
+  background-color: #ffcccc; /* Light red background color */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.topic-checkbox {
+  margin-right: 10px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
+  grid-gap: 5px; /* Add spacing between grid items */
+}
+
+
+
+/* Styling for the labels */
+label {
+  display: inline-block;
+  width: 150px; /* Adjust the width */
+  margin-bottom: 10px;
+}
+
+/* Styling for the update button */
+button.update-button {
+  background-color: #add8e6; /* Light blue background color */
+  border: none;
+  border-radius: 15px; /* Rounded corners */
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px; /* Space between the button and the form */
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
+}

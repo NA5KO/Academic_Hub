@@ -1,0 +1,28 @@
+.user-page {
+    display: flex;
+    min-height: 100vh; /* Assure que le conteneur principal utilise toute la hauteur */
+    overflow-y: visible; /* Pas de défilement local */
+  }
+  
+  .user-page app-left-menu {
+    width: 20%;
+    height: auto; /* Supprimer la contrainte de hauteur pour éviter un défilement local */
+  }
+  
+  .user-page app-right-menu {
+    width: 20%;
+    height: auto; /* Idem pour le menu de droite */
+  }
+  
+  .main-content {
+    flex: 1; /* Prend tout l'espace restant entre les menus */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: visible; /* Pas de défilement local */
+  }
+  
+  .main-content app-comments,
+  .main-content app-posts {
+    overflow-y: visible;
+  }
