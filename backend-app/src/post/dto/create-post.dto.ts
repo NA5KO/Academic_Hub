@@ -15,9 +15,9 @@ export class CreatePostDto {
   @IsEnum(PostType)
   type: PostType;
 
-  @IsNumber()  
+  @IsString()  
   communityId: string;
 
-  @IsNumber()  
+  @IsString()  
   authorId: string;
 }

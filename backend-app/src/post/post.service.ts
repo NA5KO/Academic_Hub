@@ -3,30 +3,67 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostRepository } from './post.repository';
 import { Post } from './post.model';
+import { UserRepository } from '../user/user.repository';
+import { CommunityRepository } from '../community/community.repository';
+import { User } from 'src/user/user.model';
+import { Community } from 'src/community/community.model';
 
 @Injectable()
 export class PostService {
-  constructor(private readonly postRepository: PostRepository) {}
+  constructor(
+    private readonly postRepository: PostRepository,
+    private readonly userRepository: UserRepository,
+    private readonly communityRepository: CommunityRepository,
+  ) {}
 
+  // Create a new post
   async create(createPostDto: CreatePostDto): Promise<Post> {
-    const newPost = this.postRepository.create(createPostDto);
+    const { title, content, tags, type, communityId, authorId } = createPostDto;
+
+    // Fetch community and author
+    const community = await this.communityRepository.findOne({ where: { id: communityId } });
+    const author = await this.userRepository.findOne({ where: { id: authorId } });
+
+    // Ensure community and author exist
+    if (!community || !author) {
+      throw new Error('Community or Author not found!');
+    }
+
+    // Create new post and associate it with community and author
+    const newPost = this.postRepository.create({
+      title,
+      content,
+      tags,
+      type,
+      community,
+      author,
+    });
+
+    // Save the post
     return this.postRepository.save(newPost);
   }
 
+  // Get all posts
   async findAll(): Promise<Post[]> {
     return this.postRepository.find();
   }
 
-  async findOne(id: number): Promise<Post | null> {
-    return this.postRepository.findOne({ where: { id: id.toString() }, relations: ['comments', 'community', 'author'] });
+  // Find one post by ID with relationships loaded
+  async findOne(id: string): Promise<Post | null> {
+    return this.postRepository.findOne({
+      where: { id },
+      relations: ['comments', 'community', 'author'],
+    });
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto): Promise<Post | null> {
+  // Update an existing post
+  async update(id: string, updatePostDto: UpdatePostDto): Promise<Post | null> {
     await this.postRepository.update(id, updatePostDto);
-    return this.findOne(id);
+    return this.findOne(id);  // Return the updated post
   }
 
-  async remove(id: number): Promise<void> {
+  // Delete a post by ID
+  async remove(id: string): Promise<void> {
     await this.postRepository.delete(id);
   }
 }

@@ -8,10 +8,13 @@ import { User } from 'src/user/user.model';
 import { Community } from 'src/community/community.model';
 import { DataSource } from 'typeorm';
 import { PostRepository } from './post.repository';
+import { UserModule } from 'src/user/user.module';
+import { CommentModule } from 'src/comment/comment.module';
+import { CommunityModule } from 'src/community/community.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, Comment, User, Community]),
+    TypeOrmModule.forFeature([Post, Comment, User, Community]),UserModule,CommentModule,CommunityModule
   ],
   controllers: [PostController],
   providers: [
@@ -22,6 +25,6 @@ import { PostRepository } from './post.repository';
       inject: [DataSource],
     },
   ],
-  exports: [PostService, TypeOrmModule, PostRepository],
+  exports: [PostService, PostRepository],
 })
 export class PostModule {}
