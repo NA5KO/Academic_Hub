@@ -52,8 +52,6 @@ export class AuthService {
             email,
             username: name,
             photoUrl,
-            googleId: provider === 'google' ? oauthId : undefined,
-            githubId: provider === 'github' ? oauthId : undefined,
         });
     }
 
@@ -72,30 +70,6 @@ export class AuthService {
         return null;
     }
 }
-
-
-
-
-  // Exchange Google Auth code for a token
-  // async exchangeGoogleAuthCodeForToken(code: string): Promise<string> {
-  //   console.log('Exchanging Google auth code for token:', code);
-  //   const googleApiUrl = 'https://oauth2.googleapis.com/token';
-  //   const params = new URLSearchParams();
-  //   params.append('code', code);
-  //   params.append('client_id', '491160602747-ovdftgsvteebotmki95c6r068mfk4op9.apps.googleusercontent.com'); // Use env variable
-  //   params.append('client_secret', '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'); // Use env variable
-  //   params.append('redirect_uri', 'http://localhost:3000/auth/google/callback'); // Use env variable
-  //   params.append('grant_type', 'authorization_code');
-    
-  //   try {
-  //     const response = await firstValueFrom(this.http.post(googleApiUrl, params));
-  //     console.log('Google API response:', response.data);
-  //     return response.data.access_token;
-  //   } catch (error) {
-  //     console.error('Error from Google API:', error.response?.data || error.message);
-  //     throw error;  // Log the error details
-  //   }
-  // }
 
   // Handle user signup
   async signup(signupDto: SignupDto ): Promise<User> {

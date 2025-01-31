@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../../../services/toaster.service';
+
 
 declare const google: any; // Google Identity Services global object
 
@@ -29,7 +31,12 @@ export class SignupComponent implements AfterViewInit {
     photo: '',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toasterService: ToasterService
+
+  ) {}
 
   ngAfterViewInit(): void {
     this.loadGoogleSignIn();
@@ -63,24 +70,25 @@ export class SignupComponent implements AfterViewInit {
   
     this.authService.signUpWithGoogle({ oauthToken: response.credential }).subscribe({
       next: (res: { token: string }) => {
-        console.log('User signed up:', res);
+        this.toasterService.showSuccess('Welcome to Academic Hub !');
         this.authService.storeToken(res.token);
         this.router.navigate(['/']);
       },
-      error: (error: any) => console.error('Sign-up failed', error)
+      error: (error: any) => this.toasterService.showError('Sign-up failed. Please try again.'),
     });
   }
   
 
   onSubmit() {
     this.authService.signUp(this.formData).subscribe({
-      next: (response: any) => {
-        console.log('Sign-up successful', response);
-        this.router.navigate(['/']);
-      },
-      error: (error: any) => {
-        console.error('Sign-up error', error);
-      }
-    });
+        next: (response: any) => {
+          console.log('Sign-up successful', response);
+          this.router.navigate(['/']);
+          this.toasterService.showSuccess('Sign-up successful!');
+        },
+        error: (error: any) => {
+          this.toasterService.showError('Sign-up failed. Please try again.');
+        }
+      });
   }
 }

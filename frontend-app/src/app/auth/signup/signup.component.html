@@ -3,15 +3,18 @@
     <!-- Logo Section -->
     <img src="../../../assets/logo-without-bg.png" alt="Logo" class="logo" />
 
-    <!-- Social Sign-Up Buttons -->
-    <div id="googleLoginBtn"></div> 
-    
+    <!-- Google Sign-Up Button -->
+    <div id="googleLoginBtn"></div>
+
     <div class="divider">or sign up with your details</div>
 
     <!-- Sign-Up Form -->
     <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
       <!-- Username Field -->
-      <div class="form-group" [class.error]="username.invalid && username.touched">
+      <div
+        class="form-group"
+        [class.error]="username.invalid && username.touched"
+      >
         <label for="username">Username*</label>
         <div class="input-wrapper">
           <i class="fas fa-user"></i>
@@ -28,9 +31,15 @@
           />
         </div>
         <div *ngIf="username.invalid && username.touched" class="error-message">
-          <span *ngIf="username.errors?.['required']">Username is required.</span>
-          <span *ngIf="username.errors?.['minlength']">Username must be at least 3 characters.</span>
-          <span *ngIf="username.errors?.['maxlength']">Username cannot exceed 20 characters.</span>
+          <span *ngIf="username.errors?.['required']"
+            >Username is required.</span
+          >
+          <span *ngIf="username.errors?.['minlength']"
+            >Username must be at least 3 characters.</span
+          >
+          <span *ngIf="username.errors?.['maxlength']"
+            >Username cannot exceed 20 characters.</span
+          >
         </div>
       </div>
 
@@ -51,12 +60,17 @@
         </div>
         <div *ngIf="email.invalid && email.touched" class="error-message">
           <span *ngIf="email.errors?.['required']">Email is required.</span>
-          <span *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
+          <span *ngIf="email.errors?.['email']"
+            >Please enter a valid email address.</span
+          >
         </div>
       </div>
 
       <!-- Password Field -->
-      <div class="form-group" [class.error]="password.invalid && password.touched">
+      <div
+        class="form-group"
+        [class.error]="password.invalid && password.touched"
+      >
         <label for="password">Password*</label>
         <div class="input-wrapper">
           <i class="fas fa-lock"></i>
@@ -68,17 +82,32 @@
             minlength="6"
             [(ngModel)]="formData.password"
             #password="ngModel"
+            appPasswordStrength
             placeholder="Enter your password"
           />
         </div>
         <div *ngIf="password.invalid && password.touched" class="error-message">
-          <span *ngIf="password.errors?.['required']">Password is required.</span>
-          <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</span>
+          <span *ngIf="password.errors?.['required']"
+            >Password is required.</span
+          >
+          <span *ngIf="password.errors?.['minlength']"
+            >Password must be at least 6 characters.</span
+          >
+          <span *ngIf="password.errors?.['passwordStrength']">
+            Password must contain at least one digit, one uppercase letter, one
+            lowercase letter, and one special character.
+          </span>
         </div>
       </div>
 
       <!-- Confirm Password Field -->
-      <div class="form-group" [class.error]="confirmPassword.touched && (formData.confirmPassword !== formData.password)">
+      <div
+        class="form-group"
+        [class.error]="
+          confirmPassword.touched &&
+          formData.confirmPassword !== formData.password
+        "
+      >
         <label for="confirmPassword">Confirm Password*</label>
         <div class="input-wrapper">
           <i class="fas fa-lock"></i>
@@ -92,7 +121,13 @@
             placeholder="Re-enter your password"
           />
         </div>
-        <div *ngIf="confirmPassword.touched && (formData.confirmPassword !== formData.password)" class="error-message">
+        <div
+          *ngIf="
+            confirmPassword.touched &&
+            formData.confirmPassword !== formData.password
+          "
+          class="error-message"
+        >
           <span>Passwords must match.</span>
         </div>
       </div>

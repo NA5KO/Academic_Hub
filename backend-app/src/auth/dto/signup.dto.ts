@@ -1,4 +1,5 @@
-import { IsString, IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsOptional, Validate } from 'class-validator';
+import { PasswordStrengthValidator } from '../validators/password-strength.validator';
 
 export class SignupDto {
   @IsEmail()
@@ -7,6 +8,7 @@ export class SignupDto {
 
   @IsString()
   @IsNotEmpty()
+  @Validate(PasswordStrengthValidator)
   password: string;
 
   @IsString()

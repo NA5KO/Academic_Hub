@@ -16,11 +16,6 @@ export class User extends BaseEntity {
   @Column({ nullable: true, select: true }) 
   password: string;
 
-  @Column({ nullable: true })
-  googleId?: string;
-
-  @Column({ nullable: true })
-  githubId?: string;
 
   @Column({ default: false })
   isActive: boolean;

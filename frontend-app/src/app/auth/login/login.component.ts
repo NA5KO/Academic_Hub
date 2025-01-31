@@ -38,10 +38,6 @@ export class LoginComponent implements AfterViewInit {
         auto_select: false,
       });
 
-      google.accounts.id.renderButton(
-        document.getElementById('googleLoginBtn'),
-        { theme: 'outline', size: 'large' }
-      );
     } else {
       console.error('Google API not loaded');
     }
