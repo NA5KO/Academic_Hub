@@ -1,24 +1,31 @@
-import { IsArray, IsString, IsNotEmpty, IsOptional, ArrayMinSize, IsNumber } from 'class-validator';
+// src/community/dto/create-community.dto.ts
+import { IsNotEmpty, IsString, IsArray, IsOptional, IsUrl, IsUUID } from 'class-validator';
 
 export class CreateCommunityDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1, { message: "At least one keyword is required" })
-  keywords: string[] = ["Computer Science"]; // Default value
+  @IsString({ each: true })
+  @IsOptional()
+  keywords?: string[];
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   description: string;
 
-  @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   banner: string;
 
-  @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   icon: string;
 
+  @IsNotEmpty()
+  @IsUUID()
+  creatorId: string;  // ID of the user who creates the community
+  
   followersCount: number;
 }

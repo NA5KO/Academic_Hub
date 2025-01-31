@@ -7,13 +7,20 @@ import { Post } from '../post/post.model';
 import { Community } from '../community/community.model';
 import { Notification } from 'src/notification/notification.model';
 import { Comment } from 'src/comment/comment.model';
+import { UserRepository } from './user.repository';
+import { UserController } from './user.controller';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Notification, Post, Comment, Community])
   ],
-  controllers: [],
-  providers: [UserService],
-  exports: [UserService, TypeOrmModule]
+  controllers: [UserController],
+  providers: [UserService,{
+        provide: UserRepository,
+        useFactory: (dataSource: DataSource) => new UserRepository(dataSource),
+        inject: [DataSource],
+      },],
+  exports: [UserService, UserRepository]
 })
 export class UserModule {}

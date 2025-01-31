@@ -1,58 +1,69 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { PostRepository } from './post.repository';
 import { Post } from './post.model';
+import { UserRepository } from '../user/user.repository';
+import { CommunityRepository } from '../community/community.repository';
+import { User } from 'src/user/user.model';
 import { Community } from 'src/community/community.model';
 
 @Injectable()
 export class PostService {
-
   constructor(
-    @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>,
-    
-    @InjectRepository(Community)
-    private readonly communityRepository: Repository<Community>,
+    private readonly postRepository: PostRepository,
+    private readonly userRepository: UserRepository,
+    private readonly communityRepository: CommunityRepository,
   ) {}
 
-  // Get all posts
-  async findAll() {
-    return await this.postRepository.find({
-      relations: ['author', 'community'],
-      order: { createdAt: 'DESC' },
-    });
-  }
+  // Create a new post
+  async create(createPostDto: CreatePostDto): Promise<Post> {
+    const { title, content, tags, type, communityId, authorId } = createPostDto;
 
-  getPostsByCommunity(communityName: string) {
-    return this.postRepository.find({
-      where: { community: { name: communityName } }, 
-      relations: ['community'],
-    });
-  }
+    // Fetch community and author
+    const community = await this.communityRepository.findOne({ where: { id: communityId } });
+    const author = await this.userRepository.findOne({ where: { id: authorId } });
 
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
-  }
-
-  async findOne(id: string) {
-    const post = await this.postRepository.findOne({
-      where: { id },
-      relations: ['author', 'community'],
-    });
-    if (!post) {
-      throw new NotFoundException(`Post with ID '${id}' not found`);
+    // Ensure community and author exist
+    if (!community || !author) {
+      throw new Error('Community or Author not found!');
     }
-    return post;
+
+    // Create new post and associate it with community and author
+    const newPost = this.postRepository.create({
+      title,
+      content,
+      tags,
+      type,
+      community,
+      author,
+    });
+
+    // Save the post
+    return this.postRepository.save(newPost);
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  // Get all posts
+  async findAll(): Promise<Post[]> {
+    return this.postRepository.find();
   }
 
-  async remove(id: string) {
-    const post = await this.findOne(id);
-    return await this.postRepository.remove(post);
+  // Find one post by ID with relationships loaded
+  async findOne(id: string): Promise<Post | null> {
+    return this.postRepository.findOne({
+      where: { id },
+      relations: ['comments', 'community', 'author'],
+    });
+  }
+
+  // Update an existing post
+  async update(id: string, updatePostDto: UpdatePostDto): Promise<Post | null> {
+    await this.postRepository.update(id, updatePostDto);
+    return this.findOne(id);  // Return the updated post
+  }
+
+  // Delete a post by ID
+  async remove(id: string): Promise<void> {
+    await this.postRepository.delete(id);
   }
 }

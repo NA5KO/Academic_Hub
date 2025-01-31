@@ -70,6 +70,9 @@ export class User extends BaseEntity {
   @ManyToMany(() => Community, (community) => community.followers, { cascade: true })
   @JoinTable()
   communities: Community[];
+
+  @OneToMany(() => Community, (community) => community.creator)
+  createdCommunities: Community[];
 }
 
 
