@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommunitiesService } from 'src/services/communities.service';
-import { PostsService } from 'src/services/posts.service';
 
 
 @Component({
@@ -18,8 +17,7 @@ export class CommunityDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private communitiesService: CommunitiesService,
-    private postsService: PostsService
+    private communitiesService: CommunitiesService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +28,7 @@ export class CommunityDetailsComponent implements OnInit {
 
   // Fetch posts related to the community
   getCommunityPosts(): void {
-    this.postsService.getPostsByCommunity(this.communityName).subscribe(
+    this.communitiesService.getPostsByCommunity(this.communityName).subscribe(
       (response) => {
         this.posts = response;  // Store the posts in the posts array
         this.isLoading = false;  // Set loading to false once posts are loaded
