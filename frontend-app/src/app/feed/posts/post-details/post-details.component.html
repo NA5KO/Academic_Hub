@@ -1,14 +1,14 @@
 <app-post-item [post]="post"></app-post-item>
 <div class="comments-section">
-  <h3>Comments ({{ comments.length }})</h3>
+  <h3>Comments ({{ post?.comments?.length }})</h3>
   <div class="comment-input">
     <textarea
-      [(ngModel)]="newComment"
+      [(ngModel)]="commentText"
       placeholder="Write your comment..."
     ></textarea>
     <button (click)="addComment()">Submit</button>
   </div>
-  <div class="comment" *ngFor="let comment of comments">
+  <div class="comment" *ngFor="let comment of post?.comments">
     <img [src]="comment.image" alt="User avatar" />
     <div class="comment-content">
       <div>

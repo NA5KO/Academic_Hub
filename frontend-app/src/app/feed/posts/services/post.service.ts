@@ -6,27 +6,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PostService {
   
-  private baseUrl = 'http://localhost:3000/posts';
+  private baseUrl = 'http://localhost:3000/post';
+  private post =
+    {
+      id: "",
+      title: "",
+      content: "",
+      tags: [],
+      type: "",
+      communityId: "",
+      authorId: ""
+    };
   private allPosts = [
     {
-      id: 1,
-      image: '../../../../assets/nourhen.jpg',
-      community: 'Figma',
-      author: 'Nourhen Khechine',
-      time: '3 minutes ago',
-      content: 'How Do I Solve This Problem on Figma?',
-      tags: ['#Figma'],
-      comments: 3,
-      upvotes: 48,
-      downvotes: 0,
-      isSaved: false,
-      category: 'news-source'
-    }];
-
+      id: "",
+      title: "",
+      content: "",
+      tags: [],
+      type: "",
+      communityId: "",
+      authorId: ""
+    }
+  ];
   constructor(private http: HttpClient) {}
 
-
-  
   upvotePost(postId: number) {
     return this.http.put(`${this.baseUrl}/${postId}/upvote`, {});
   }
@@ -39,14 +42,15 @@ export class PostService {
     return this.http.put(`${this.baseUrl}/${postId}/save`, { userId });
   }
 
-  commentPost(postId: number, userId: number, text: string) {
-    return this.http.put(`${this.baseUrl}/${postId}/comment`, { userId, text });
+  commentPost(postId: string, userId: string, text: string) {
+    return this.http.put(`${this.baseUrl}/comment/${postId}`, { userId, text });
   }
 
-  getPosts(filter: string): any[] {
-    if (!filter || filter === 'discover') {
-      return this.allPosts; // Return all posts for 'discover'
-    }
-    return this.allPosts.filter((post) => post.category === filter);
+  getPostById(postId: string) {
+    return this.http.get(`${this.baseUrl}/${postId}`);
+  }
+
+  getPosts(filter: string = '') {
+    return this.http.get(`${this.baseUrl}?filter=${filter}`);
   }
 }

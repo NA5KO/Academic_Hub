@@ -9,9 +9,7 @@ import { PostService } from '../services/post.service';
 })
 export class PostListComponent implements OnInit {
   @Input() posts: any[] = [];
-  filtered_posts: any[] = []; // Stores the filtered posts
   filter: string = ''; 
-  userId = 1; // replace with dynamic value
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +26,13 @@ export class PostListComponent implements OnInit {
 
   // Fetch posts based on the filter
   fetchFilteredPosts(): void {
-    this.filtered_posts = this.postService.getPosts(this.filter); // Use PostService
+    this.postService.getPosts('').subscribe(
+      (data: any) => {
+        this.posts = data;
+      },
+      (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    );
   }
 }
