@@ -2,10 +2,10 @@
   <div class="post-header">
     <img [src]="post.author.photoUrl || '../../../../assets/default-avatar.png'" alt="User avatar" />
     <div>
-      <span class="username" (click)="goToUserProfile(post.author)">
+      <span class="username" (click)="goToUserProfile(post.author.username)">
         {{ post.author.username }}
       </span>
-      <span (click)="goToCommunity(post.community)">
+      <span (click)="goToCommunity(post.community.name)">
         posted in <b>{{ post.community.name }}</b>
       </span>
       <span class="time">{{ post.createdAt | date: 'short' }}</span>
@@ -21,10 +21,14 @@
   </div>
 
   <div class="actions">
-    <button>↑ {{ post.upvotes }}</button>
-    <button>↓ {{ post.downvotes }}</button>
-    <button>
-      {{ post.isSaved ? 'Unsave' : 'Save' }}
+    <button (click)="handleVote('upvote', !isUpvoted)">
+      ↑ {{ post.upvotes }}
+    </button>
+    <button (click)="handleVote('downvote', !isDownvoted)">
+      ↓ {{ post.downvotes }}
+    </button>
+    <button (click)="handleSavePost(!isSaved)">
+      {{ post.saves }} | {{ isSaved ? 'Unsave' : 'Save' }}
     </button>
     <span>{{ post.comments.length }} comments</span>
   </div>

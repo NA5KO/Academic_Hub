@@ -19,7 +19,7 @@ export class PostService {
     return this.http.put(`${this.baseUrl}/post/${postId}/downvote`, {});
   }
 
-  savePost(postId: number, userId: number) {
+  savePost(postId: number, userId: string) {
     return this.http.put(`${this.baseUrl}/post/${postId}/save`, { userId });
   }
 

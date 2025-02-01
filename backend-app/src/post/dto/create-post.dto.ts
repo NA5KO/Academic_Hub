@@ -15,6 +15,18 @@ export class CreatePostDto {
   @IsEnum(PostType)
   type: PostType;
 
+  @IsNumber()
+  @IsOptional()
+  upvotes: number = 0;
+
+  @IsNumber()
+  @IsOptional()
+  downvotes: number = 0;
+
+  @IsNumber()
+  @IsOptional()
+  saves: number = 0;
+
   @IsString()  
   communityId: string;
 

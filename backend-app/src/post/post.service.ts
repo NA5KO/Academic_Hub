@@ -34,7 +34,7 @@ export class PostService {
       tags,
       type,
       community,
-      author,
+      author
     });
 
     // Save the post
@@ -52,6 +52,37 @@ export class PostService {
       where: { id },
       relations: ['comments', 'community', 'author'],
     });
+  }
+
+  async upvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.upvotes += 1;
+    return this.postRepository.save(post);
+  }
+
+  async downvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.downvotes += 1;
+    return this.postRepository.save(post);
+  }
+
+  async save(postId: string, userId: string) {
+    const post = await this.postRepository.findOne(
+      { where: { id: postId },
+      // relations: ['savedBy'] 
+    });
+    if (!post) throw new Error('Post not found');
+    post.saves += 1;
+    return this.postRepository.save(post);
+
+    // // Ensure the post is not already saved
+    // if (!post.savedBy.includes(userId)) {
+    //   post.savedBy.push(userId);
+    //   await this.postRepository.save(post);
+    // }
+
   }
 
   // Update an existing post
