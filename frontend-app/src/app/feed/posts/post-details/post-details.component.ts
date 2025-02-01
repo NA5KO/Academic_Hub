@@ -9,7 +9,7 @@ import { PostService } from '../services/post.service';
 })
 export class PostDetailsComponent implements OnInit {
   post: any;
-  userId: string = '';
+  userId: string = ''; // logged in user id
   commentText: string = '';
 
   constructor(

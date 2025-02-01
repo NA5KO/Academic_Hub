@@ -1,25 +1,31 @@
 <div class="post-item" (click)="goToPost(post.id)">
   <div class="post-header">
-    <img src={{post.image}} alt="User avatar" />
+    <img [src]="post.author.photoUrl || '../../../../assets/default-avatar.png'" alt="User avatar" />
     <div>
-      <span class="username" (click)="goToUserProfile(post.author)">{{ post.author }}</span>
-      <span (click)="goToCommunity(post.community)"> posted on <b>{{ post.community }}</b></span>
-      <span class="time">{{ post.time }}</span>
+      <span class="username" (click)="goToUserProfile(post.author)">
+        {{ post.author.username }}
+      </span>
+      <span (click)="goToCommunity(post.community)">
+        posted in <b>{{ post.community.name }}</b>
+      </span>
+      <span class="time">{{ post.createdAt | date: 'short' }}</span>
     </div>
   </div>
+
   <div class="post-content">
+    <h3>{{ post.title }}</h3>
     <p>{{ post.content }}</p>
     <div class="tags">
       <span *ngFor="let tag of post.tags">{{ tag }}</span>
     </div>
   </div>
+
   <div class="actions">
-    <!-- <button (click)="onUpvote(post)">👍 {{ post.upvotes }}</button> -->
     <button>↑ {{ post.upvotes }}</button>
     <button>↓ {{ post.downvotes }}</button>
     <button>
       {{ post.isSaved ? 'Unsave' : 'Save' }}
     </button>
-    <span>{{ post.comments }} comments</span>
+    <span>{{ post.comments.length }} comments</span>
   </div>
 </div>
