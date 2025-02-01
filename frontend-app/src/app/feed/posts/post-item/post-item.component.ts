@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-post-item',
@@ -9,10 +10,8 @@ import { Router } from '@angular/router';
 export class PostItemComponent {
   @Input() post: any;
 
-  // constructor(private postService: PostService, private router: Router) {}
-  constructor(private router: Router) {}
+  constructor(private postService: PostService, private router: Router) {}
 
-/*
   onUpvote(post: any) {
     this.postService.upvotePost(post.id).subscribe(() => {
       post.upvotes++;
@@ -25,12 +24,12 @@ export class PostItemComponent {
     });
   }
 
-  onSave(post: any) {
-    this.postService.savePost(post.id, this.userId).subscribe(() => {
-      post.isSaved = !post.isSaved;
-    });
-  }
-}*/
+  // onSave(post: any) {
+  //   this.postService.savePost(post.id, this.userId).subscribe(() => {
+  //     post.isSaved = !post.isSaved;
+  //   });
+  // }
+
   goToPost(postId: number) {
     this.router.navigate(['/post', postId]);
   }

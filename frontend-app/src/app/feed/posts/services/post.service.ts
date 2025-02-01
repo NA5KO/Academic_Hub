@@ -21,37 +21,12 @@ export class PostService {
       downvotes: 0,
       isSaved: false,
       category: 'news-source'
-    },
-    {
-      id: 2,
-      image: '../../../../assets/amine.jpg',
-      community: 'K8s',
-      author: 'Amen Dhouibi',
-      time: '3 minutes ago',
-      content: 'Read this article about K8s!!!',
-      tags: ['#Kubernetes'],
-      comments: 11,
-      upvotes: 23,
-      downvotes: 1,
-      isSaved: false,
-      category: 'discover'
-    },
-    { id: 3, 
-      image: '../../../../assets/amine.jpg',
-      community: 'WD',
-      author: 'Amen Dhouibi',
-      time: '3 minutes ago',
-      content: 'What is a REST API?',
-      tags: ['#Questions'],
-      comments: 11,
-      upvotes: 23,
-      downvotes: 1,
-      isSaved: false,
-      category: 'questions' },
-  ];
+    }];
 
   constructor(private http: HttpClient) {}
 
+
+  
   upvotePost(postId: number) {
     return this.http.put(`${this.baseUrl}/${postId}/upvote`, {});
   }
