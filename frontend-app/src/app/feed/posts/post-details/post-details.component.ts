@@ -40,9 +40,20 @@ export class PostDetailsComponent implements OnInit {
 
   addComment(): void {
     if (!this.commentText.trim()) return;
-    this.postService.commentPost(this.post.id, this.userId, this.commentText).subscribe(
+  
+    const createCommentDto = {
+      content: this.commentText,
+      postId: this.post.id,
+      authorId: this.userId,
+    };
+  
+    this.postService.commentPost(this.post.id, this.userId, createCommentDto).subscribe(
       (response) => {
-        this.post.comments.push(response);
+        if (this.post.comments) {
+          this.post.comments.push(response);
+        } else {
+          this.post.comments = [response];
+        }
         this.commentText = '';
       },
       (error) => {
@@ -50,4 +61,5 @@ export class PostDetailsComponent implements OnInit {
       }
     );
   }
+  
 }

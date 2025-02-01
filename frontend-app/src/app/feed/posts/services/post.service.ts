@@ -1,60 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CreateCommentDto } from '../../../../../../backend-app/src/comment/dto/create-comment.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
   
-  private baseUrl = 'http://localhost:3000/post';
-  private post =
-    {
-      id: "",
-      title: "",
-      content: "",
-      tags: [],
-      type: "",
-      communityId: "",
-      authorId: ""
-    };
-  private allPosts = [
-    {
-      id: "",
-      title: "",
-      content: "",
-      tags: [],
-      type: "",
-      communityId: "",
-      authorId: ""
-    }
-  ];
+  private baseUrl = 'http://localhost:3000';
+
   constructor(private http: HttpClient) {}
 
   upvotePost(postId: number) {
-    return this.http.put(`${this.baseUrl}/${postId}/upvote`, {});
+    return this.http.put(`${this.baseUrl}/post/${postId}/upvote`, {});
   }
 
   downvotePost(postId: number) {
-    return this.http.put(`${this.baseUrl}/${postId}/downvote`, {});
+    return this.http.put(`${this.baseUrl}/post/${postId}/downvote`, {});
   }
 
   savePost(postId: number, userId: number) {
-    return this.http.put(`${this.baseUrl}/${postId}/save`, { userId });
+    return this.http.put(`${this.baseUrl}/post/${postId}/save`, { userId });
   }
 
-  commentPost(postId: string, userId: string, text: string) {
-    return this.http.put(`${this.baseUrl}/comment/${postId}`, { userId, text });
+  commentPost(postId: string, authorId: string, createCommentDto: CreateCommentDto) {
+    return this.http.post(`${this.baseUrl}/comment`, {
+      ...createCommentDto,
+      postId: postId,
+      authorId: authorId,
+    });
   }
 
   getPostById(postId: string) {
-    return this.http.get(`${this.baseUrl}/${postId}`);
+    return this.http.get(`${this.baseUrl}/post/${postId}`);
   }
 
   getPosts(filter: string = '') {
-    return this.http.get(`${this.baseUrl}?filter=${filter}`);
+    return this.http.get(`${this.baseUrl}/post?filter=${filter}`);
   }
 
   getAllPosts(){
-    return this.http.get(`${this.baseUrl}`);
+    return this.http.get(`${this.baseUrl}/post`);
   }
 }
