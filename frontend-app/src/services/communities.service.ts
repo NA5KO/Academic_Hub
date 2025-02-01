@@ -21,6 +21,6 @@ export class CommunitiesService {
 
   createCommunity(formData: any): Observable<any> {
     console.log(formData)
-    return this.http.post(`${this.apiUrl}/community/create`, formData);
+    return this.http.post(`${this.apiUrl}/community`, formData);
   }
 }

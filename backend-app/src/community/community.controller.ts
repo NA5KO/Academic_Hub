@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
@@ -7,13 +7,18 @@ import { PostService } from '../post/post.service';
 
 @Controller('community')
 export class CommunityController {
-  constructor(private readonly communityService: CommunityService, private readonly postService: PostService) {}
+  constructor(
+    private readonly communityService: CommunityService,
+    // private readonly postService: PostService
+  ) {}
 
-  @Post('/create')
+  // @UseGuards(JwtAuthGuard)
+  @Post()
   create(@Body() createCommunityDto: CreateCommunityDto) {
     return this.communityService.create(createCommunityDto);
   }
 
+  // not tested yet
   @Post(':communityId/follow/:userId')
   async followCommunity(
     @Param('communityId') communityId: string,
@@ -33,14 +38,19 @@ export class CommunityController {
   }
 
   @Get(':name')
-  findOne(@Param('name') name: string) {
-    return this.communityService.findOne(name);
+  findOneByName(@Param('name') name: string) {
+    return this.communityService.findOneByName(name);
   }
 
-  @Get(':name/posts')
-  getPostsForCommunity(@Param('name') name: string) {
-    return this.postService.getPostsByCommunity(name); 
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.communityService.findOne(+id);
   }
+
+  // @Get(':name/posts')
+  // getPostsForCommunity(@Param('name') name: string) {
+  //   return this.postService.getPostsByCommunity(name); 
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCommunityDto: UpdateCommunityDto) {

@@ -1,12 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostRepository } from './post.repository';
 import { Post } from './post.model';
 import { UserRepository } from '../user/user.repository';
 import { CommunityRepository } from '../community/community.repository';
-import { User } from 'src/user/user.model';
-import { Community } from 'src/community/community.model';
 
 @Injectable()
 export class PostService {
