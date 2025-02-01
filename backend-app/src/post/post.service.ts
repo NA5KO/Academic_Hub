@@ -41,9 +41,9 @@ export class PostService {
     return this.postRepository.save(newPost);
   }
 
-  // Get all posts
-  async findAll(): Promise<Post[]> {
-    return this.postRepository.find();
+  // Get all posts with their relations (comments, community, author)
+  async findAll() {
+    return this.postRepository.findWithRelations(); // Use the new method to fetch posts with relations
   }
 
   // Find one post by ID with relationships loaded

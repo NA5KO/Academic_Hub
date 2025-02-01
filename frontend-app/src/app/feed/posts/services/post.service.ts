@@ -53,4 +53,8 @@ export class PostService {
   getPosts(filter: string = '') {
     return this.http.get(`${this.baseUrl}?filter=${filter}`);
   }
+
+  getAllPosts(){
+    return this.http.get(`${this.baseUrl}`);
+  }
 }
