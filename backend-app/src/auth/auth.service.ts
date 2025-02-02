@@ -6,7 +6,6 @@ import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/user.model';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import axios from 'axios';
 
@@ -88,6 +87,7 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
     const accessToken = this.generateJwt(payload);
+    console.log('Access Token:', accessToken);
 
     return { accessToken };
   }
