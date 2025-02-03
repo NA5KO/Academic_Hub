@@ -5,6 +5,7 @@ import { PostRepository } from './post.repository';
 import { Post } from './post.model';
 import { UserRepository } from '../user/user.repository';
 import { CommunityRepository } from '../community/community.repository';
+import { PostType } from 'src/enums/post-type.enum';
 
 @Injectable()
 export class PostService {
@@ -83,6 +84,13 @@ export class PostService {
     //   await this.postRepository.save(post);
     // }
 
+  }
+
+  async getPostsByType(postType: PostType): Promise<Post[]> {
+    return this.postRepository.find({
+      where: { type: postType },
+      relations: ['comments', 'community', 'author'],
+    });
   }
 
   // Update an existing post

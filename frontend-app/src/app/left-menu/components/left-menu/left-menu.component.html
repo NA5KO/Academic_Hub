@@ -1,8 +1,11 @@
 <div class="left-menu">
     <!-- Top Menu Items -->
-    <div *ngFor="let menu of menuItems">
-      <app-menu-item [icon]="menu.icon" [label]="menu.label" [route]="menu.route" [queryParams]="menu.queryParams"></app-menu-item>
+    <div *ngFor="let item of menuItems">
+      <a (click)="onMenuItemClick(item.queryParams.filter)">
+        <i [class]="item.icon"></i> {{ item.label }}
+      </a>
     </div>
+    
   
     <!-- Popular Tags -->
     <h3>Popular tags</h3>

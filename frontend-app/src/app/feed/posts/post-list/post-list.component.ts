@@ -31,8 +31,8 @@ export class PostListComponent implements OnInit {
       // If there's a filter, use the filtered fetch method
       this.postService.getPosts(this.filter).subscribe(
         (data: any) => {
-          console.log(data);
           this.posts = data;  // Update posts with the filtered data
+          console.log(this.posts)
         },
         (error) => {
           console.error('Error fetching filtered posts:', error);

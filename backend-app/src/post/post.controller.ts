@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query, NotFoundException } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PostType } from 'src/enums/post-type.enum';
 
 @Controller('post')
 export class PostController {
@@ -12,10 +13,15 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
-  // all posts (discover)
+  // with filter
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  async getPostsByType(@Query('filter') filter: string) {
+    if (!Object.values(PostType).includes(filter as PostType)) {
+      return this.postService.findAll(); // if the filter is not valid it returns all posts (discover mode)
+    }
+
+    const postType = filter as PostType;
+    return await this.postService.getPostsByType(postType);
   }
 
   @Get(':id')
@@ -23,7 +29,7 @@ export class PostController {
     return this.postService.findOne(id);
   }
 
-// Upvote a post
+  // Upvote a post
   @Put(':id/upvote')
   upvote(@Param('id') id: string) {
     return this.postService.upvote(id);
