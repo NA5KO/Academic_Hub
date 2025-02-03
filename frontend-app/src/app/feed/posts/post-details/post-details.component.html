@@ -8,7 +8,7 @@
   <div class="comment" *ngFor="let comment of post?.comments">
     <div class="comment-content">
       <div>
-        <span class="username">Unknown</span>
+        <span class="username">{{ comment.authorUsername }}</span>
         <span class="time">{{ comment.createdAt | date:'short' }}</span>
       </div>
       <p class="text">{{ comment.content }}</p>
