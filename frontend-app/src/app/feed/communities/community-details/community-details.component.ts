@@ -6,7 +6,9 @@ import { CommunitiesService } from 'src/services/communities.service';
 @Component({
   selector: 'app-community-details',
   templateUrl: './community-details.component.html',
-  styleUrls: ['./community-details.component.css']
+  styleUrls: ['./community-details.component.css'],
+  standalone: false,
+
 })
 export class CommunityDetailsComponent implements OnInit {
 

@@ -1,30 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';  // Import the 'map' operator
+
+export interface Community {
+  id: string;
+  name: string;
+  // Add other properties if needed
+}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class PostService {
-  private apiUrl = 'https://your-backend-api.com/posts'; // URL taa lbackend api !
+export class PostCreateService {
+
+  private apiUrl = `http://localhost:3000/post`;  // Adjust API endpoint accordingly
 
   constructor(private http: HttpClient) {}
 
-  // Vérifier si l'utilisateur est authentifié
-  isAuthenticated(): boolean {
-    // lenna e logique taa lauthentification(verification de l'authentification)
-    const token = localStorage.getItem('authToken');
-    return !!token; // Renvoie true si un token existe
+  // Fetch communities from the backend API
+  fetchCommunities(): Observable<Community[]> {
+    return this.http.get<Community[]>('http://localhost:3000/community'); // Adjust URL if necessary
   }
 
-  // Envoyer une requête POST pour créer un post
-  createPost(postDto: any): Observable<any> {
-    return this.http.post(this.apiUrl, postDto).pipe(
+
+  // Retrieve the author ID from local storage (assuming JWT token structure)
+  getAuthorIdFromLocalStorage(): string {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token payload
+      return payload.sub || '';  // Use 'sub' as the user ID field from the JWT payload
+    }
+    return '';
+  }
+
+  // Create the post by sending the post data to the backend
+  createPost(postData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',  // Ensure correct content type for the post
+    });
+
+    return this.http.post<any>(this.apiUrl, postData, { headers }).pipe(
       catchError((error) => {
         console.error('Error creating post:', error);
-        return throwError(() => error);
+        return throwError(error);  // Pass the error for further handling
       })
     );
   }
-}
+  }
+

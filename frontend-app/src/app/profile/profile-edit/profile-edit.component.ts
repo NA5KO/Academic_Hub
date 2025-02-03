@@ -6,6 +6,7 @@ import { ProfileService } from '../services/post-edit.service';
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css'],
+  standalone: false,
 })
 export class ProfileEditComponent {
   profile = {

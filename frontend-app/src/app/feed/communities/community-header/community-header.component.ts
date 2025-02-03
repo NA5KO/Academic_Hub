@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-community-header',
   templateUrl: './community-header.component.html',
-  styleUrls: ['./community-header.component.css']
+  styleUrls: ['./community-header.component.css'],
+  standalone: false,
+
 })
 export class CommunityHeaderComponent implements OnInit {
 

@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-community',
   templateUrl: './create-community.component.html',
-  styleUrls: ['./create-community.component.css']
+  styleUrls: ['./create-community.component.css'],
+  standalone: false,
+
 })
 export class CreateCommunityComponent {
   

@@ -3,7 +3,8 @@ import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@an
 
 @Directive({
   selector: '[appPasswordStrength]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: PasswordStrengthDirective, multi: true }]
+  providers: [{ provide: NG_VALIDATORS, useExisting: PasswordStrengthDirective, multi: true }],
+  standalone: false,
 })
 export class PasswordStrengthDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {

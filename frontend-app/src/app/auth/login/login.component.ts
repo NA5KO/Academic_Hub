@@ -7,7 +7,8 @@ declare const google: any; // Google Identity Services global object
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: false,
 })
 export class LoginComponent implements AfterViewInit {
   email: string = '';
@@ -66,6 +67,9 @@ export class LoginComponent implements AfterViewInit {
     this.authService.loginWithEmail(loginData).subscribe({
       next: (response: any) => {
         console.log('Login successful', response);
+        const token = response.accessToken;
+        this.authService.storeToken(token);
+        console.log('Token stored:',this.authService.getToken());
         this.router.navigate(['/']);
       },
       error: (error: any) => {

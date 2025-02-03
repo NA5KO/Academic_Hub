@@ -5,7 +5,9 @@ import { PostService } from '../services/post.service';
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
-  styleUrls: ['./post-details.component.css']
+  styleUrls: ['./post-details.component.css'],
+  standalone: false,
+
 })
 export class PostDetailsComponent implements OnInit {
   post: any;

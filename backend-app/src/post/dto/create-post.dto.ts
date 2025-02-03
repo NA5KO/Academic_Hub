@@ -27,9 +27,13 @@ export class CreatePostDto {
   @IsOptional()
   saves: number = 0;
 
-  @IsString()  
+  @IsString()
   communityId: string;
 
-  @IsString()  
+  @IsString()
   authorId: string;
+
+  @IsOptional()
+  @IsString()  
+  attachment: string;  
 }

@@ -1,6 +1,7 @@
 <div class="container mt-5">
   <h2 class="text-center">Create a New Post</h2>
   <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+    
     <!-- Choose Community -->
     <div class="form-group mb-3">
       <label for="community" class="form-label">Choose Community</label>
@@ -12,10 +13,10 @@
         [(ngModel)]="post.community"
         #community="ngModel"
       >
-        <option value="" disabled selected>Select a community</option>
-        <option *ngFor="let community of communities" [value]="community">
-          {{ community }}
-        </option>
+      <option value="" disabled selected>Select a community</option>
+      <option *ngFor="let community of communities" [value]="community.id"> <!-- Bind to the ID -->
+        {{ community.name }}  <!-- Display the name of the community -->
+      </option>
       </select>
       <div *ngIf="community.invalid && community.touched" class="text-danger">
         <small>Community selection is required.</small>
@@ -61,6 +62,65 @@
         <small>Description is required.</small>
       </div>
     </div>
+
+    <!-- Type (PostType Enum) -->
+    <div class="form-group mb-3">
+      <label for="type" class="form-label">Post Type</label>
+      <select
+        id="type"
+        name="type"
+        class="form-control"
+        required
+        [(ngModel)]="post.type"
+        #type="ngModel"
+      >
+        <option value="" disabled selected>Select a type</option>
+        <option value="question">Question</option>
+        <option value="article">Article</option>
+        <option value="news source">News Source</option>
+      </select>
+      <div *ngIf="type.invalid && type.touched" class="text-danger">
+        <small>Post type selection is required.</small>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="form-group mb-3">
+      <label for="tags" class="form-label">Tags</label>
+      <div class="d-flex">
+        <input
+          type="text"
+          id="tagInput"
+          name="tagInput"
+          class="form-control"
+          [(ngModel)]="tagInput"
+          placeholder="Enter a tag"
+        />
+        <button
+          type="button"
+          class="btn btn-primary ml-2"
+          (click)="addTag()"
+          [disabled]="!tagInput.trim()"
+        >
+          Add Tag
+        </button>
+      </div>
+      <div class="mt-2">
+        <ul>
+          <li *ngFor="let tag of post.tags; let i = index">
+            {{ tag }}
+            <button
+              type="button"
+              class="btn btn-danger btn-sm ml-2"
+              (click)="removeTag(i)"
+            >
+              Remove
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
 
     <!-- Attach Document -->
     <div class="form-group mb-3">
