@@ -18,4 +18,13 @@ export class CommunitiesService {
   getCommunity(name: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/community/${name}`);
   }
+
+  createCommunity(formData: any): Observable<any> {
+    console.log(formData)
+    return this.http.post(`${this.apiUrl}/community`, formData);
+  }
+  
+  getPostsByCommunity(communityName: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/community/${communityName}/posts`);
+  }
 }

@@ -16,11 +16,6 @@ export class User extends BaseEntity {
   @Column({ nullable: true, select: true }) 
   password: string;
 
-  @Column({ nullable: true })
-  googleId?: string;
-
-  @Column({ nullable: true })
-  githubId?: string;
 
   @Column({ default: false })
   isActive: boolean;
@@ -61,7 +56,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.author)
   comments: Comment[];
 
   @OneToMany(() => Notification, (notification) => notification.user)
@@ -70,6 +65,9 @@ export class User extends BaseEntity {
   @ManyToMany(() => Community, (community) => community.followers, { cascade: true })
   @JoinTable()
   communities: Community[];
+
+  @OneToMany(() => Community, (community) => community.creator)
+  createdCommunities: Community[];
 }
 
 

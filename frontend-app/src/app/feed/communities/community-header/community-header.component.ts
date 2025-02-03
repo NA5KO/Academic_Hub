@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-community-header',
   templateUrl: './community-header.component.html',
-  styleUrls: ['./community-header.component.css']
+  styleUrls: ['./community-header.component.css'],
+  standalone: false,
+
 })
 export class CommunityHeaderComponent implements OnInit {
 
@@ -17,6 +19,8 @@ export class CommunityHeaderComponent implements OnInit {
     description: '',
     banner: '',
     icon: '',
+    followersCount: 0,
+    keywords: []
   };
 
   isAdmin: boolean = false;
@@ -28,8 +32,6 @@ export class CommunityHeaderComponent implements OnInit {
       this.communityService.getCommunity(communityName).subscribe((data) => {
         console.log(data);
         this.community = data;
-        this.community.banner= '../../../assets/background.jpeg';
-        this.community.icon='../../../assets/reddit.png';
       });
     }
     // this.isAdmin = this.authService.isAdmin();

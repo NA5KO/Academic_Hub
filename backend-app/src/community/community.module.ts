@@ -5,15 +5,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Community } from './community.model';
 import { User } from 'src/user/user.model';
 import { Post } from 'src/post/post.model';
-import { PostModule } from 'src/post/post.module';
+import { CommunityRepository } from './community.repository';
+import { UserModule } from 'src/user/user.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Community, User, Post]),
-    PostModule
+    TypeOrmModule.forFeature([Community, User, Post]),UserModule
   ],
   controllers: [CommunityController],
-  providers: [CommunityService],
-  exports: [CommunityService, TypeOrmModule]
+  providers: [CommunityService,
+    {
+          provide: CommunityRepository,
+          useFactory: (dataSource: DataSource) => new CommunityRepository(dataSource),
+          inject: [DataSource],
+        },
+  ],
+  exports: [CommunityService, CommunityRepository],
 })
 export class CommunityModule {}

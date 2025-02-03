@@ -13,6 +13,6 @@ export class Comment extends BaseEntity {
   post: Post;
 
   @ManyToOne(() => User, (user) => user.comments)
-  user: User;
+  author: User;
   
 }

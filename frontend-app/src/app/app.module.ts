@@ -4,28 +4,35 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LeftMenuModule } from './left-menu/left-menu.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RightMenuModule } from './right-menu/right-menu.module';
 import { HeaderComponent } from './header/header.component';
 import { PostsModule } from './feed/posts.module';
 import { ProfileModule } from './profile/profile.module';
 import { LoginComponent } from './auth/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
 import { RouterModule } from '@angular/router';
+import { PasswordStrengthDirective } from './auth/Directive/Password.Directive';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    PasswordStrengthDirective,
   ],
   imports: [
+    MatSnackBarModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
+    // FontAwesomeModule,
     RightMenuModule,
     PostsModule,
     ProfileModule,
@@ -33,7 +40,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     HttpClientModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
   ],
   providers: [
   ],

@@ -14,7 +14,7 @@ import { CommunityHeaderComponent } from './communities/community-header/communi
 
 @NgModule({
   declarations: [PostListComponent, PostItemComponent, PostDetailsComponent, TopCommunitiesComponent, CreateCommunityComponent, CommunityDetailsComponent, PostCreateComponent, CommunityHeaderComponent],
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,],
   exports: [PostListComponent]
 })
 export class PostsModule {}

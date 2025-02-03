@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-top-communities',
   templateUrl: './top-communities.component.html',
-  styleUrls: ['./top-communities.component.css']
+  styleUrls: ['./top-communities.component.css'],
+  standalone: false,
+
 })
 export class TopCommunitiesComponent implements OnInit {
   

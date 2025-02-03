@@ -1,26 +1,31 @@
-import { IsArray, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+// src/community/dto/create-community.dto.ts
+import { IsNotEmpty, IsString, IsArray, IsOptional, IsUrl, IsUUID } from 'class-validator';
 
 export class CreateCommunityDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
   @IsArray()
+  @IsString({ each: true })
   @IsOptional()
-  keywords: string[];
+  keywords?: string[];
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   description: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsUrl()
   banner: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsUrl()
   icon: string;
-  
+
   @IsNotEmpty()
+  @IsUUID()
+  creatorId: string;  // ID of the user who creates the community
+  
   followersCount: number;
 }

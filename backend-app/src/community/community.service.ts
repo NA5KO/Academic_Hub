@@ -1,20 +1,79 @@
+// src/community/community.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCommunityDto } from './dto/create-community.dto';
-import { UpdateCommunityDto } from './dto/update-community.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { GenericRepository } from 'src/common/repositories/GenericRepository';
 import { Community } from './community.model';
-import { Repository } from 'typeorm';
-import { User } from 'src/user/user.model';
+import { CreateCommunityDto } from './dto/create-community.dto';
+import { UpdateCommunityDto } from './dto/update-community.dto'; // Assuming this DTO exists
+import { UserRepository } from 'src/user/user.repository';  // Import the UserRepository
 
 @Injectable()
 export class CommunityService {
-
   constructor(
     @InjectRepository(Community)
-    private communityRepository: Repository<Community>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly communityRepository: GenericRepository<Community>,
+    private readonly userRepository: UserRepository,  // Inject UserRepository
   ) {}
+
+  // Create community
+  async create(createCommunityDto: CreateCommunityDto): Promise<Community> {
+    const { creatorId, ...communityData } = createCommunityDto;
+
+    // Fetch the creator user
+    const creator = await this.userRepository.findOne({ where: { id: creatorId } });
+    if (!creator) {
+      throw new Error('Creator not found');
+    }
+
+    // Create the new community and include creator from the DTO
+    const community = this.communityRepository.create({
+      ...communityData,
+      creator,  // Assign the fetched creator
+    });
+
+    return this.communityRepository.save(community);
+  }
+
+  // Get all communities
+  async findAll(): Promise<Community[]> {
+    return this.communityRepository.find();
+  }
+
+  // Get a single community by ID
+  async findOne(id: number): Promise<Community> {
+    const community = await this.communityRepository.findOne({ where: { id: id.toString() } });
+    if (!community) {
+      throw new Error('Community not found');
+    }
+    return community;
+  }
+
+  // Get a single community by name
+  async findOneByName(name: string): Promise<Community> {
+    const community = await this.communityRepository.findOne({ where: { name } });
+    if (!community) {
+      throw new Error('Community not found');
+    }
+    return community;
+  }
+
+  
+
+  // Update community
+  async update(id: number, updateCommunityDto: UpdateCommunityDto): Promise<Community> {
+    const community = await this.findOne(id);
+
+    // Update the community fields
+    Object.assign(community, updateCommunityDto);
+
+    return this.communityRepository.save(community);
+  }
+
+  // Delete community
+  async remove(id: number): Promise<void> {
+    const community = await this.findOne(id);
+    await this.communityRepository.remove(community);
+  }
 
   async getTopCommunities(): Promise<Community[]> {
     try {
@@ -29,8 +88,8 @@ export class CommunityService {
       throw new Error('Error fetching top communities: ' + error.message);
     }
   }
-  
 
+  // not tested yet
   async followCommunity(userId: string, communityId: string): Promise<Community> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     const community = await this.communityRepository.findOne({ where: { id: communityId } });
@@ -51,35 +110,5 @@ export class CommunityService {
     user.communities.push(community);
     await this.userRepository.save(user);
     return community;
-  }
-
-  async create(createCommunityDto: CreateCommunityDto): Promise<Community> {
-    const community = this.communityRepository.create(createCommunityDto);
-    return await this.communityRepository.save(community);
-  }
-
-  findAll() {
-    return this.communityRepository.find();
-  }
-
-  async findOne(communityName: string): Promise<Community> {
-    const community = await this.communityRepository.findOne({
-      where: { name: communityName },
-      relations: ['followers', 'posts'],
-    });
-
-    if (!community) {
-      throw new NotFoundException('Community not found');
-    }
-
-    return community;
-  }
-
-  update(id: number, updateCommunityDto: UpdateCommunityDto) {
-    return `This action updates a #${id} community`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} community`;
   }
 }

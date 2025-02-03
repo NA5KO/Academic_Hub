@@ -1,49 +1,67 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
-  styleUrls: ['./post-details.component.css']
+  styleUrls: ['./post-details.component.css'],
+  standalone: false,
+
 })
 export class PostDetailsComponent implements OnInit {
-  post: any = {
-    id: 1,
-    image: '../../../../assets/nourhen.jpg',
-    community: 'Figma',
-    author: 'Nourhen Khechine',
-    time: '3 minutes ago',
-    content: 'How Do I Solve This Problem on Figma?',
-    tags: ['#Figma'],
-    comments: 3,
-    upvotes: 48,
-    downvotes: 0,
-    isSaved: false,
-  };
-  comments: any[] = [
-    { image: '../../../../assets/amine.jpg', author: 'Amine Yahya', text: 'tayerrrrr', time: '30 Minutes ago' },
-    { image: '../../../../assets/inesb.jpg', author: 'Ines El Bour', text: '(y)', time: 'Just now' },
-  ];
-  newComment: string = '';
+  post: any;
+  userId: string = ''; // logged in user id
+  commentText: string = '';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private postService: PostService
+  ) {}
 
   ngOnInit(): void {
-    const postId = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(params => {
+      const postId = params.get('id');
+      if (postId) {
+        this.fetchPost(postId);
+      }
+    });
+  }
+
+  fetchPost(postId: string): void {
+    this.postService.getPostById(postId).subscribe(
+      (data) => {
+        console.log(data)
+        this.post = data;
+      },
+      (error) => {
+        console.error('Error fetching post:', error);
+      }
+    );
   }
 
   addComment(): void {
-    if (this.newComment.trim()) {
-      const newCommentObj = {
-        image: '../../../../assets/amine.jpg', 
-        author: 'Current User', // Replace with the logged-in user's name
-        text: this.newComment,
-        time: 'Just now',
-      };
-      this.comments.push(newCommentObj); 
-      this.newComment = '';
-    } else {
-      console.log('Comment is empty, cannot add.');
-    }
+    if (!this.commentText.trim()) return;
+  
+    const createCommentDto = {
+      content: this.commentText,
+      postId: this.post.id,
+      authorId: this.userId,
+    };
+  
+    this.postService.commentPost(this.post.id, this.userId, createCommentDto).subscribe(
+      (response) => {
+        if (this.post.comments) {
+          this.post.comments.push(response);
+        } else {
+          this.post.comments = [response];
+        }
+        this.commentText = '';
+      },
+      (error) => {
+        console.error('Error adding comment:', error);
+      }
+    );
   }
+  
 }

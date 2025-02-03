@@ -8,8 +8,14 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
+  // @UseGuards(AuthGuard) 
+  async create(
+    @Body() createCommentDto: CreateCommentDto,  // Get the entire body
+    // @Request() req: any,  // Access the authenticated user
+  ) {
+    // const userId = req.user.id;
+    const userId = "fe7dd07f-804f-4f7e-aea2-0de2a40d5aba";
+    return this.commentService.createComment(createCommentDto.postId, userId, createCommentDto);
   }
 
   @Get()
