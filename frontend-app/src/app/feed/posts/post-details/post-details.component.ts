@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { AuthService } from 'src/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-post-details',
