@@ -1,18 +1,19 @@
 <div class="left-menu">
-    <!-- Top Menu Items -->
-    <div *ngFor="let item of menuItems">
-      <a (click)="onMenuItemClick(item.queryParams.filter)">
-        <i [class]="item.icon"></i> {{ item.label }}
-      </a>
+  <!-- Top Menu Items -->
+  <div *ngFor="let item of menuItems">
+    <div class="menu-item" (click)="onMenuItemClick(item.queryParams.filter)">
+      <i [class]="item.icon"></i> <span>{{ item.label }}</span>
     </div>
-    
+  </div>
   
-    <!-- Popular Tags -->
-    <h3>Popular tags</h3>
-    <app-tag-list [tags]="popularTags"></app-tag-list>
-  
-    <!-- Favorite Communities -->
-    <h3>Favorite communities</h3>
-    <app-community-list [communities]="favoriteCommunities"></app-community-list>
+  <!-- Community Items -->
+  <div *ngFor="let menu of communityItem">
+    <div class="menu-item" (click)="onCommunityItemClick(menu.route)">
+      <i [class]="menu.icon"></i> <span>{{ menu.label }}</span>
+    </div>
+  </div>
+
+  <!-- Favorite Communities -->
+  <h3>My communities</h3>
+  <!-- fetch followed communities by the logged in user -->
 </div>
-  

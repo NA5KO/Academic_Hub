@@ -13,9 +13,12 @@ export class LeftMenuComponent implements OnInit {
     { icon: 'fa-regular fa-newspaper', label: 'News Source', route: '/post', queryParams: { filter: 'news source' } },
     { icon: 'fa-solid fa-magnifying-glass', label: 'Discover', route: '/post', queryParams: { filter: '' } },
     { icon: 'fa-solid fa-question', label: 'Questions', route: '/post', queryParams: { filter: 'question' } },
-    { icon: 'fa-solid fa-book', label: 'Articles', route: '/post', queryParams: { filter: 'article' } },
-    { icon: 'fa-solid fa-fire', label: 'Top Communities', route: '/communities', queryParams: { filter: '' } },
-    { icon: 'fa-solid fa-plus', label: 'Create a community', route: '/community', queryParams: { filter: '' } },
+    { icon: 'fa-solid fa-book', label: 'Articles', route: '/post', queryParams: { filter: 'article' } }
+  ];
+
+  communityItem = [
+    { icon: 'fa-solid fa-fire', label: 'Top Communities', route: '/communities' },
+    { icon: 'fa-solid fa-plus', label: 'Create a community', route: '/community' },
   ];
 
   popularTags = [
@@ -38,11 +41,13 @@ export class LeftMenuComponent implements OnInit {
 
   onMenuItemClick(filter: string) {
     this.postService.getPostsByFilter(filter).subscribe(posts => {
-      // Handle the posts (you can store them in a variable or pass them to another component)
       console.log(posts);
     });
 
-    // Navigate to the respective route with the filter as a query parameter
     this.router.navigate(['/post'], { queryParams: { filter: filter } });
+  }
+
+  onCommunityItemClick(route: string) {
+    this.router.navigate([route]);
   }
 }

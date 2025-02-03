@@ -13,11 +13,18 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
+  // all posts (discover)
+  @Get("/discover")
+  findAll() {
+    return this.postService.findAll();
+  }
+
   // with filter
   @Get()
   async getPostsByType(@Query('filter') filter: string) {
+    // Ensure the filter is a valid PostType
     if (!Object.values(PostType).includes(filter as PostType)) {
-      return this.postService.findAll(); // if the filter is not valid it returns all posts (discover mode)
+      return this.postService.findAll();
     }
 
     const postType = filter as PostType;
@@ -29,7 +36,7 @@ export class PostController {
     return this.postService.findOne(id);
   }
 
-  // Upvote a post
+// Upvote a post
   @Put(':id/upvote')
   upvote(@Param('id') id: string) {
     return this.postService.upvote(id);
