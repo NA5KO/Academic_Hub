@@ -16,7 +16,6 @@ export class User extends BaseEntity {
   @Column({ nullable: true, select: true }) 
   password: string;
 
-
   @Column({ default: false })
   isActive: boolean;
 
