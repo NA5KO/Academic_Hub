@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, HttpException, HttpStatus, Delete } from '@nestjs/common';
 import { UserService } from './user.service'; // Adjust the import path as needed
 import { User } from './user.model'; // Adjust the import path as needed
 
@@ -21,5 +21,27 @@ export class UserController {
   @Get()
   async getAllUsers(): Promise<User[]> {
     return this.userService.findAll();
+  }
+  
+  // Endpoint to follow a community
+  @Post(':userId/follow/:communityId')
+  async followCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+    return this.userService.followCommunity(userId, communityId);
+  }
+
+  // Endpoint to unfollow a community
+  @Delete(':userId/unfollow/:communityId')
+  async unfollowCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+    return this.userService.unfollowCommunity(userId, communityId);
+  }
+
+  @Get(':userId/followed-communities')
+  async getFollowedCommunities(@Param('userId') userId: string) {
+    return this.userService.getFollowedCommunities(userId);
+  }
+
+  @Get(':userId/is-following/:communityId')
+  async isFollowing(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+    return this.userService.isFollowing(userId, communityId);
   }
 }

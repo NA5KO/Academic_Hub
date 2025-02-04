@@ -27,4 +27,20 @@ export class CommunitiesService {
   getPostsByCommunity(communityName: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/community/${communityName}/posts`);
   }
+
+  followCommunity(userId: string, communityId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${userId}/follow/${communityId}`, {});
+  }
+
+  unfollowCommunity(userId: string, communityId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${userId}/unfollow/${communityId}`);
+  }
+
+  getFollowedCommunities(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/${userId}/followed-communities`);
+  }
+
+  isFollowing(userId: string, communityId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/users/${userId}/is-following/${communityId}`);
+  }
 }
