@@ -77,4 +77,25 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('authToken');
   }
+
+  checkAuthToken() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      console.log('Token found:', token);
+      return true;
+    } else {
+      console.log('No token found.');
+      return false;
+    }
+  }
+
+  getUserIdFromLocalStorage(): string {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token payload
+      return payload.sub || '';  // Use 'sub' as the user ID field from the JWT payload
+    }
+    return '';
+  }
+
 }

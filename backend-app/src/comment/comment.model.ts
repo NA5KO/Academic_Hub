@@ -14,5 +14,7 @@ export class Comment extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.comments)
   author: User;
-  
+
+  @Column({ nullable: true, default: "Academic Hub User" })
+  authorUsername?: string; 
 }
