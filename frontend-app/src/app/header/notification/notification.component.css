@@ -1,0 +1,19 @@
+.notification-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .nav-link.active {
+    border-bottom: 2px solid #007bff;
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+  }
+  
+  .notification-dropdown {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  

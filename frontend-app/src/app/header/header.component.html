@@ -1,29 +1,33 @@
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-light" style="border: 1px solid #ddd;">
-    <a class="navbar-brand" href="#">
-        <img src="../../assets/logo-without-bg.png" width="239" height="39" class="d-inline-block align-top" alt="">
-    </a>
-    <div class="search-bar">
-        <div class="input-group">
-          <input
-            type="text"
-            placeholder="Search for questions, articles or members..."
-            aria-label="Search"
-            aria-describedby="search-addon"
-          />
-          <button type="button" id="search-addon">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+  <a class="navbar-brand" href="#">
+      <img src="../../assets/logo-without-bg.png" width="239" height="39" class="d-inline-block align-top" alt="">
+  </a>
+  <div class="search-bar">
+      <div class="input-group">
+        <input
+          type="text"
+          placeholder="Search for questions, articles or members..."
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <button type="button" id="search-addon">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
-      <div class="actions">
-        <button type="button" class="btn" (click)="navigateToCreate()">Create</button>
-        <div class="notifications">
-          <i class="fas fa-bell"></i>
-          <span class="badge">1</span>
-        </div>
-        <div class="profile" (click)="navigateToEditProfile()">
-          <img src="../../assets/profile.png" alt="Profile Picture" /> 
-        </div>
+    </div>
+    <div class="notifications position-relative" (click)="toggleNotifications()">
+      <i class="fas fa-bell fa-lg"></i>
+      <span class="badge bg-danger position-absolute top-0 start-100 translate-middle p-1 rounded-circle" *ngIf="unreadNotificationsCount > 0">
+        {{ unreadNotificationsCount }}
+      </span>
+      <div class="notification-dropdown bg-white shadow rounded p-3 position-absolute" *ngIf="isNotificationsOpen" style="right: 0; top: 40px; width: 350px; z-index: 1000;">
+        <app-notification></app-notification>
       </div>
-    </nav>
+    </div>
+    
+      <div class="profile" (click)="navigateToEditProfile()">
+        <img src="../../assets/profile.png" alt="Profile Picture" /> 
+      </div>
+   
+  </nav>
