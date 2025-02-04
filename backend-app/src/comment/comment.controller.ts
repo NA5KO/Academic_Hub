@@ -7,9 +7,11 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  async create(
-    @Body() createCommentDto: CreateCommentDto,
-  ) {
-    return this.commentService.createComment(createCommentDto.postId, createCommentDto.authorId, createCommentDto);
+  async create(@Body() createCommentDto: CreateCommentDto) {
+    return this.commentService.createComment(
+      createCommentDto.postId,
+      createCommentDto.authorId,
+      createCommentDto,
+    );
   }
 }

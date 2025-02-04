@@ -1,0 +1,15 @@
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0; 
+
+  strong {
+    display: block;
+    color:  #C80036; 
+    margin-bottom: 5px; 
+    font-size: 1.1rem; 
+  }
+  p {
+    color: #666; /* Couleur douce pour le texte */
+    font-size: 0.95rem; /* Taille normale pour le texte */
+  }
+}

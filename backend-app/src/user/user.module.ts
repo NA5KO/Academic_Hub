@@ -10,15 +10,18 @@ import { Comment } from 'src/comment/comment.model';
 import { UserRepository } from './user.repository';
 import { UserController } from './user.controller';
 import { DataSource } from 'typeorm';
+import { PostRepository } from 'src/post/post.repository';
 import { CommentRepository } from 'src/comment/comment.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Notification, Post, Comment, Community])
+    TypeOrmModule.forFeature([User, Notification, Post, Comment, Community]),
   ],
   controllers: [UserController],
   providers: [
     UserService,
+    PostRepository,
+    CommentRepository,
     {
       provide: UserRepository,
       useFactory: (dataSource: DataSource) => new UserRepository(dataSource),

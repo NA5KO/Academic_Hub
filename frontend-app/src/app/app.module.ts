@@ -42,7 +42,8 @@ import { NotificationComponent } from './header/notification/notification.compon
     HttpClientModule,
     HttpClientModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [
   ],

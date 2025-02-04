@@ -1,18 +1,17 @@
-// src/community/community.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GenericRepository } from 'src/common/repositories/GenericRepository';
 import { Community } from './community.model';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto'; // Assuming this DTO exists
-import { UserRepository } from 'src/user/user.repository';  // Import the UserRepository
+import { UserRepository } from 'src/user/user.repository'; // Import the UserRepository
 
 @Injectable()
 export class CommunityService {
   constructor(
     @InjectRepository(Community)
     private readonly communityRepository: GenericRepository<Community>,
-    private readonly userRepository: UserRepository,  // Inject UserRepository
+    private readonly userRepository: UserRepository, // Inject UserRepository
   ) {}
 
   // Create community
@@ -20,7 +19,9 @@ export class CommunityService {
     const { creatorId, ...communityData } = createCommunityDto;
 
     // Fetch the creator user
-    const creator = await this.userRepository.findOne({ where: { id: creatorId } });
+    const creator = await this.userRepository.findOne({
+      where: { id: creatorId },
+    });
     if (!creator) {
       throw new Error('Creator not found');
     }
@@ -28,7 +29,7 @@ export class CommunityService {
     // Create the new community and include creator from the DTO
     const community = this.communityRepository.create({
       ...communityData,
-      creator,  // Assign the fetched creator
+      creator, // Assign the fetched creator
     });
 
     return this.communityRepository.save(community);
@@ -41,7 +42,9 @@ export class CommunityService {
 
   // Get a single community by ID
   async findOne(id: number): Promise<Community> {
-    const community = await this.communityRepository.findOne({ where: { id: id.toString() } });
+    const community = await this.communityRepository.findOne({
+      where: { id: id.toString() },
+    });
     if (!community) {
       throw new Error('Community not found');
     }
@@ -50,17 +53,20 @@ export class CommunityService {
 
   // Get a single community by name
   async findOneByName(name: string): Promise<Community> {
-    const community = await this.communityRepository.findOne({ where: { name } });
+    const community = await this.communityRepository.findOne({
+      where: { name },
+    });
     if (!community) {
       throw new Error('Community not found');
     }
     return community;
   }
 
-  
-
   // Update community
-  async update(id: number, updateCommunityDto: UpdateCommunityDto): Promise<Community> {
+  async update(
+    id: number,
+    updateCommunityDto: UpdateCommunityDto,
+  ): Promise<Community> {
     const community = await this.findOne(id);
 
     // Update the community fields
@@ -90,9 +96,14 @@ export class CommunityService {
   }
 
   // not tested yet
-  async followCommunity(userId: string, communityId: string): Promise<Community> {
+  async followCommunity(
+    userId: string,
+    communityId: string,
+  ): Promise<Community> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
-    const community = await this.communityRepository.findOne({ where: { id: communityId } });
+    const community = await this.communityRepository.findOne({
+      where: { id: communityId },
+    });
 
     if (!user) {
       throw new NotFoundException('User not found');
