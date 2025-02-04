@@ -9,7 +9,6 @@ import { Comment as CommentModel } from 'src/comment/comment.model';
 import { PostRepository } from 'src/post/post.repository';
 import { CommentRepository } from 'src/comment/comment.repository';
 
-
 @Injectable()
 export class UserService {
   constructor(
@@ -17,7 +16,6 @@ export class UserService {
     private readonly userRepository: GenericRepository<User>,
     private readonly postRepository: PostRepository,
     private readonly commentRepository: CommentRepository,
-
   ) {}
 
   async findByEmail(email: string): Promise<User> {
@@ -25,6 +23,14 @@ export class UserService {
       where: { email },
       relations: ['followers', 'following'],
     });
+  }
+  async findById(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    console.log('id', id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
   }
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
@@ -56,6 +62,7 @@ export class UserService {
     }
     return this.userRepository.save(user);
   }
+
   async followUser(
     followerEmail: string,
     followingEmail: string,
@@ -67,31 +74,30 @@ export class UserService {
       throw new Error('Follower or Following user not found');
     }
 
-    // Initialiser `following` si nécessaire
-    if (!follower.following) {
-      follower.following = [];
-    }
-
-    // Vérifier si l'utilisateur suit déjà cette personne
     if (follower.following.some((user) => user.email === followingEmail)) {
       throw new Error('You are already following this user');
     }
 
-    follower.following.push(following);
-    await this.userRepository.save(follower);
+    if (following.followers.some((user) => user.email === followerEmail)) {
+      throw new Error('This user is already following you');
+    }
 
-    // Initialiser `followers` si nécessaire
+    if (!follower.following) {
+      follower.following = [];
+    }
+    follower.following.push(following);
+
     if (!following.followers) {
       following.followers = [];
     }
-
     following.followers.push(follower);
+
+    await this.userRepository.save(follower);
     await this.userRepository.save(following);
 
-    const updatedFollower = await this.findByEmail(followerEmail);
-    return plainToInstance(User, updatedFollower);
+    // Utiliser plainToInstance pour exclure les propriétés 'following' et 'followers'
+    return plainToInstance(User, follower);
   }
-
   async unfollowUser(
     followerEmail: string,
     followingEmail: string,
@@ -99,22 +105,25 @@ export class UserService {
     const follower = await this.findByEmail(followerEmail);
     const following = await this.findByEmail(followingEmail);
 
-    if (!follower.following.some((user) => user.email === followingEmail)) {
-      throw new Error('You are not following this user');
+    if (!follower || !following) {
+      throw new Error('Follower or Following user not found');
     }
-
+    // Supprimer l'utilisateur de la liste 'following' de l'utilisateur
     follower.following = follower.following.filter(
       (user) => user.email !== followingEmail,
     );
-    await this.userRepository.save(follower);
 
     following.followers = following.followers.filter(
       (user) => user.email !== followerEmail,
     );
+
+    // Sauvegarder les utilisateurs après les modifications
+    await this.userRepository.save(follower);
     await this.userRepository.save(following);
 
-    return follower;
+    return plainToInstance(User, follower);
   }
+
   async getUserPostsByUserId(userId: string): Promise<PostModel[]> {
     const posts = await this.postRepository.findByAuthor(userId);
 
@@ -124,6 +133,16 @@ export class UserService {
     return posts.sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  }
+  async getLatestCommentsByUserId(userId: string): Promise<CommentModel[]> {
+    const comments = await this.commentRepository.findByAuthor(userId);
+
+    if (!comments.length) {
+      throw new NotFoundException(`No comments found for user ID: ${userId}`);
+    }
+    return comments.sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
     );
   }
 }

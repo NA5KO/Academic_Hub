@@ -1,12 +1,22 @@
-import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from '../common/entities/BaseEntity';
 import { Post } from '../post/post.model';
 import { Comment } from '../comment/comment.model';
 import { Notification } from 'src/notification/notification.model';
 import { Community } from 'src/community/community.model';
+import { Exclude } from 'class-transformer';
 
 @Entity('User')
 export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: string;
   @Column({ unique: true })
   username: string;
 
@@ -70,10 +80,12 @@ export class User extends BaseEntity {
   @OneToMany(() => Community, (community) => community.creator)
   createdCommunities: Community[];
 
-  @ManyToMany(() => User, (user) => user.following)
+  @ManyToMany(() => User, (user) => user.followers)
   @JoinTable()
+  @Exclude()
   following: User[];
 
-  @ManyToMany(() => User, (user) => user.followers)
+  @ManyToMany(() => User, (user) => user.following)
+  @Exclude()
   followers: User[];
 }

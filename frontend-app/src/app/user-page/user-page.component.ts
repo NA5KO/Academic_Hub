@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
+import { RightMenuModule } from "../right-menu/right-menu.module";
+import { PostsComponent } from "../posts/posts.component";
+import { LeftMenuModule } from "../left-menu/left-menu.module";
+import { CommentsComponent } from "../comments/comments.component";
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+  styleUrls: ['./user-page.component.css'],
+  imports: [RightMenuModule, PostsComponent, LeftMenuModule, CommentsComponent]
 })
 export class UserPageComponent {
   user = {

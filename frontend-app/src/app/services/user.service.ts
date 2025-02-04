@@ -10,17 +10,36 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(userId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${userId}`);
+  getUserByEmail(email: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/email/${email}`);
   }
 
-  followUser(userId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${userId}/follow`, {});
+  followUser(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/email/${email}/follow`, {});
   }
 
-  unfollowUser(userId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${userId}/unfollow`, {});
+  unfollowUser(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/email/${email}/unfollow`, {});
   }
+
+ // getUser(userId: string): Observable<any> {
+  //  return this.http.get(`${this.apiUrl}/${userId}`);
+  //}
+
+  //followUser(userId: string): Observable<any> {
+    //return this.http.post(`${this.apiUrl}/${userId}/follow`, {});
+//}
+
+  //unfollowUser(userId: string): Observable<any> {
+    //return this.http.post(`${this.apiUrl}/${userId}/unfollow`, {});
+  //}
+
+
+
+  ///getUserComments(userId: string): Observable<any> {
+    //return this.http.get(`${this.apiUrl}/${userId}/comments`);
+  //}
+
 
   deleteUser(userId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${userId}`);

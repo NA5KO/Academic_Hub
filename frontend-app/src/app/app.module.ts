@@ -29,7 +29,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     MatSnackBarModule,
     ReactiveFormsModule,
-    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     // FontAwesomeModule,
@@ -41,7 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     HttpClientModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [
   ],

@@ -7,13 +7,12 @@ import {
   HttpException,
   HttpStatus,
   Patch,
-  Query,
-  NotFoundException,
 } from '@nestjs/common';
-import { UserService } from './user.service'; // Adjust the import path as needed
-import { User } from './user.model'; // Adjust the import path as needed
+import { UserService } from './user.service';
+import { User } from './user.model';
 import { Post as PostModel } from 'src/post/post.model';
 import { CreateUserDto } from './dto/createuser.dto';
+import { Comment as CommentModel } from 'src/comment/comment.model';
 
 @Controller('users')
 export class UserController {
@@ -23,6 +22,15 @@ export class UserController {
   @Get(':email')
   async getUserByEmail(@Param('email') email: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
+  @Get(':id')
+  async getUserById(@Param('id') id: string): Promise<User> {
+    console.log('id', id);
+    const user = await this.userService.findById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
@@ -56,6 +64,12 @@ export class UserController {
   @Get(':userId/posts')
   async getUserPosts(@Param('userId') userId: string): Promise<PostModel[]> {
     return this.userService.getUserPostsByUserId(userId);
+  }
+  @Get(':userId/comments')
+  async getUserCommentss(
+    @Param('userId') userId: string,
+  ): Promise<CommentModel[]> {
+    return this.userService.getLatestCommentsByUserId(userId);
   }
   // Endpoint to get all users (optional)
   @Get()
