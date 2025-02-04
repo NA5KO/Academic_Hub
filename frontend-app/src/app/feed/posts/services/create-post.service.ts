@@ -6,7 +6,9 @@ import { catchError, map } from 'rxjs/operators';  // Import the 'map' operator
 export interface Community {
   id: string;
   name: string;
-  // Add other properties if needed
+  creator?: { id: string; name?: string };
+  followers?: { id: string; name?: string }[];
+  // You can include other properties if needed
 }
 
 @Injectable({

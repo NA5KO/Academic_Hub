@@ -36,7 +36,7 @@ export class CommunityService {
 
   // Get all communities
   async findAll(): Promise<Community[]> {
-    return this.communityRepository.find();
+    return this.communityRepository.find({ relations: ['creator', 'followers'] });
   }
 
   // Get a single community by ID
