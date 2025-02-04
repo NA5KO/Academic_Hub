@@ -1,25 +1,36 @@
-// src/user/user.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/createuser.dto';
 import { User } from './user.model';
 import { GenericRepository } from 'src/common/repositories/GenericRepository';
+import { plainToInstance } from 'class-transformer';
+import { Post as PostModel } from 'src/post/post.model';
+import { Comment as CommentModel } from 'src/comment/comment.model';
+import { PostRepository } from 'src/post/post.repository';
+import { CommentRepository } from 'src/comment/comment.repository';
+
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: GenericRepository<User>,
+    private readonly postRepository: PostRepository,
+    private readonly commentRepository: CommentRepository,
+
   ) {}
 
   async findByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['followers', 'following'],
+    });
   }
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  async createOrUpdateUser(createUserDto: CreateUserDto ): Promise<User> {
+  async createOrUpdateUser(createUserDto: CreateUserDto): Promise<User> {
     let user = await this.findByEmail(createUserDto.email);
 
     if (user) {
@@ -40,8 +51,79 @@ export class UserService {
     } else {
       // Create new user if not exists
       user = this.userRepository.create(createUserDto);
+      user.following = []; // Initialisez following
+      user.followers = []; // Initialisez followers
+    }
+    return this.userRepository.save(user);
+  }
+  async followUser(
+    followerEmail: string,
+    followingEmail: string,
+  ): Promise<User> {
+    const follower = await this.findByEmail(followerEmail);
+    const following = await this.findByEmail(followingEmail);
+
+    if (!follower || !following) {
+      throw new Error('Follower or Following user not found');
     }
 
-    return this.userRepository.save(user);
+    // Initialiser `following` si nécessaire
+    if (!follower.following) {
+      follower.following = [];
+    }
+
+    // Vérifier si l'utilisateur suit déjà cette personne
+    if (follower.following.some((user) => user.email === followingEmail)) {
+      throw new Error('You are already following this user');
+    }
+
+    follower.following.push(following);
+    await this.userRepository.save(follower);
+
+    // Initialiser `followers` si nécessaire
+    if (!following.followers) {
+      following.followers = [];
+    }
+
+    following.followers.push(follower);
+    await this.userRepository.save(following);
+
+    const updatedFollower = await this.findByEmail(followerEmail);
+    return plainToInstance(User, updatedFollower);
+  }
+
+  async unfollowUser(
+    followerEmail: string,
+    followingEmail: string,
+  ): Promise<User> {
+    const follower = await this.findByEmail(followerEmail);
+    const following = await this.findByEmail(followingEmail);
+
+    if (!follower.following.some((user) => user.email === followingEmail)) {
+      throw new Error('You are not following this user');
+    }
+
+    follower.following = follower.following.filter(
+      (user) => user.email !== followingEmail,
+    );
+    await this.userRepository.save(follower);
+
+    following.followers = following.followers.filter(
+      (user) => user.email !== followerEmail,
+    );
+    await this.userRepository.save(following);
+
+    return follower;
+  }
+  async getUserPostsByUserId(userId: string): Promise<PostModel[]> {
+    const posts = await this.postRepository.findByAuthor(userId);
+
+    if (!posts.length) {
+      throw new NotFoundException(`No posts found for user ID: ${userId}`);
+    }
+    return posts.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
   }
 }

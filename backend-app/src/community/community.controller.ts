@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
@@ -49,11 +58,14 @@ export class CommunityController {
 
   // @Get(':name/posts')
   // getPostsForCommunity(@Param('name') name: string) {
-  //   return this.postService.getPostsByCommunity(name); 
+  //   return this.postService.getPostsByCommunity(name);
   // }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommunityDto: UpdateCommunityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCommunityDto: UpdateCommunityDto,
+  ) {
     return this.communityService.update(+id, updateCommunityDto);
   }
 

@@ -13,9 +13,8 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: true, select: true }) 
+  @Column({ nullable: true, select: true })
   password: string;
-
 
   @Column({ default: false })
   isActive: boolean;
@@ -51,7 +50,7 @@ export class User extends BaseEntity {
   program?: string;
 
   @Column({ nullable: true })
-  photoUrl?: string; 
+  photoUrl?: string;
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
@@ -62,12 +61,19 @@ export class User extends BaseEntity {
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications: Notification[];
 
-  @ManyToMany(() => Community, (community) => community.followers, { cascade: true })
+  @ManyToMany(() => Community, (community) => community.followers, {
+    cascade: true,
+  })
   @JoinTable()
   communities: Community[];
 
   @OneToMany(() => Community, (community) => community.creator)
   createdCommunities: Community[];
+
+  @ManyToMany(() => User, (user) => user.following)
+  @JoinTable()
+  following: User[];
+
+  @ManyToMany(() => User, (user) => user.followers)
+  followers: User[];
 }
-
-

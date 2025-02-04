@@ -1,12 +1,12 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class CreateCommentDto {
-    @IsString()
-    content!: string;
+  @IsString()
+  content!: string;
 
-    @IsString()
-    postId!: string;
+  @IsString()
+  postId!: string;
 
-    @IsString()
-    authorId!: string;
+  @IsString()
+  authorId!: string;
 }

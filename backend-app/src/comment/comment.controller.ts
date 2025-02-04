@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -8,14 +16,18 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  // @UseGuards(AuthGuard) 
+  // @UseGuards(AuthGuard)
   async create(
-    @Body() createCommentDto: CreateCommentDto,  // Get the entire body
+    @Body() createCommentDto: CreateCommentDto, // Get the entire body
     // @Request() req: any,  // Access the authenticated user
   ) {
     // const userId = req.user.id;
-    const userId = "fe7dd07f-804f-4f7e-aea2-0de2a40d5aba";
-    return this.commentService.createComment(createCommentDto.postId, userId, createCommentDto);
+    const userId = 'fe7dd07f-804f-4f7e-aea2-0de2a40d5aba';
+    return this.commentService.createComment(
+      createCommentDto.postId,
+      userId,
+      createCommentDto,
+    );
   }
 
   @Get()
