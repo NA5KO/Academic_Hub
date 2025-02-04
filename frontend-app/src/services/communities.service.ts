@@ -33,7 +33,7 @@ export class CommunitiesService {
     console.log('Form data received in service:', formData);
     // Set headers if necessary.
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.apiUrl}/community`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/create-community`, formData, { headers });
   }
   
   getPostsByCommunity(communityName: string): Observable<any> {
