@@ -46,9 +46,17 @@ export class PostCreateComponent implements OnInit {
   fetchCommunities() {
     this.postCreateService.fetchCommunities().subscribe(
       (data: Community[]) => {
-        // Data is expected to be an array of community objects
-        this.communities = data;
-      },
+        // Retrieve current user's id from token using the service method
+        const currentUserId = this.postCreateService.getAuthorIdFromLocalStorage();
+
+        // Filter communities to include only those followed by or created by the current user.
+        // Assumes community.creator is an object with an 'id'
+        // and community.followers is an array of objects, each with an 'id'
+        this.communities = data.filter(community => {
+          const isCreator = community.creator && community.creator.id === currentUserId;
+          const isFollower = community.followers && community.followers.some((follower: any) => follower.id === currentUserId);
+          return isCreator || isFollower;
+        })},
       (error) => {
         console.error('Error fetching communities:', error);
         // Fallback static list if needed

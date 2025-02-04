@@ -16,11 +16,11 @@ export class CreateCommunityDto {
   description: string;
 
   @IsNotEmpty()
-  @IsUrl()
+  //@IsUrl()
   banner: string;
 
   @IsNotEmpty()
-  @IsUrl()
+  //@IsUrl()
   icon: string;
 
   @IsNotEmpty()
