@@ -52,6 +52,10 @@ export class CommunitiesService {
     return this.http.get(`${this.apiUrl}/users/${userId}/followed-communities`);
   }
 
+  getCreatedCommunities(userId: string) {
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}/created-communities`);
+  }
+
   isFollowing(userId: string, communityId: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUrl}/users/${userId}/is-following/${communityId}`);
   }

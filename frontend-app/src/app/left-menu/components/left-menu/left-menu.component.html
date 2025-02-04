@@ -15,5 +15,15 @@
 
   <!-- Favorite Communities -->
   <h3>My communities</h3>
-  <!-- fetch followed communities by the logged in user -->
+  <!-- Followed Communities -->
+  <div *ngFor="let community of followedCommunities">
+    <div class="menu-item" (click)="onCommunityItemClick(community.name)">
+      <i class="fas fa-users"></i> <span>{{ community.name }}</span>
+    </div>
+  </div>
+  <div *ngFor="let community of createdCommunities">
+    <div class="menu-item" (click)="onCommunityItemClick(community.name)">
+      <i class="fas fa-users-cog"></i> <span>{{ community.name }}</span>
+    </div>
+  </div>
 </div>

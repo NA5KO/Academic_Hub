@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/services/auth.service';
+import { CommunitiesService } from 'src/services/communities.service';
 import { FeedService } from 'src/services/feed.service';
 
 @Component({
@@ -21,23 +23,29 @@ export class LeftMenuComponent implements OnInit {
     { icon: 'fa-solid fa-plus', label: 'Create a community', route: '/create-community' },
   ];
 
-  popularTags = [
-    { name: 'Javascript', count: 99 },
-    { name: 'PHP', count: 99 },
-    { name: 'Web Development', count: 99 },
-    { name: 'CSS', count: 99 },
-  ];
+  followedCommunities: any[] = [];
+  createdCommunities: any[] = [];
+  userId: string = '';
 
-  favoriteCommunities = [
-    { name: 'RT4', count: 99 },
-    { name: 'Makrouna', count: 99 },
-    { name: 'Nestjs channel', count: 99 },
-    { name: '4070', count: 99 },
-  ];
+  constructor(
+    private postService: FeedService, 
+    private authService: AuthService,
+    private communityService: CommunitiesService,
+    private router: Router) {}
 
-  constructor(private postService: FeedService, private router: Router) {}
+  ngOnInit() {
+    this.userId = this.authService.getUserIdFromLocalStorage(); 
 
-  ngOnInit() {}
+    if (this.userId) {
+      this.communityService.getFollowedCommunities(this.userId).subscribe((data) => {
+        this.followedCommunities = data;
+      });
+
+      this.communityService.getCreatedCommunities(this.userId).subscribe((data) => {
+        this.createdCommunities = data;
+      });
+    }
+  }
 
   onMenuItemClick(filter: string) {
     this.postService.getPostsByFilter(filter).subscribe(posts => {
@@ -47,7 +55,7 @@ export class LeftMenuComponent implements OnInit {
     this.router.navigate(['/post'], { queryParams: { filter: filter } });
   }
 
-  onCommunityItemClick(route: string) {
-    this.router.navigate([route]);
+  onCommunityItemClick(name: string) {
+    this.router.navigate(['/community', name]); 
   }
 }

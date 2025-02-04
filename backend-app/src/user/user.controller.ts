@@ -18,18 +18,8 @@ import { Comment as CommentModel } from 'src/comment/comment.model';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // Endpoint to get a user by email
-  @Get(':email')
-  async getUserByEmail(@Param('email') email: string): Promise<User> {
-    const user = await this.userService.findByEmail(email);
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    return user;
-  }
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User> {
-    console.log('id', id);
     const user = await this.userService.findById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -92,6 +82,11 @@ export class UserController {
   @Get(':userId/followed-communities')
   async getFollowedCommunities(@Param('userId') userId: string) {
     return this.userService.getFollowedCommunities(userId);
+  }
+
+  @Get(':id/created-communities')
+  async getCreatedCommunities(@Param('id') userId: string) {
+    return this.userService.getCreatedCommunities(userId);
   }
 
   @Get(':userId/is-following/:communityId')

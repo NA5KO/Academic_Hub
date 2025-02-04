@@ -27,8 +27,8 @@ export class UserService {
   }
   
   async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    console.log('id', id);
+    const user = await this.userRepository.findOne({ where: { id } ,
+      relations: ['followers', 'following'],});
     if (!user) {
       throw new Error('User not found');
     }
@@ -187,6 +187,19 @@ export class UserService {
     }
 
     return user.communities;
+  }
+
+  async getCreatedCommunities(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['createdCommunities'],
+    });
+  
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+  
+    return user.createdCommunities;
   }
 
   async isFollowing(userId: string, communityId: string): Promise<boolean> {
