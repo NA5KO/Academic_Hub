@@ -69,7 +69,7 @@ export class CreateCommunityComponent {
 
     this.communitiesService.createCommunity(this.formData).subscribe(
       response => {
-        this.router.navigate(['/community/', response.name]); // Navigate to community page
+        this.router.navigate(['/create-community/', response.name]); // Navigate to community page
       },
       error => {
         console.error('Error creating community:', error);

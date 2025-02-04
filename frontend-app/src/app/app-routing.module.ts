@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'post', component: PostListComponent },
   { path: 'post/:filter', component: PostListComponent },
   { path: 'create', component: PostCreateComponent },
-  { path: 'community', component: CreateCommunityComponent },
+  { path: 'create-community', component: CreateCommunityComponent },
   { path: 'communities', component: TopCommunitiesComponent },
   { path: 'community/:name', component: CommunityDetailsComponent },
   { path: 'profile/edit', component: ProfileEditComponent },
