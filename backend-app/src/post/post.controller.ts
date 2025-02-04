@@ -37,31 +37,34 @@ export class PostController {
   }
 
   // Upvote a post
-  @Put('post/:id/upvote')
+  @Post('post/:id/upvote')
   upvote(@Param('id') id: string) {
     return this.postService.upvote(id);
   }
-  @Put('post/:id/unupvote')
+
+  @Post('post/:id/unupvote')
   unupvote(@Param('id') id: string) {
     return this.postService.unupvote(id);
   }
 
   // Downvote a post
-  @Put('post/:id/downvote')
+  @Post('post/:id/downvote')
   downvote(@Param('id') id: string) {
     return this.postService.downvote(id);
   }
-  @Put('post/:id/undownvote')
+
+  @Post('post/:id/undownvote')
   undownvote(@Param('id') id: string) {
     return this.postService.undownvote(id);
   }
 
   // Save a post
-  @Put('post/:id/save')
+  @Post('post/:id/save')
   save(@Param('id') id: string, @Body('userId') userId: string) {
     return this.postService.save(id);
   }
-  @Put('post/:id/unsave')
+
+  @Post('post/:id/unsave')
   unsave(@Param('id') id: string, @Body('userId') userId: string) {
     return this.postService.unsave(id);
   }
