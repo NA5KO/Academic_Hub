@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LeftMenuModule } from './left-menu/left-menu.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RightMenuModule } from './right-menu/right-menu.module';
 import { HeaderComponent } from './header/header.component';
 import { PostsModule } from './feed/posts.module';
@@ -33,7 +33,7 @@ import { NotificationComponent } from './header/notification/notification.compon
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-     FontAwesomeModule,
+    // FontAwesomeModule,
     RightMenuModule,
     PostsModule,
     ProfileModule,
