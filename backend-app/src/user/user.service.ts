@@ -32,6 +32,7 @@ export class UserService {
     }
     return user;
   }
+
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
@@ -67,6 +68,8 @@ export class UserService {
     followerEmail: string,
     followingEmail: string,
   ): Promise<User> {
+    console.log('followerEmail', followerEmail); // Affichez l'e-mail de l'utilisateur qui suit
+
     const follower = await this.findByEmail(followerEmail);
     const following = await this.findByEmail(followingEmail);
 
@@ -95,7 +98,7 @@ export class UserService {
     await this.userRepository.save(follower);
     await this.userRepository.save(following);
 
-    // Utiliser plainToInstance pour exclure les propriétés 'following' et 'followers'
+    // Utiliser plainToInstance pour exclure les propri
     return plainToInstance(User, follower);
   }
   async unfollowUser(

@@ -6,7 +6,6 @@ import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/user.model';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import axios from 'axios';
 
@@ -25,11 +24,14 @@ export class AuthService {
   }
 
   // Validate a password
-  async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
+  async validatePassword(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     if (!password || !hashedPassword) {
       throw new Error('Password or hashed password is missing');
     }
-  
+
     return bcrypt.compare(password, hashedPassword);
   }
 
@@ -38,41 +40,45 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
 
-
-  async validateOAuthUser(profile: any, provider: 'google' | 'github'): Promise<User> {
+  async validateOAuthUser(
+    profile: any,
+    provider: 'google' | 'github',
+  ): Promise<User> {
     console.log('OAuth profile:', profile);
     const email = profile.email;
     const name = profile.name || profile.displayName;
-    const oauthId = profile.sub; 
+    const oauthId = profile.sub;
     const photoUrl = profile.picture || null;
 
     let user = await this.userService.findByEmail(email);
     if (!user) {
-        user = await this.userService.createOrUpdateUser({
-            email,
-            username: name,
-            photoUrl,
-        });
+      user = await this.userService.createOrUpdateUser({
+        email,
+        username: name,
+        photoUrl,
+      });
     }
 
     return user;
-}
-
-
-
+  }
 
   async getGoogleUserProfile(oauthToken: string) {
     try {
-        const { data } = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${oauthToken}`);
-        return data;
+      const { data } = await axios.get(
+        `https://oauth2.googleapis.com/tokeninfo?id_token=${oauthToken}`,
+      );
+      return data;
     } catch (error) {
-        console.error('Error fetching Google user profile:', error.response?.data || error.message);
-        return null;
+      console.error(
+        'Error fetching Google user profile:',
+        error.response?.data || error.message,
+      );
+      return null;
     }
-}
+  }
 
   // Handle user signup
-  async signup(signupDto: SignupDto ): Promise<User> {
+  async signup(signupDto: SignupDto): Promise<User> {
     const hashedPassword = await this.hashPassword(signupDto.password);
     signupDto.password = hashedPassword;
 
@@ -82,7 +88,10 @@ export class AuthService {
   // Handle user login
   async login(LoginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.userService.findByEmail(LoginDto.email);
-    if (!user || !(await this.validatePassword(LoginDto.password, user.password))) {
+    if (
+      !user ||
+      !(await this.validatePassword(LoginDto.password, user.password))
+    ) {
       throw new Error('Invalid credentials');
     }
 

@@ -7,18 +7,27 @@ import {
   HttpException,
   HttpStatus,
   Patch,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { Post as PostModel } from 'src/post/post.model';
 import { CreateUserDto } from './dto/createuser.dto';
 import { Comment as CommentModel } from 'src/comment/comment.model';
+import { AuthGuard } from 'src/auth/guards/auth-guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // Endpoint to get a user by email
+  @UseGuards(AuthGuard) // Protects the route using JWT Auth
+  @Get('me')
+  async getMyProfile(@Req() req): Promise<User> {
+    return req.user;
+  }
+
+  // Endpoint to get a user by emai
   @Get(':email')
   async getUserByEmail(@Param('email') email: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
@@ -71,7 +80,7 @@ export class UserController {
   ): Promise<CommentModel[]> {
     return this.userService.getLatestCommentsByUserId(userId);
   }
-  // Endpoint to get all users (optional)
+  @UseGuards(AuthGuard)
   @Get()
   async getAllUsers(): Promise<User[]> {
     return this.userService.findAll();

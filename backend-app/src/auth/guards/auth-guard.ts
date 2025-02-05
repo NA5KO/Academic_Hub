@@ -9,7 +9,7 @@ export class AuthGuard extends PassportAuthGuard('jwt') {
 
   handleRequest(err: any, user: any) {
     if (err || !user) {
-      throw err || new UnauthorizedException('User not authenticated');
+      throw new UnauthorizedException('User not authenticated');
     }
     return user;
   }
