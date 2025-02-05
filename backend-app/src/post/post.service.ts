@@ -42,9 +42,11 @@ export class PostService {
     return this.postRepository.save(newPost);
   }
 
-  // Get all posts with their relations (comments, community, author)
+  // Get all posts with their relations
   async findAll() {
-    return this.postRepository.findWithRelations(); // Use the new method to fetch posts with relations
+    return this.postRepository.find({
+      relations: ['comments', 'community', 'author'],
+    });
   }
 
   // Find one post by ID with relationships loaded

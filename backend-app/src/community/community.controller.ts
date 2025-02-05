@@ -34,7 +34,7 @@ export class CommunityController {
     return this.communityService.followCommunity(userId, communityId);
   }
 
-  @Get('community/top')
+  @Get('communities')
   async getTopCommunities(): Promise<Community[]> {
     return this.communityService.getTopCommunities();
   }

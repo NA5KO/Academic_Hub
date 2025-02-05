@@ -12,18 +12,18 @@ export class CommunitiesService {
   private apiUrl = 'http://localhost:3000'; 
 
   getTopCommunities(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/community/top`);
+    return this.http.get(`${this.apiUrl}/communities`);
   }
 
-    // Retrieve the author ID from local storage (assuming JWT token structure)
-    getAuthorIdFromLocalStorage(): string {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        const payload = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token payload
-        return payload.sub || '';  // Use 'sub' as the user ID field from the JWT payload
-      }
-      return '';
+  // Retrieve the author ID from local storage (assuming JWT token structure)
+  getAuthorIdFromLocalStorage(): string {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token payload
+      return payload.sub || '';  // Use 'sub' as the user ID field from the JWT payload
     }
+    return '';
+  }
 
   getCommunity(name: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/community/${name}`);
@@ -34,10 +34,6 @@ export class CommunitiesService {
     // Set headers if necessary.
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(`${this.apiUrl}/create-community`, formData, { headers });
-  }
-  
-  getPostsByCommunity(communityName: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/community/${communityName}/posts`);
   }
 
   followCommunity(userId: string, communityId: string): Observable<any> {
@@ -53,7 +49,7 @@ export class CommunitiesService {
   }
 
   getCreatedCommunities(userId: string) {
-    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}/created-communities`);
+    return this.http.get<any[]>(`${this.apiUrl}/users/${userId}/created-communities`);
   }
 
   isFollowing(userId: string, communityId: string): Observable<boolean> {

@@ -55,6 +55,7 @@ export class CommunityService {
   async findOneByName(name: string): Promise<Community> {
     const community = await this.communityRepository.findOne({
       where: { name },
+      relations: ['posts', 'followers', 'creator', 'posts.author', 'posts.community', 'posts.comments']
     });
     if (!community) {
       throw new Error('Community not found');

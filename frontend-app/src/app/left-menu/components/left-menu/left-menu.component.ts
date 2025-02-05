@@ -42,6 +42,7 @@ export class LeftMenuComponent implements OnInit {
       });
 
       this.communityService.getCreatedCommunities(this.userId).subscribe((data) => {
+        console.log(data)
         this.createdCommunities = data;
       });
     }
@@ -56,6 +57,10 @@ export class LeftMenuComponent implements OnInit {
   }
 
   onCommunityItemClick(name: string) {
+    this.router.navigate([name]); 
+  }
+
+  onCommunityClick(name: string) {
     this.router.navigate(['/community', name]); 
   }
 }

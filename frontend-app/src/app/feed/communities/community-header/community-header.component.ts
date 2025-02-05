@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommunitiesService } from 'src/services/communities.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
@@ -6,7 +6,7 @@ import { AuthService } from 'src/services/auth.service';
 @Component({
   selector: 'app-community-header',
   templateUrl: './community-header.component.html',
-  styleUrls: ['./community-header.component.css'],
+  styleUrls: ['./community-header.component.css', '../../posts/post-list/post-list.component.css'],
   standalone: false,
 
 })
@@ -32,7 +32,8 @@ export class CommunityHeaderComponent implements OnInit {
     banner: '',
     icon: '',
     followersCount: 0,
-    keywords: []
+    keywords: [],
+    posts: []
   };
 
 
@@ -70,14 +71,9 @@ export class CommunityHeaderComponent implements OnInit {
     }
   
 
-  // mch mawjouda fl front
-  editCommunity() {
-    console.log('Editing community');
-    // Handle community edit logic here
-  }
-
-  reportUser() {
-    console.log('Reporting user');
-    // Handle report user logic here
-  }
+    // mch mawjouda fl front
+    editCommunity() {
+      console.log('Editing community');
+      // Handle community edit logic here
+    }
 }

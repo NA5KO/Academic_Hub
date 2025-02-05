@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../services/post.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-post-item',
@@ -9,14 +10,15 @@ import { PostService } from '../services/post.service';
   standalone: false,
 })
 export class PostItemComponent implements OnInit {
+
+  constructor(private postService: PostService, private router: Router, private authService: AuthService) {}
+
   @Input() post: any;
-  @Input() userId: string = ''; // User ID of the logged-in user
+  userId: string = this.authService.checkAuthToken() ? this.authService.getUserIdFromLocalStorage() : ''; 
 
   isSaved: boolean = false;
   isUpvoted: boolean = false;
   isDownvoted: boolean = false;
-
-  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     // console.log(this.post);

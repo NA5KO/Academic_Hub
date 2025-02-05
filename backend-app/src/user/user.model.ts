@@ -59,7 +59,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   program?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: '../../../../assets/default-avatar.png' })
   photoUrl?: string;
 
   @OneToMany(() => Post, (post) => post.author)

@@ -2,7 +2,7 @@
   <!-- Post Header -->
   <div class="post-header">
     <img 
-      [src]="post.author.photoUrl || '../../../../assets/default-avatar.png'" 
+      [src]="post.author.photoUrl" 
       alt="User avatar"
       class="user-avatar"
       (click)="goToUserProfile(post.author.username)"
