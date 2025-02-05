@@ -71,8 +71,10 @@ export class SignupComponent implements AfterViewInit {
   
     this.authService.signUpWithGoogle({ oauthToken: response.credential }).subscribe({
       next: (res: { token: string }) => {
+        console.log('Sign-up successful', res);
         this.toasterService.showSuccess('Welcome to Academic Hub !');
-        this.authService.storeToken(res.token);
+        const token = response.credential;
+        this.authService.storeToken(token);
         this.router.navigate(['/']);
       },
       error: (error: any) => this.toasterService.showError('Sign-up failed. Please try again.'),
