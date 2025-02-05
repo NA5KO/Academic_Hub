@@ -1,0 +1,75 @@
+/* Styling for the profile edit page */
+.profile-edit-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.profile-edit-form {
+  border: 1px solid #eaeaea;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: none; /* Remove background color */
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: inline-block;
+  width: 150px; /* Fixed width for labels */
+  margin-bottom: 10px;
+  padding: 5px; /* Add some padding to the labels */
+  border-radius: 5px; /* Rounded corners for labels */
+}
+
+label[for="bio"] {
+  width: auto; /* Exclude bio label from fixed width */
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: calc(100% - 160px); /* Adjust width to account for label width and padding */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: #ffffff; /* White background for input boxes */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: none; /* Remove default outline */
+}
+
+/* Styling for the section titles */
+.section legend {
+  color: #c80036; /* Light red color for the section titles */
+}
+
+/* Styling for the update button */
+button.update-button {
+  background-color: #0c1844; /* Light blue background color */
+  color: #ffffff;
+  border: none;
+  border-radius: 15px; /* Rounded corners */
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px; /* Space between the button and the form */
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+button.update-button:hover {
+  background-color: #0069d9; /* Darker blue on hover */
+  color: #fff; /* White text on hover */
+}

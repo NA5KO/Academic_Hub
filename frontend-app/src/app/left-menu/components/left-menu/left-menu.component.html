@@ -1,0 +1,29 @@
+<div class="left-menu">
+  <!-- Top Menu Items -->
+  <div *ngFor="let item of menuItems">
+    <div class="menu-item" (click)="onMenuItemClick(item.queryParams.filter)">
+      <i [class]="item.icon"></i> <span>{{ item.label }}</span>
+    </div>
+  </div>
+  
+  <!-- Community Items -->
+  <div *ngFor="let menu of communityItem">
+    <div class="menu-item" (click)="onCommunityItemClick(menu.route)">
+      <i [class]="menu.icon"></i> <span>{{ menu.label }}</span>
+    </div>
+  </div>
+
+  <!-- Favorite Communities -->
+  <h3>My communities</h3>
+  <!-- Followed Communities -->
+  <div *ngFor="let community of followedCommunities">
+    <div class="menu-item" (click)="onCommunityClick(community.name)">
+      <i class="fas fa-users"></i> <span>{{ community.name }}</span>
+    </div>
+  </div>
+  <div *ngFor="let community of createdCommunities">
+    <div class="menu-item" (click)="onCommunityClick(community.name)">
+      <i class="fas fa-users-cog"></i> <span>{{ community.name }}</span>
+    </div>
+  </div>
+</div>

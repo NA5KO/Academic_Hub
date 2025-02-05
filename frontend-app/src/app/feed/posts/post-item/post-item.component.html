@@ -1,0 +1,45 @@
+<div class="post-item">
+  <!-- Post Header -->
+  <div class="post-header">
+    <img 
+      src="../../../../assets/zizou.jpg" 
+      alt="User avatar"
+      class="user-avatar"
+      (click)="goToUserProfile(post.author.username)"
+    />
+    <div class="post-info">
+      <span class="username" (click)="goToUserProfile(post.author.username)">
+        {{ post.author.username }}
+      </span>
+      <span class="community" (click)="goToCommunity(post.community.name)">
+        posted in <b>{{ post.community.name }}</b>
+      </span>
+      <span class="time">{{ post.createdAt | date: 'short' }}</span>
+    </div>
+  </div>
+
+  <!-- Post Content -->
+  <div class="post-content" (click)="goToPost(post.id)">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+    <div class="tags">
+      <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
+    </div>
+  </div>
+
+  <!-- Post Actions -->
+  <div class="actions">
+    <button (click)="handleVote('upvote')" [class.active]="isUpvoted" aria-label="Upvote post">
+      ↑ {{ post.upvotes }}
+    </button>
+    <button (click)="handleVote('downvote')" [class.active]="isDownvoted" aria-label="Downvote post">
+      ↑ {{ post.downvotes }}
+    </button>
+    <button (click)="handleSave()" [class.saved]="isSaved" aria-label="Save post">
+      {{ post.saves }} | {{ isSaved ? 'Unsave' : 'Save' }}
+    </button>
+    <span class="comments">
+      💬 {{ post.comments.length }} comments
+    </span>
+  </div>
+</div>

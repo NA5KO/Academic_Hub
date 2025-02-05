@@ -1,0 +1,42 @@
+<div class="create-community-page">
+  <div class="create-community-form">
+
+    <div class="form-group">
+      <label for="name">Community Name</label>
+      <input type="text" id="name" class="form-control" [(ngModel)]="formData.name" placeholder="Community name*">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" id="description" class="form-control" [(ngModel)]="formData.description" placeholder="Description*">
+    </div>
+
+    <div class="form-group">
+      <label for="icon">Community Icon</label>
+      <input type="file" id="icon" class="form-control" (change)="onFileSelected($event, 'icon')">
+    </div>
+
+    <div class="form-group">
+      <label for="banner">Community Banner</label>
+      <input type="file" id="banner" class="form-control" (change)="onFileSelected($event, 'banner')">
+    </div>
+
+    <div class="topics-container">
+      <label>Add Topics</label>
+      <p>Choose up to 3 topics to help users find your community.</p>
+    
+      <div class="topic-grid">
+        <div *ngFor="let topic of keywords" class="topic-item">
+          <div class="form-check">
+            <input class="form-check-input topic-checkbox" type="checkbox" [id]="topic" (change)="toggleTopic(topic)" [checked]="formData.selectedKeywords.includes(topic)">
+            <label class="form-check-label" [for]="topic">{{ topic }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    
+    <button type="submit" class="continue-button" (click)="createCommunity()">Continue</button>
+  </div>
+</div>

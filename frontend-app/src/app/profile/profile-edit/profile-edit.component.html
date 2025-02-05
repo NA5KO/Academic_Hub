@@ -1,0 +1,72 @@
+<h2 style="margin-top: 20px;">Edit Profile</h2>
+<form class="profile-edit-form" #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
+  <!-- Section: Account Information -->
+  <fieldset class="section">
+    <legend>Account Information:</legend>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="profile.name" placeholder="Enter your new name ..." required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="profile.email" placeholder="Enter your new email ..." required />
+    </div>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="profile.username" placeholder="Enter your new username ..." required />
+    </div>
+  </fieldset>
+
+  <!-- Section: Contact Information -->
+  <fieldset class="section">
+    <legend>Personal Information:</legend>
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" [(ngModel)]="profile.phone" placeholder="Enter your new phone number..." />
+    </div>
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" [(ngModel)]="profile.location" placeholder="Enter your new Location ..." />
+    </div>
+    <div class="form-group">
+        <label for="linkedin">LinkedIn:</label>
+        <input type="text" id="linkedin" name="linkedin" [(ngModel)]="profile.linkedin" placeholder="LinkedIn Profile link ..."/>
+    </div>
+    <div class="form-group">
+        <label for="github">GitHub:</label>
+        <input type="text" id="github" name="github" [(ngModel)]="profile.github" placeholder="Github Profile link ..."  />
+    </div>
+    <div class="form-group">
+        <label for="bio">Bio:</label>
+        <textarea id="bio" name="bio" [(ngModel)]="profile.bio" placeholder="Change your bio ..."></textarea>
+      </div>
+  </fieldset>
+
+  <!-- Section: Professional Information -->
+  <fieldset class="section">
+    <legend>Professional Information:</legend>
+    <div class="form-group">
+      <label for="degree">Degree:</label>
+      <input type="text" id="degree" name="degree" [(ngModel)]="profile.degree" placeholder="Enter your degree" />
+    </div>
+    <div class="form-group">
+      <label for="program">Program:</label>
+      <input type="text" id="program" name="program" [(ngModel)]="profile.program" placeholder="Add/Change your program" />
+    </div>
+    <div class="form-group">
+      <label for="specialization">Specialization:</label>
+      <input type="text" id="specialization" name="specialization" [(ngModel)]="profile.specialization" placeholder="Add/Change your specialization" />
+    </div>
+    <div class="form-group">
+      <label for="technicalSkills">Technical Skills:</label>
+      <textarea id="technicalSkills" name="technicalSkills" [(ngModel)]="profile.technicalSkills" placeholder="Add/Change your technical skills"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="profession">Profession:</label>
+      <input type="text" id="profession" name="profession" [(ngModel)]="profile.profession" placeholder="Add/Change your profession" />
+    </div>
+  </fieldset>
+
+  <!-- Update Button -->
+  <button class="update-button" type="submit" [disabled]="profileForm.invalid">Update</button>
+</form>

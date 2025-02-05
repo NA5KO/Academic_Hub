@@ -1,0 +1,17 @@
+<app-post-item [post]="post"></app-post-item>
+<div class="comments-section">
+  <h3>Comments ({{ post?.comments?.length }})</h3>
+  <div class="comment-input">
+    <textarea [(ngModel)]="commentText" placeholder="Write your comment..."></textarea>
+    <button (click)="addComment()">Submit</button>
+  </div>
+  <div class="comment" *ngFor="let comment of post?.comments">
+    <div class="comment-content">
+      <div>
+        <span class="username">{{ comment.authorUsername }}</span>
+        <span class="time">{{ comment.createdAt | date:'short' }}</span>
+      </div>
+      <p class="text">{{ comment.content }}</p>
+    </div>
+  </div>
+</div>

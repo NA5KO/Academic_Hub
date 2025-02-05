@@ -1,0 +1,115 @@
+.navbar {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+
+  .navbar-brand img {
+    height: 39px;
+  }
+  
+
+  .search-bar {
+    flex-grow: 1; 
+    margin: 0 20px;
+  }
+  
+  .search-bar .input-group {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 80px;
+    overflow: hidden;
+  }
+  
+  .search-bar input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .search-bar input:focus {
+    outline: none;
+  }
+  
+  .search-bar button {
+    background-color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .search-bar button:hover {
+    background-color: #f0f0f0;
+  }
+  
+ 
+  .actions {
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+  }
+  
+  .actions .btn {
+    border: 1px solid #ddd;
+    border-radius: 80px;
+    padding: 8px 16px;
+    background-color: #fff;
+    color: 0C1844;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .actions .btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+
+  .notifications {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .notifications i {
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .notifications i:hover {
+    color: #007bff;
+  }
+  
+  .notifications .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .profile span {
+    font-size: 14px;
+    color: #333;
+  }
