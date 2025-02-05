@@ -10,13 +10,14 @@ import {ProfileEditComponent} from './profile/profile-edit/profile-edit.componen
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { UserPageComponent } from './profile/profile-page/user-page/user-page.component';
+import { AngularAuthGuard } from './auth/angular-auth.guard';
 
 // routes ynajem yabda fihom data (header m left w right menu ) si non yabda b default which is true
 const routes: Routes = [
   { path: '', component: PostListComponent },
   { path: 'posts', component: PostListComponent },
   { path: 'posts/:filter', component: PostListComponent },
-  { path: 'post/create', component: PostCreateComponent },
+  { path: 'post/create', component: PostCreateComponent , canActivate: [AngularAuthGuard] },
   { path: 'post/:id', component: PostDetailsComponent },
   { path: 'community', component: CreateCommunityComponent },
   { path: 'communities', component: TopCommunitiesComponent },
