@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../../../services/toaster.service';
 
 declare const google: any; // Google Identity Services global object
 
@@ -15,7 +16,11 @@ export class LoginComponent implements AfterViewInit {
   password: string = '';
   rememberMe: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+    private router: Router,
+    private toasterService: ToasterService
+
+  ) {}
 
   ngAfterViewInit(): void {
     this.loadGoogleSignIn();
@@ -49,11 +54,11 @@ export class LoginComponent implements AfterViewInit {
 
     this.authService.loginWithGoogle({ oauthToken: response.credential }).subscribe({
       next: (res: { token: string }) => {
-        console.log('User logged in:', res);
+        this.toasterService.showSuccess('Google Sign-In successful');
         this.authService.storeToken(res.token);
         this.router.navigate(['/']);
       },
-      error: (error: any) => console.error('Login failed', error)
+      error: (error: any) => this.toasterService.showError('Login failed')
     });
   }
 
@@ -66,15 +71,11 @@ export class LoginComponent implements AfterViewInit {
 
     this.authService.loginWithEmail(loginData).subscribe({
       next: (response: any) => {
-        console.log('Login successful', response);
-        const token = response.accessToken;
-        this.authService.storeToken(token);
-        console.log('Token stored:',this.authService.getToken());
+        this.toasterService.showSuccess('Login successful');
         this.router.navigate(['/']);
       },
       error: (error: any) => {
-        console.error('Login failed', error);
-        alert('Login failed: ' + (error.error?.message || 'Unknown error'));
+        this.toasterService.showError('Login failed');
       },
     });
   }

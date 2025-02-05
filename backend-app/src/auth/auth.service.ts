@@ -97,6 +97,7 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
     const accessToken = this.generateJwt(payload);
+    console.log('Access Token:', accessToken);
 
     return { accessToken };
   }
