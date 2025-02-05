@@ -17,6 +17,11 @@ import { PasswordStrengthDirective } from './auth/Directive/Password.Directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationComponent } from './header/notification/notification.component';
+import { UserPageComponent } from './profile/profile-page/user-page/user-page.component';
+import { UserProfileComponent } from './profile/profile-page/user-profile/user-profile.component';
+import { CommentsComponent } from './profile/profile-page/comments/comments.component';
+import { PostsComponent } from './posts/posts.component';
+import { PostComponent } from './post/post.component';
 
 
 @NgModule({
@@ -26,7 +31,8 @@ import { NotificationComponent } from './header/notification/notification.compon
     LoginComponent,
     SignupComponent,
     PasswordStrengthDirective,
-    NotificationComponent,
+    UserProfileComponent,
+ 
   ],
   imports: [
     MatSnackBarModule,
@@ -36,14 +42,19 @@ import { NotificationComponent } from './header/notification/notification.compon
     // FontAwesomeModule,
     RightMenuModule,
     PostsModule,
-    ProfileModule,
+   // ProfileModule,
     LeftMenuModule,
     FormsModule,
     HttpClientModule,
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
-    FormsModule
+    BrowserAnimationsModule,
+    NotificationComponent,
+    UserPageComponent,
+    CommentsComponent,
+    PostsComponent,
+    PostComponent
   ],
   providers: [
   ],

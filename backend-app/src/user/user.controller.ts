@@ -5,7 +5,8 @@ import {
   Get,
   Param,
   HttpException,
-  HttpStatus, Delete,
+  HttpStatus,
+  Delete,
   Patch,
   UseGuards,
   Req,
@@ -100,16 +101,22 @@ export class UserController {
   async getAllUsers(): Promise<User[]> {
     return this.userService.findAll();
   }
-  
+
   // Endpoint to follow a community
   @Post(':userId/follow/:communityId')
-  async followCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+  async followCommunity(
+    @Param('userId') userId: string,
+    @Param('communityId') communityId: string,
+  ) {
     return this.userService.followCommunity(userId, communityId);
   }
 
   // Endpoint to unfollow a community
   @Delete(':userId/unfollow/:communityId')
-  async unfollowCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+  async unfollowCommunity(
+    @Param('userId') userId: string,
+    @Param('communityId') communityId: string,
+  ) {
     return this.userService.unfollowCommunity(userId, communityId);
   }
 
@@ -119,7 +126,10 @@ export class UserController {
   }
 
   @Get(':userId/is-following/:communityId')
-  async isFollowing(@Param('userId') userId: string, @Param('communityId') communityId: string) {
+  async isFollowing(
+    @Param('userId') userId: string,
+    @Param('communityId') communityId: string,
+  ) {
     return this.userService.isFollowing(userId, communityId);
   }
 }

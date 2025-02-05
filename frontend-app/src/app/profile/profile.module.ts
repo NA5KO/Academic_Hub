@@ -12,15 +12,13 @@ import { RightMenuModule } from "../right-menu/right-menu.module";
 @NgModule({
   declarations: [
     ProfileEditComponent,
-    UserProfileComponent,
-    CommentComponent,
-    CommentsComponent,
-    UserPageComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule, FormsModule,
     LeftMenuModule,
-    RightMenuModule
+    RightMenuModule,CommentsComponent,
+    UserPageComponent
 ],
   exports: []
 })

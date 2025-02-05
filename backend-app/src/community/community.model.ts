@@ -3,21 +3,20 @@ import { Post } from 'src/post/post.model';
 import { User } from 'src/user/user.model';
 import { Entity, Column, OneToMany, ManyToMany, ManyToOne } from 'typeorm';
 
-
 @Entity('Community')
 export class Community extends BaseEntity {
   @Column()
   name: string;
 
-  @Column("text", { array: true, nullable: false, default: "{}" })
+  @Column('text', { array: true, nullable: false, default: '{}' })
   keywords: string[];
 
   @Column()
   description: string;
-  
+
   @Column()
   banner: string;
-  
+
   @Column()
   icon: string;
 

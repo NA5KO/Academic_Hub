@@ -14,7 +14,7 @@ import { UserModule } from '../user/user.module';
   imports: [
     TypeOrmModule.forFeature([Comment, Post, User]),
     forwardRef(() => PostModule),
-    UserModule
+    UserModule,
   ],
   controllers: [CommentController],
   providers: [
@@ -25,6 +25,6 @@ import { UserModule } from '../user/user.module';
       inject: [DataSource],
     },
   ],
-  exports: [CommentService, CommentRepository]
+  exports: [CommentService, CommentRepository],
 })
 export class CommentModule {}

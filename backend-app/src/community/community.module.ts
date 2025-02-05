@@ -10,16 +10,16 @@ import { UserModule } from 'src/user/user.module';
 import { DataSource } from 'typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Community, User, Post]),UserModule
-  ],
+  imports: [TypeOrmModule.forFeature([Community, User, Post]), UserModule],
   controllers: [CommunityController],
-  providers: [CommunityService,
+  providers: [
+    CommunityService,
     {
-          provide: CommunityRepository,
-          useFactory: (dataSource: DataSource) => new CommunityRepository(dataSource),
-          inject: [DataSource],
-        },
+      provide: CommunityRepository,
+      useFactory: (dataSource: DataSource) =>
+        new CommunityRepository(dataSource),
+      inject: [DataSource],
+    },
   ],
   exports: [CommunityService, CommunityRepository],
 })

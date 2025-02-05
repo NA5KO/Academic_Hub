@@ -124,4 +124,24 @@ export class CommunityService {
     await this.userRepository.save(user);
     return community;
   }
+
+  async getRelatedCommunities(communityId: string): Promise<Community[]> {
+    // Récupérer la communauté cible
+    const community = await this.communityRepository.findOne({
+      where: { id: communityId },
+    });
+
+    if (!community) {
+      throw new Error('Community not found');
+    }
+    // Récupérer les autres communautés ayant au moins un mot-clé en commun
+    return this.communityRepository
+      .createQueryBuilder('community')
+      .where('community.id != :id', { id: communityId })
+      .andWhere(
+        `community.keywords && :keywords`, // Vérifie l'intersection avec les mots-clés
+        { keywords: community.keywords },
+      )
+      .getMany();
+  }
 }

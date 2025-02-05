@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
 } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
@@ -60,12 +60,19 @@ export class CommunityController {
   // }
 
   @Patch('community/:id')
-  update(@Param('id') id: string, @Body() updateCommunityDto: UpdateCommunityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCommunityDto: UpdateCommunityDto,
+  ) {
     return this.communityService.update(+id, updateCommunityDto);
   }
 
   @Delete('community/:id')
   remove(@Param('id') id: string) {
     return this.communityService.remove(+id);
+  }
+  @Get(':id/related')
+  async getRelated(@Param('id') communityId: string): Promise<Community[]> {
+    return this.communityService.getRelatedCommunities(communityId);
   }
 }

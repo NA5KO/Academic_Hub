@@ -1,5 +1,12 @@
 // src/community/dto/create-community.dto.ts
-import { IsNotEmpty, IsString, IsArray, IsOptional, IsUrl, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsArray,
+  IsOptional,
+  IsUrl,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateCommunityDto {
   @IsNotEmpty()
@@ -25,7 +32,7 @@ export class CreateCommunityDto {
 
   @IsNotEmpty()
   @IsUUID()
-  creatorId: string;  // ID of the user who creates the community
-  
+  creatorId: string; // ID of the user who creates the community
+
   followersCount: number;
 }

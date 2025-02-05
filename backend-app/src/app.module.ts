@@ -19,7 +19,7 @@ import { Notification } from './notification/notification.model';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [    
+  imports: [
     HttpModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -32,7 +32,7 @@ import { HttpModule } from '@nestjs/axios';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      entities: [User, Post, Comment, Community, Notification], 
+      entities: [User, Post, Comment, Community, Notification],
       synchronize: true,
       retryAttempts: 0,
     }),

@@ -13,10 +13,12 @@ import { CommentRepository } from 'src/comment/comment.repository';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: GenericRepository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: GenericRepository<User>,
     private readonly postRepository: PostRepository,
     private readonly commentRepository: CommentRepository,
-    @InjectRepository(Community) private readonly communityRepository: GenericRepository<Community>,
+    @InjectRepository(Community)
+    private readonly communityRepository: GenericRepository<Community>,
   ) {}
 
   async findByEmail(email: string): Promise<User> {
@@ -25,7 +27,7 @@ export class UserService {
       relations: ['followers', 'following'],
     });
   }
-  
+
   async findById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
@@ -219,15 +221,20 @@ export class UserService {
   }
 
   async followCommunity(userId: string, communityId: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['communities'] });
-    const community = await this.communityRepository.findOne({ where: { id: communityId } });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['communities'],
+    });
+    const community = await this.communityRepository.findOne({
+      where: { id: communityId },
+    });
 
     if (!user || !community) {
       throw new NotFoundException('User or Community not found');
     }
 
     // Add community to user's followed list if not already followed
-    if (!user.communities.some(c => c.id === communityId)) {
+    if (!user.communities.some((c) => c.id === communityId)) {
       user.communities.push(community);
       await this.userRepository.save(user);
     }
@@ -236,20 +243,26 @@ export class UserService {
   }
 
   async unfollowCommunity(userId: string, communityId: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['communities'] });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['communities'],
+    });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    user.communities = user.communities.filter(c => c.id !== communityId);
+    user.communities = user.communities.filter((c) => c.id !== communityId);
     await this.userRepository.save(user);
 
     return user;
   }
 
   async getFollowedCommunities(userId: string): Promise<Community[]> {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['communities'] });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['communities'],
+    });
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -259,12 +272,15 @@ export class UserService {
   }
 
   async isFollowing(userId: string, communityId: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['communities'] });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['communities'],
+    });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    return user.communities.some(c => c.id === communityId);
+    return user.communities.some((c) => c.id === communityId);
   }
 }

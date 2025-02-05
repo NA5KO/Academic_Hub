@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Post } from 'src/services/post.service';
 
 @Component({
   selector: 'app-posts',
@@ -6,28 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent {
-  posts = [
-    {
-      user: 'janedoe',
-      avatar: 'assets/user.jpg',
-      timePosted: '3 hours ago',
-      title: 'How Do I Solve This Problem on Instagram?',
-      tags: ['#instagram', '#soru'],
-      comments: 3,
-      upvotes: 3,
-      downvotes: 3,
-      likes: ['assets/user.jpg', 'assets/user.jpg']
-    },
-    {
-      user: 'johndoe',
-      avatar: 'assets/user.jpg',
-      timePosted: '2 days ago',
-      title: 'Anyone Know a Good Recipe for Lasagna?',
-      tags: ['#recipe', '#cooking'],
-      comments: 5,
-      upvotes: 10,
-      downvotes: 1,
-      likes: ['assets/user.jpg', 'assets/user.jpg']
-    }
-  ];
+  @Input() posts: Post[] = [];
 }
