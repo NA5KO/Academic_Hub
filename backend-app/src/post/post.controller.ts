@@ -1,9 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+  Put,
+} from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from 'src/auth/guards/auth-guard';
 import { GetUser } from '../user/Decorator/user.decorator';
+import { PostType } from 'src/enums/post-type.enum';
 
 @Controller('post')
 export class PostController {
@@ -16,7 +28,7 @@ export class PostController {
   }
 
   // all posts (discover)
-  @Get("/discover")
+  @Get('/discover')
   findAll() {
     return this.postService.findAll();
   }

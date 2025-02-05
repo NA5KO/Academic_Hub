@@ -25,7 +25,10 @@ export class UserService {
     });
   }
   async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['followers', 'following'],
+    });
     console.log('id', id);
     if (!user) {
       throw new Error('User not found');
@@ -63,69 +66,133 @@ export class UserService {
     }
     return this.userRepository.save(user);
   }
+  async followUser(followerId: string, followingId: string): Promise<User> {
+    console.log('followerId', followerId); // Debug
+    console.log('followingId', followingId); // Debug
 
-  async followUser(
-    followerEmail: string,
-    followingEmail: string,
-  ): Promise<User> {
-    console.log('followerEmail', followerEmail); // Affichez l'e-mail de l'utilisateur qui suit
-
-    const follower = await this.findByEmail(followerEmail);
-    const following = await this.findByEmail(followingEmail);
+    const follower = await this.findById(followerId);
+    const following = await this.findById(followingId);
 
     if (!follower || !following) {
       throw new Error('Follower or Following user not found');
     }
 
-    if (follower.following.some((user) => user.email === followingEmail)) {
+    if (follower.following.some((user) => user.id === followingId)) {
       throw new Error('You are already following this user');
     }
 
-    if (following.followers.some((user) => user.email === followerEmail)) {
+    if (following.followers.some((user) => user.id === followerId)) {
       throw new Error('This user is already following you');
     }
 
-    if (!follower.following) {
-      follower.following = [];
-    }
-    follower.following.push(following);
+    // Initialisation des tableaux si nécessaires
+    follower.following = follower.following || [];
+    following.followers = following.followers || [];
 
-    if (!following.followers) {
-      following.followers = [];
-    }
+    // Ajout des utilisateurs dans les relations
+    follower.following.push(following);
     following.followers.push(follower);
 
     await this.userRepository.save(follower);
     await this.userRepository.save(following);
 
-    // Utiliser plainToInstance pour exclure les propri
     return plainToInstance(User, follower);
   }
-  async unfollowUser(
-    followerEmail: string,
-    followingEmail: string,
-  ): Promise<User> {
-    const follower = await this.findByEmail(followerEmail);
-    const following = await this.findByEmail(followingEmail);
+
+  async unfollowUser(followerId: string, followingId: string): Promise<User> {
+    console.log('followerId', followerId); // Debug
+    console.log('followingId', followingId); // Debug
+
+    const follower = await this.findById(followerId);
+    const following = await this.findById(followingId);
 
     if (!follower || !following) {
       throw new Error('Follower or Following user not found');
     }
-    // Supprimer l'utilisateur de la liste 'following' de l'utilisateur
+
+    follower.following = follower.following || [];
+    following.followers = following.followers || [];
+
+    if (!follower.following.some((user) => user.id === followingId)) {
+      throw new Error('You are not following this user');
+    }
+
+    // Suppression de l'utilisateur suivi
     follower.following = follower.following.filter(
-      (user) => user.email !== followingEmail,
+      (user) => user.id !== followingId,
     );
-
     following.followers = following.followers.filter(
-      (user) => user.email !== followerEmail,
+      (user) => user.id !== followerId,
     );
 
-    // Sauvegarder les utilisateurs après les modifications
     await this.userRepository.save(follower);
     await this.userRepository.save(following);
 
     return plainToInstance(User, follower);
   }
+
+  // // async followUser(
+  // //   followerEmail: string,
+  // //   followingEmail: string,
+  // // ): Promise<User> {
+  // //   console.log('followerEmail', followerEmail); // Affichez l'e-mail de l'utilisateur qui suit
+
+  //   const follower = await this.findByEmail(followerEmail);
+  //   const following = await this.findByEmail(followingEmail);
+
+  //   if (!follower || !following) {
+  //     throw new Error('Follower or Following user not found');
+  //   }
+
+  //   if (follower.following.some((user) => user.email === followingEmail)) {
+  //     throw new Error('You are already following this user');
+  //   }
+
+  //   if (following.followers.some((user) => user.email === followerEmail)) {
+  //     throw new Error('This user is already following you');
+  //   }
+
+  //   if (!follower.following) {
+  //     follower.following = [];
+  //   }
+  //   follower.following.push(following);
+
+  //   if (!following.followers) {
+  //     following.followers = [];
+  //   }
+  //   following.followers.push(follower);
+
+  //   await this.userRepository.save(follower);
+  //   await this.userRepository.save(following);
+
+  //   // Utiliser plainToInstance pour exclure les propri
+  //   return plainToInstance(User, follower);
+  // }
+  // async unfollowUser(
+  //   followerEmail: string,
+  //   followingEmail: string,
+  // ): Promise<User> {
+  //   const follower = await this.findByEmail(followerEmail);
+  //   const following = await this.findByEmail(followingEmail);
+
+  //   if (!follower || !following) {
+  //     throw new Error('Follower or Following user not found');
+  //   }
+  //   // Supprimer l'utilisateur de la liste 'following' de l'utilisateur
+  //   follower.following = follower.following.filter(
+  //     (user) => user.email !== followingEmail,
+  //   );
+
+  //   following.followers = following.followers.filter(
+  //     (user) => user.email !== followerEmail,
+  //   );
+
+  //   // Sauvegarder les utilisateurs après les modifications
+  //   await this.userRepository.save(follower);
+  //   await this.userRepository.save(following);
+
+  //   return plainToInstance(User, follower);
+  // }
 
   async getUserPostsByUserId(userId: string): Promise<PostModel[]> {
     const posts = await this.postRepository.findByAuthor(userId);

@@ -10,7 +10,6 @@ import { HttpModule } from '@nestjs/axios';
 import { JwtAuthGuard } from './guards/auth-guard';
 import { ConfigModule } from '@nestjs/config';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -23,9 +22,8 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy,JwtAuthGuard],
-  exports: [AuthService, JwtModule , JwtAuthGuard],
-  
+  providers: [AuthService, JwtStrategy, GoogleStrategy, JwtAuthGuard],
+  exports: [AuthService, JwtModule, JwtAuthGuard],
 })
 export class AuthModule {}
 
@@ -43,17 +41,3 @@ export class AuthModule {}
 //   providers: [AuthService, JwtStrategy, GoogleStrategy, GithubStrategy],
 //   exports: [AuthService, JwtModule],
 // })
-
-//@Module({
-//imports: [
-//HttpModule,
-//PassportModule,
-//JwtModule.registerAsync({
-//imports: [ConfigModule],
-//inject: [ConfigService],
-//useFactory: async (configService: ConfigService) => ({
-//secret: configService.get<string>('JWT_SECRET'),
-//signOptions: { expiresIn: '1h' },
-//}),
-//}),
-//UserModule,
