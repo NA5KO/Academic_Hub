@@ -5,7 +5,8 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  NotFoundException
 } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
@@ -67,5 +68,19 @@ export class CommunityController {
   @Delete('community/:id')
   remove(@Param('id') id: string) {
     return this.communityService.remove(+id);
+  }
+
+  @Get('community/:id/related')
+  async getRelated(@Param('id') communityId: string): Promise<Community[]> {
+    return this.communityService.getRelatedCommunities(communityId);
+  }
+
+  @Get('get-community-id/:name')
+  async getCommunityByName(@Param('name') name: string) {
+    const community = await this.communityService.findByName(name);
+    if (!community) {
+      throw new NotFoundException(`Community '${name}' not found`);
+    }
+    return { id: community.id };
   }
 }

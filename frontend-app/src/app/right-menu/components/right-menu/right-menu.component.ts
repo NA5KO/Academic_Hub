@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommunitiesService } from 'src/services/communities.service';
+import { FeedService } from 'src/services/feed.service';
 
 @Component({
   selector: 'app-right-menu',
@@ -7,13 +10,30 @@ import { Component } from '@angular/core';
   standalone: false
 })
 export class RightMenuComponent {
-  relatedCommunities = [
-    { name: 'Kubernetes' },
-    { name: 'MLOps' },
-    { name: 'DevOps' },
-  ];
-  topContributors = [
-    { name: 'Özellik İsteği', count: 100 },
-    { name: 'Değişiklikler', count: 99 },
-  ];
+  relatedCommunities: any[] = [];
+  communityId: string | null = null;
+
+  constructor(
+    private route: ActivatedRoute, 
+    private feedService: FeedService,
+    private communityService: CommunitiesService
+  ) {}
+
+  ngOnInit(): void {
+    // Extract community name from route
+    const communityName = this.route.snapshot.url[1]?.path; 
+    
+    if (communityName) {
+      // Fetch community details by name to get the ID
+      this.communityService.getCommunityByName(communityName).subscribe((community) => {
+        this.communityId = community.id; // Get the ID
+        console.log("hedha communityid"+this.communityId)
+        // Fetch related communities using the retrieved ID
+        this.feedService.getRelatedCommunities(this.communityId).subscribe((data) => {
+          console.log("hedhi related community "+data)
+          this.relatedCommunities = data;
+        });
+      });
+    }
+  }
 }

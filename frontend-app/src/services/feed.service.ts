@@ -6,12 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FeedService {
-    private apiUrl = 'http://localhost:3000/post'; 
+    private baseUrl = 'http://localhost:3000'; 
 
   constructor(private http: HttpClient) {}
 
   getPostsByFilter(filter: string): Observable<any[]> {
     const params = new HttpParams().set('filter', filter);
-    return this.http.get<any[]>(this.apiUrl, { params });
+    return this.http.get<any[]>(`${this.baseUrl}/post`, { params });
+  }
+
+  getRelatedCommunities(communityId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/community/${communityId}/related`);
   }
 }

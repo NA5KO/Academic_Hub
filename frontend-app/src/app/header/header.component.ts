@@ -17,7 +17,7 @@ export class HeaderComponent {
   constructor(private router: Router, private notificationService: NotificationService) {}
 
   navigateToCreate(): void {
-    this.router.navigate(['/post/create']);
+    this.router.navigate(['/create']);
   }
 
   navigateToEditProfile(): void {
