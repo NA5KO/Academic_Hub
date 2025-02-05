@@ -1,0 +1,24 @@
+<div class="user-profile">
+  <div class="avatar">
+    <img src="../../../../assets/profile.png" alt="{{ user.name }}" />
+  </div>
+  <div class="content">
+    <h2>{{ user.name }}</h2>
+    <p class="bio">{{ user.bio }}</p>
+    <p class="followers">{{ user.followers }} Followers • {{ user.following }} Following</p>
+    <div class="details">
+      <span>
+        <i class="fa fa-map-marker"></i> {{ user.location }}
+      </span>
+      <span>
+        <i class="fa fa-calendar"></i> Joined {{ user.joinedDate }}
+      </span>
+    </div>
+  </div>
+  <button (click)="toggleFollow()">
+    {{ isFollowing ? 'Unfollow' : 'Follow' }}
+  </button>
+  <button *ngIf="isAdmin" (click)="onDeleteProfile()" class="delete-button">
+    🗑️ Delete Profile
+  </button>  
+</div>

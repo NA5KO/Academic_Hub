@@ -5,6 +5,7 @@ import { PostRepository } from './post.repository';
 import { Post } from './post.model';
 import { UserRepository } from '../user/user.repository';
 import { CommunityRepository } from '../community/community.repository';
+import { PostType } from 'src/enums/post-type.enum';
 
 @Injectable()
 export class PostService {
@@ -41,9 +42,11 @@ export class PostService {
     return this.postRepository.save(newPost);
   }
 
-  // Get all posts with their relations (comments, community, author)
+  // Get all posts with their relations
   async findAll() {
-    return this.postRepository.findWithRelations(); // Use the new method to fetch posts with relations
+    return this.postRepository.find({
+      relations: ['comments', 'community', 'author'],
+    });
   }
 
   // Find one post by ID with relationships loaded
@@ -61,6 +64,13 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
+  async unupvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.upvotes -= 1;
+    return this.postRepository.save(post);
+  }
+
   async downvote(postId: string) {
     const post = await this.postRepository.findOne({ where: { id: postId } });
     if (!post) throw new Error('Post not found');
@@ -68,7 +78,14 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
-  async save(postId: string, userId: string) {
+  async undownvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.downvotes -= 1;
+    return this.postRepository.save(post);
+  }
+
+  async save(postId: string) {
     const post = await this.postRepository.findOne(
       { where: { id: postId },
       // relations: ['savedBy'] 
@@ -77,12 +94,23 @@ export class PostService {
     post.saves += 1;
     return this.postRepository.save(post);
 
-    // // Ensure the post is not already saved
-    // if (!post.savedBy.includes(userId)) {
-    //   post.savedBy.push(userId);
-    //   await this.postRepository.save(post);
-    // }
+    // Ensure the post is not already saved/unsaved --> less prior task
+  }
 
+  async unsave(postId: string) {
+    const post = await this.postRepository.findOne(
+      { where: { id: postId }
+    });
+    if (!post) throw new Error('Post not found');
+    post.saves -= 1;
+    return this.postRepository.save(post);
+  }
+
+  async getPostsByType(postType: PostType): Promise<Post[]> {
+    return this.postRepository.find({
+      where: { type: postType },
+      relations: ['comments', 'community', 'author'],
+    });
   }
 
   // Update an existing post

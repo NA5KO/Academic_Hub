@@ -1,19 +1,29 @@
-import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from '../common/entities/BaseEntity';
 import { Post } from '../post/post.model';
 import { Comment } from '../comment/comment.model';
 import { Notification } from 'src/notification/notification.model';
 import { Community } from 'src/community/community.model';
+import { Exclude } from 'class-transformer';
 
 @Entity('User')
 export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: string;
   @Column({ unique: true })
   username: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: true, select: true }) 
+  @Column({ nullable: true, select: true })
   password: string;
 
   @Column({ default: false })
@@ -49,8 +59,8 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   program?: string;
 
-  @Column({ nullable: true })
-  photoUrl?: string; 
+  @Column({ nullable: true, default: '../../../../assets/default-avatar.png' })
+  photoUrl?: string;
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
@@ -61,12 +71,21 @@ export class User extends BaseEntity {
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications: Notification[];
 
-  @ManyToMany(() => Community, (community) => community.followers, { cascade: true })
+  @ManyToMany(() => Community, (community) => community.followers, {
+    cascade: true,
+  })
   @JoinTable()
   communities: Community[];
 
   @OneToMany(() => Community, (community) => community.creator)
   createdCommunities: Community[];
+
+  @ManyToMany(() => User, (user) => user.followers)
+  @JoinTable()
+  @Exclude()
+  following: User[];
+
+  @ManyToMany(() => User, (user) => user.following)
+  @Exclude()
+  followers: User[];
 }
-
-

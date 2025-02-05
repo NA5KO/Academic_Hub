@@ -1,77 +1,92 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../services/post.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.css'],
   standalone: false,
-
 })
 export class PostItemComponent implements OnInit {
+
+  constructor(private postService: PostService, private router: Router, private authService: AuthService) {}
+
   @Input() post: any;
-  @Input() userId: string = ''; // User ID of the logged-in user
-  
-  // hedhom yaamlou machekel , yetsal7o kif ywali aana authguard
-  isSaved: boolean = false; 
-  isUpvoted: boolean = false; 
+  userId: string = this.authService.checkAuthToken() ? this.authService.getUserIdFromLocalStorage() : ''; 
+
+  isSaved: boolean = false;
+  isUpvoted: boolean = false;
   isDownvoted: boolean = false;
 
-  constructor(private postService: PostService, private router: Router) {}
-
   ngOnInit(): void {
-    // Initialize post states (upvoted, downvoted, saved) based on user status.
-    this.checkUserPostStatus();
+    // console.log(this.post);
   }
+  
 
-  // General method to update votes and saves
-  private updatePostState(action: 'upvote' | 'downvote' | 'save', increment: boolean): void {
-    const actionMap = {
-      upvote: () => increment ? this.post.upvotes += 1 : this.post.upvotes -= 1,
-      downvote: () => increment ? this.post.downvotes += 1 : this.post.downvotes -= 1,
-      save: () => increment ? this.post.saves += 1 : this.post.saves -= 1
-    };
+  // Handle upvoting/downvoting logic
+  handleVote(voteType: 'upvote' | 'downvote'): void {
+    if (voteType === 'upvote') {
+      if (this.isUpvoted) {
+        // Unupvote if already upvoted
+        this.postService.unupvotePost(this.post.id).subscribe(() => {
+          this.post.upvotes -= 1;
+          this.isUpvoted = false;
+        });
+      } else {
+        // Upvote the post
+        this.postService.upvotePost(this.post.id).subscribe(() => {
+          this.post.upvotes += 1;
+          this.isUpvoted = true;
 
-    actionMap[action]();
+          // If already downvoted, remove downvote
+          if (this.isDownvoted) {
+            this.post.downvotes -= 1;
+            this.isDownvoted = false;
+          }
+        });
+      }
+    } else if (voteType === 'downvote') {
+      if (this.isDownvoted) {
+        // Undownvote if already downvoted
+        this.postService.undownvotePost(this.post.id).subscribe(() => {
+          this.post.downvotes -= 1;
+          this.isDownvoted = false;
+        });
+      } else {
+        // Downvote the post
+        this.postService.downvotePost(this.post.id).subscribe(() => {
+          this.post.downvotes += 1;
+          this.isDownvoted = true;
 
-    // Toggle the state based on the action
-    if (action === 'upvote') {
-      this.isUpvoted = increment;
-    } else if (action === 'downvote') {
-      this.isDownvoted = increment;
-    } else if (action === 'save') {
-      this.isSaved = increment;
+          // If already upvoted, remove upvote
+          if (this.isUpvoted) {
+            this.post.upvotes -= 1;
+            this.isUpvoted = false;
+          }
+        });
+      }
     }
   }
 
-  // Generalized upvote and downvote logic
-  handleVote(action: 'upvote' | 'downvote', increment: boolean): void {
-    const voteServiceMethod = action === 'upvote' ? this.postService.upvotePost(this.post.id) : this.postService.downvotePost(this.post.id);
-
-    voteServiceMethod.subscribe(() => {
-      this.updatePostState(action, increment);
-    }, error => {
-      console.error(`Error ${action} post:`, error);
-    });
-  }
-
-  // Generalized save and unsave logic
-  handleSavePost(increment: boolean): void {
-    this.postService.savePost(this.post.id, this.userId).subscribe(() => {
-      this.updatePostState('save', increment);
-    }, error => {
-      console.error(`Error saving post:`, error);
-    });
-  }
-
-  // Initialize post states on load
-  checkUserPostStatus(): void {
-    // You may want to add logic to check the current user's post state, e.g., whether the user has already upvoted, downvoted, or saved the post
+  // Handle save/unsave logic
+  handleSave(): void {
+    if (this.isSaved) {
+      this.postService.unsavePost(this.post.id).subscribe(() => {
+        this.post.saves -= 1;
+        this.isSaved = false;
+      });
+    } else {
+      this.postService.savePost(this.post.id).subscribe(() => {
+        this.post.saves += 1;
+        this.isSaved = true;
+      });
+    }
   }
 
   goToPost(postId: number): void {
-    this.router.navigate(['/post', postId]);
+    this.router.navigate(['/id', postId]);
   }
 
   goToUserProfile(username: string): void {

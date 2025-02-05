@@ -1,35 +1,45 @@
-<div class="post-item" (click)="goToPost(post.id)">
+<div class="post-item">
+  <!-- Post Header -->
   <div class="post-header">
-    <img [src]="post.author.photoUrl || '../../../../assets/default-avatar.png'" alt="User avatar" />
-    <div>
+    <img 
+      [src]="post.author.photoUrl" 
+      alt="User avatar"
+      class="user-avatar"
+      (click)="goToUserProfile(post.author.username)"
+    />
+    <div class="post-info">
       <span class="username" (click)="goToUserProfile(post.author.username)">
         {{ post.author.username }}
       </span>
-      <span (click)="goToCommunity(post.community.name)">
+      <span class="community" (click)="goToCommunity(post.community.name)">
         posted in <b>{{ post.community.name }}</b>
       </span>
       <span class="time">{{ post.createdAt | date: 'short' }}</span>
     </div>
   </div>
 
-  <div class="post-content">
+  <!-- Post Content -->
+  <div class="post-content" (click)="goToPost(post.id)">
     <h3>{{ post.title }}</h3>
     <p>{{ post.content }}</p>
     <div class="tags">
-      <span *ngFor="let tag of post.tags">{{ tag }}</span>
+      <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
     </div>
   </div>
 
+  <!-- Post Actions -->
   <div class="actions">
-    <button (click)="handleVote('upvote', !isUpvoted)">
+    <button (click)="handleVote('upvote')" [class.active]="isUpvoted" aria-label="Upvote post">
       ↑ {{ post.upvotes }}
     </button>
-    <button (click)="handleVote('downvote', !isDownvoted)">
-      ↓ {{ post.downvotes }}
+    <button (click)="handleVote('downvote')" [class.active]="isDownvoted" aria-label="Downvote post">
+      ↑ {{ post.downvotes }}
     </button>
-    <button (click)="handleSavePost(!isSaved)">
+    <button (click)="handleSave()" [class.saved]="isSaved" aria-label="Save post">
       {{ post.saves }} | {{ isSaved ? 'Unsave' : 'Save' }}
     </button>
-    <span>{{ post.comments.length }} comments</span>
+    <span class="comments">
+      💬 {{ post.comments.length }} comments
+    </span>
   </div>
 </div>

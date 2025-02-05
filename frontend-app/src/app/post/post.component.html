@@ -1,0 +1,39 @@
+<div class="post-container">
+
+  <div class="post-header">
+    <img class="profile-pic" [src]="post.avatar" alt="User Avatar" />
+    <div class="post-user-info">
+      <span class="username">{{ post.user }}</span>
+      <span class="verified-icon">✔️</span>
+      <span class="time-posted">{{ post.timePosted }}</span>
+    </div>
+  </div>
+
+  <div class="post-content">
+    <h3 class="post-title">{{ post.title }}</h3>
+    <div class="post-tags">
+      <span *ngFor="let tag of post.tags">{{ tag }}</span>
+    </div>
+  </div>
+
+  <div class="post-footer">
+    <div class="post-actions">
+      <span class="action">
+        💬 <span>{{ post.comments }}</span>
+      </span>
+      <span class="action">
+        👍 <span>{{ post.upvotes }}</span>
+      </span>
+      <span class="action">
+        👎 <span>{{ post.downvotes }}</span>
+      </span>
+    </div>
+    <div class="post-likes">
+      <img 
+        *ngFor="let like of post.likes" 
+        [src]="like" 
+        alt="Liked by User" 
+      />
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/auth-token.interceptor';
+import { NotificationComponent } from './header/notification/notification.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TokenInterceptor } from './auth/auth-token.interceptor';
     LoginComponent,
     SignupComponent,
     PasswordStrengthDirective,
+    NotificationComponent,
   ],
   imports: [
     MatSnackBarModule,
@@ -42,7 +44,8 @@ import { TokenInterceptor } from './auth/auth-token.interceptor';
     HttpClientModule,
     HttpClientModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

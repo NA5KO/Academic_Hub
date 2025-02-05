@@ -31,6 +31,7 @@ export class PostCreateComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCommunities();
   }
+  
   checkAuthToken() {
     const token = localStorage.getItem('authToken');
     if (token) {

@@ -99,8 +99,7 @@ export class CreateCommunityComponent {
     // Call the service to create the community.
     this.communitiesService.createCommunity(communityData).subscribe(
       response => {
-        // Navigate to the newly created community page.
-        this.router.navigate(['/community', response.name]); // Adjust navigation as needed.
+        this.router.navigate(['/community/', response.name]); // Navigate to community page
       },
       error => {
         console.error('Error creating community:', error);
