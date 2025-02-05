@@ -27,7 +27,12 @@ import { CommentRepository } from 'src/comment/comment.repository';
       useFactory: (dataSource: DataSource) => new UserRepository(dataSource),
       inject: [DataSource],
     },
-  ],
-  exports: [UserService, UserRepository],
+    {
+      provide: CommentRepository,
+      useFactory: (dataSource: DataSource) => new CommentRepository(dataSource),
+      inject: [DataSource],
+    },
+    ],
+  exports: [UserService, UserRepository]
 })
 export class UserModule {}

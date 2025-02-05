@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { PasswordStrengthDirective } from './auth/Directive/Password.Directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotificationComponent } from './header/notification/notification.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     SignupComponent,
     PasswordStrengthDirective,
+    NotificationComponent,
   ],
   imports: [
     MatSnackBarModule,

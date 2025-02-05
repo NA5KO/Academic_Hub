@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
   standalone: false
 })
 export class HeaderComponent {
-  constructor(private router: Router) {}
+  isNotificationsOpen = false;
+  unreadNotificationsCount = 0; 
+  notifications: Notification[] = [];
+  
+
+  constructor(private router: Router, private notificationService: NotificationService) {}
 
   navigateToCreate(): void {
     this.router.navigate(['/post/create']);
@@ -17,4 +23,22 @@ export class HeaderComponent {
   navigateToEditProfile(): void {
     this.router.navigate(['profile/edit']);
   }
+
+
+  
+  
+ /* ngOnInit() {
+    this.notificationService.getUnreadCount().subscribe(count => {
+      this.unreadNotificationsCount = count;
+    });
+    this.notificationService.getNotifications().subscribe((notifications) => {
+      this.notifications = notifications;
+    });
+  }
+   */
+  toggleNotifications() {
+    this.isNotificationsOpen = !this.isNotificationsOpen;
+  }
+ 
+
 }

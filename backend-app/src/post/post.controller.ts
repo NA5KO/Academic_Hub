@@ -17,7 +17,7 @@ import { JwtAuthGuard } from 'src/auth/guards/auth-guard';
 import { GetUser } from '../user/Decorator/user.decorator';
 import { PostType } from 'src/enums/post-type.enum';
 
-@Controller('post')
+@Controller()
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
@@ -34,7 +34,7 @@ export class PostController {
   }
 
   // with filter
-  @Get()
+  @Get("post")
   async getPostsByType(@Query('filter') filter: string) {
     // Ensure the filter is a valid PostType
     if (!Object.values(PostType).includes(filter as PostType)) {
@@ -45,35 +45,50 @@ export class PostController {
     return await this.postService.getPostsByType(postType);
   }
 
-  @Get(':id')
+  @Get('id/:id')
   findOne(@Param('id') id: string) {
     return this.postService.findOne(id);
   }
 
   // Upvote a post
-  @Put(':id/upvote')
+  @Post('post/:id/upvote')
   upvote(@Param('id') id: string) {
     return this.postService.upvote(id);
   }
 
+  @Post('post/:id/unupvote')
+  unupvote(@Param('id') id: string) {
+    return this.postService.unupvote(id);
+  }
+
   // Downvote a post
-  @Put(':id/downvote')
+  @Post('post/:id/downvote')
   downvote(@Param('id') id: string) {
     return this.postService.downvote(id);
   }
 
-  // Save a post
-  @Put(':id/save')
-  save(@Param('id') id: string, @Body('userId') userId: string) {
-    return this.postService.save(id, userId);
+  @Post('post/:id/undownvote')
+  undownvote(@Param('id') id: string) {
+    return this.postService.undownvote(id);
   }
 
-  @Patch(':id')
+  // Save a post
+  @Post('post/:id/save')
+  save(@Param('id') id: string, @Body('userId') userId: string) {
+    return this.postService.save(id);
+  }
+
+  @Post('post/:id/unsave')
+  unsave(@Param('id') id: string, @Body('userId') userId: string) {
+    return this.postService.unsave(id);
+  }
+
+  @Patch('post/:id')
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(id, updatePostDto);
   }
 
-  @Delete(':id')
+  @Delete('post/:id')
   remove(@Param('id') id: string) {
     return this.postService.remove(id);
   }

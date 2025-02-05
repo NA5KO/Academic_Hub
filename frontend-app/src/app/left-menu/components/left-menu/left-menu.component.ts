@@ -18,7 +18,7 @@ export class LeftMenuComponent implements OnInit {
 
   communityItem = [
     { icon: 'fa-solid fa-fire', label: 'Top Communities', route: '/communities' },
-    { icon: 'fa-solid fa-plus', label: 'Create a community', route: '/community' },
+    { icon: 'fa-solid fa-plus', label: 'Create a community', route: '/create-community' },
   ];
 
   popularTags = [

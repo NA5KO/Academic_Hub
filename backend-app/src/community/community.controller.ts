@@ -5,16 +5,14 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
-  UseGuards,
+  Delete
 } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { Community } from './community.model';
-import { PostService } from '../post/post.service';
 
-@Controller('community')
+@Controller()
 export class CommunityController {
   constructor(
     private readonly communityService: CommunityService,
@@ -22,13 +20,13 @@ export class CommunityController {
   ) {}
 
   // @UseGuards(JwtAuthGuard)
-  @Post()
+  @Post('create-community')
   create(@Body() createCommunityDto: CreateCommunityDto) {
     return this.communityService.create(createCommunityDto);
   }
 
   // not tested yet
-  @Post(':communityId/follow/:userId')
+  @Post('community/:communityId/follow/:userId')
   async followCommunity(
     @Param('communityId') communityId: string,
     @Param('userId') userId: string,
@@ -36,22 +34,22 @@ export class CommunityController {
     return this.communityService.followCommunity(userId, communityId);
   }
 
-  @Get('top')
+  @Get('community/top')
   async getTopCommunities(): Promise<Community[]> {
     return this.communityService.getTopCommunities();
   }
 
-  @Get()
+  @Get('community')
   async getAll(): Promise<Community[]> {
     return this.communityService.findAll();
   }
 
-  @Get(':name')
+  @Get('community/:name')
   findOneByName(@Param('name') name: string) {
     return this.communityService.findOneByName(name);
   }
 
-  @Get(':id')
+  @Get('community/:id')
   findOne(@Param('id') id: number) {
     return this.communityService.findOne(+id);
   }
@@ -61,15 +59,12 @@ export class CommunityController {
   //   return this.postService.getPostsByCommunity(name);
   // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateCommunityDto: UpdateCommunityDto,
-  ) {
+  @Patch('community/:id')
+  update(@Param('id') id: string, @Body() updateCommunityDto: UpdateCommunityDto) {
     return this.communityService.update(+id, updateCommunityDto);
   }
 
-  @Delete(':id')
+  @Delete('community/:id')
   remove(@Param('id') id: string) {
     return this.communityService.remove(+id);
   }

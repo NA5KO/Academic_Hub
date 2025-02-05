@@ -12,15 +12,27 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   upvotePost(postId: number) {
-    return this.http.put(`${this.baseUrl}/post/${postId}/upvote`, {});
+    return this.http.post(`${this.baseUrl}/post/${postId}/upvote`, {});
   }
 
   downvotePost(postId: number) {
-    return this.http.put(`${this.baseUrl}/post/${postId}/downvote`, {});
+    return this.http.post(`${this.baseUrl}/post/${postId}/downvote`, {});
   }
 
-  savePost(postId: number, userId: string) {
-    return this.http.put(`${this.baseUrl}/post/${postId}/save`, { userId });
+  savePost(postId: number) {
+    return this.http.post(`${this.baseUrl}/post/${postId}/save`, {});
+  }
+
+  unupvotePost(postId: number) {
+    return this.http.post(`${this.baseUrl}/post/${postId}/unupvote`, {});
+  }
+
+  undownvotePost(postId: number) {
+    return this.http.post(`${this.baseUrl}/post/${postId}/undownvote`, {});
+  }
+
+  unsavePost(postId: number) {
+    return this.http.post(`${this.baseUrl}/post/${postId}/unsave`, {});
   }
 
   commentPost(postId: string, authorId: string, createCommentDto: CreateCommentDto) {
@@ -32,7 +44,7 @@ export class PostService {
   }
 
   getPostById(postId: string) {
-    return this.http.get(`${this.baseUrl}/post/${postId}`);
+    return this.http.get(`${this.baseUrl}/id/${postId}`);
   }
 
   getPosts(filter: string = '') {

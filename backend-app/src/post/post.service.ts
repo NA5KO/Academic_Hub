@@ -62,6 +62,13 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
+  async unupvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.upvotes -= 1;
+    return this.postRepository.save(post);
+  }
+
   async downvote(postId: string) {
     const post = await this.postRepository.findOne({ where: { id: postId } });
     if (!post) throw new Error('Post not found');
@@ -69,7 +76,14 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
-  async save(postId: string, userId: string) {
+  async undownvote(postId: string) {
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    if (!post) throw new Error('Post not found');
+    post.downvotes -= 1;
+    return this.postRepository.save(post);
+  }
+
+  async save(postId: string) {
     const post = await this.postRepository.findOne(
       { where: { id: postId },
       // relations: ['savedBy'] 
@@ -78,12 +92,16 @@ export class PostService {
     post.saves += 1;
     return this.postRepository.save(post);
 
-    // // Ensure the post is not already saved
-    // if (!post.savedBy.includes(userId)) {
-    //   post.savedBy.push(userId);
-    //   await this.postRepository.save(post);
-    // }
+    // Ensure the post is not already saved/unsaved --> less prior task
+  }
 
+  async unsave(postId: string) {
+    const post = await this.postRepository.findOne(
+      { where: { id: postId }
+    });
+    if (!post) throw new Error('Post not found');
+    post.saves -= 1;
+    return this.postRepository.save(post);
   }
 
   async getPostsByType(postType: PostType): Promise<Post[]> {

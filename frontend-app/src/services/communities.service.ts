@@ -33,10 +33,26 @@ export class CommunitiesService {
     console.log('Form data received in service:', formData);
     // Set headers if necessary.
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.apiUrl}/community`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/create-community`, formData, { headers });
   }
   
   getPostsByCommunity(communityName: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/community/${communityName}/posts`);
+  }
+
+  followCommunity(userId: string, communityId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${userId}/follow/${communityId}`, {});
+  }
+
+  unfollowCommunity(userId: string, communityId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${userId}/unfollow/${communityId}`);
+  }
+
+  getFollowedCommunities(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/${userId}/followed-communities`);
+  }
+
+  isFollowing(userId: string, communityId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/users/${userId}/is-following/${communityId}`);
   }
 }
