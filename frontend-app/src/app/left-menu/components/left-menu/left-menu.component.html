@@ -6,7 +6,7 @@
     </div>
   </div>
   
-  <!-- Community Items -->
+  <!-- create community or fetch top communities -->
   <div *ngFor="let menu of communityItem">
     <div class="menu-item" (click)="onCommunityItemClick(menu.route)">
       <i [class]="menu.icon"></i> <span>{{ menu.label }}</span>

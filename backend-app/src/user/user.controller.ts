@@ -18,6 +18,7 @@ import { Comment as CommentModel } from 'src/comment/comment.model';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // user profile page endpoints
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User> {
     const user = await this.userService.findById(id);
@@ -26,6 +27,7 @@ export class UserController {
     }
     return user;
   }
+
   @Patch(':email')
   async updateUser(
     @Param('email') email: string,
@@ -35,6 +37,7 @@ export class UserController {
     const updatedUser = { ...user, ...updateUserDto };
     return this.userService.createOrUpdateUser(updatedUser);
   }
+
   @Post(':email/follow')
   async followUser(
     @Param('email') followingEmail: string,
@@ -55,40 +58,45 @@ export class UserController {
   async getUserPosts(@Param('userId') userId: string): Promise<PostModel[]> {
     return this.userService.getUserPostsByUserId(userId);
   }
+
   @Get(':userId/comments')
   async getUserCommentss(
     @Param('userId') userId: string,
   ): Promise<CommentModel[]> {
     return this.userService.getLatestCommentsByUserId(userId);
   }
-  // Endpoint to get all users (optional)
+
   @Get()
   async getAllUsers(): Promise<User[]> {
     return this.userService.findAll();
   }
   
-  // Endpoint to follow a community
+  // community page endpoints
+  // follow community
   @Post(':userId/follow/:communityId')
   async followCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
     return this.userService.followCommunity(userId, communityId);
   }
 
-  // Endpoint to unfollow a community
+  // unfollow community
   @Delete(':userId/unfollow/:communityId')
   async unfollowCommunity(@Param('userId') userId: string, @Param('communityId') communityId: string) {
     return this.userService.unfollowCommunity(userId, communityId);
   }
 
+  // get followed communities by a user
   @Get(':userId/followed-communities')
   async getFollowedCommunities(@Param('userId') userId: string) {
     return this.userService.getFollowedCommunities(userId);
   }
 
+  // get created communities by a user
   @Get(':id/created-communities')
   async getCreatedCommunities(@Param('id') userId: string) {
     return this.userService.getCreatedCommunities(userId);
   }
 
+  // get followed communities by a user
   @Get(':userId/is-following/:communityId')
   async isFollowing(@Param('userId') userId: string, @Param('communityId') communityId: string) {
     return this.userService.isFollowing(userId, communityId);

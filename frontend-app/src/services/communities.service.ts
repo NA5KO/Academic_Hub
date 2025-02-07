@@ -32,7 +32,6 @@ export class CommunitiesService {
   getCommunityByName(name: string) {
     return this.http.get<{ id: string }>(`${this.apiUrl}/get-community-id/${name}`);
   }
-  
 
   createCommunity(formData: any): Observable<any> {
     console.log('Form data received in service:', formData);

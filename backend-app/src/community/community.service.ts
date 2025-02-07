@@ -3,15 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GenericRepository } from 'src/common/repositories/GenericRepository';
 import { Community } from './community.model';
 import { CreateCommunityDto } from './dto/create-community.dto';
-import { UpdateCommunityDto } from './dto/update-community.dto'; // Assuming this DTO exists
-import { UserRepository } from 'src/user/user.repository'; // Import the UserRepository
+import { UserRepository } from 'src/user/user.repository'; 
 
 @Injectable()
 export class CommunityService {
   constructor(
     @InjectRepository(Community)
     private readonly communityRepository: GenericRepository<Community>,
-    private readonly userRepository: UserRepository, // Inject UserRepository
+    private readonly userRepository: UserRepository,
   ) {}
 
   // Create community
@@ -35,20 +34,9 @@ export class CommunityService {
     return this.communityRepository.save(community);
   }
 
-  // Get all communities
+  // get all communities
   async findAll(): Promise<Community[]> {
     return this.communityRepository.find({ relations: ['creator', 'followers'] });
-  }
-
-  // Get a single community by ID
-  async findOne(id: number): Promise<Community> {
-    const community = await this.communityRepository.findOne({
-      where: { id: id.toString() },
-    });
-    if (!community) {
-      throw new Error('Community not found');
-    }
-    return community;
   }
 
   // Get a single community by name
@@ -63,65 +51,18 @@ export class CommunityService {
     return community;
   }
 
-  // Update community
-  async update(
-    id: number,
-    updateCommunityDto: UpdateCommunityDto,
-  ): Promise<Community> {
-    const community = await this.findOne(id);
-
-    // Update the community fields
-    Object.assign(community, updateCommunityDto);
-
-    return this.communityRepository.save(community);
-  }
-
-  // Delete community
-  async remove(id: number): Promise<void> {
-    const community = await this.findOne(id);
-    await this.communityRepository.remove(community);
-  }
-
   async getTopCommunities(): Promise<Community[]> {
     try {
       const topCommunities = await this.communityRepository
         .createQueryBuilder('community')
         .orderBy('community.followersCount', 'DESC')
         .limit(12)
-        .getMany();
+        .getMany(); // executes lquery and returns an array of topComm
 
       return topCommunities;
     } catch (error) {
       throw new Error('Error fetching top communities: ' + error.message);
     }
-  }
-
-  // not tested yet
-  async followCommunity(
-    userId: string,
-    communityId: string,
-  ): Promise<Community> {
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-    const community = await this.communityRepository.findOne({
-      where: { id: communityId },
-    });
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    if (!community) {
-      throw new NotFoundException('Community not found');
-    }
-
-    // Check if the user is already following the community
-    if (user.communities.some((comm) => comm.id === communityId)) {
-      throw new Error('User is already following this community');
-    }
-
-    user.communities.push(community);
-    await this.userRepository.save(user);
-    return community;
   }
 
   async findByName(name: string): Promise<Community | null> {
