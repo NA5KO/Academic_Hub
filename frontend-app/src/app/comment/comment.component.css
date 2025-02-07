@@ -2,7 +2,7 @@
   padding: 10px;
   border-bottom: 1px solid #e0e0e0; 
 
-  strong {
+  :is(strong) {
     display: block;
     color:  #C80036; 
     margin-bottom: 5px; 

@@ -17,10 +17,13 @@ import { Post } from './post/post.model';
 import { Comment } from './comment/comment.model';
 import { Notification } from './notification/notification.model';
 import { HttpModule } from '@nestjs/axios';
+import { NotificationheaderModule } from './notificationheader/notificationheader.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [    
     HttpModule,
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -42,6 +45,7 @@ import { HttpModule } from '@nestjs/axios';
     CommentModule,
     CommunityModule,
     NotificationModule,
+    NotificationheaderModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService],

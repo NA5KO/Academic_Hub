@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 
-
-
 interface Notification {
-  avatar: string;
-  title: string;
+  id: number;
   message: string;
-  time: string;
-  unread: boolean;
+  createdAt: string;
+  userId: number;
 }
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -22,12 +20,20 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNotifications();
+    this.listenForNewNotifications();
   }
 
   loadNotifications(): void {
-    this.notifications = this.notificationService.getNotifications();
+    this.notificationService.getNotifications().subscribe(response => {
+      this.notifications = response.notifications;
+    });
   }
 
+  listenForNewNotifications(): void {
+    this.notificationService.listenForNotifications().subscribe(notification => {
+      this.notifications.unshift(notification);  // Add the new notification at the top
+    });
+  }
 
   closeNotification(): void {
     // Logic to close the dropdown

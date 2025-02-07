@@ -11,6 +11,7 @@ import { Post } from '../post/post.model';
 import { Comment } from '../comment/comment.model';
 import { Notification } from 'src/notification/notification.model';
 import { Community } from 'src/community/community.model';
+import { Notificationheader } from '../notificationheader/notificationheader.model';
 import { Exclude } from 'class-transformer';
 
 @Entity('User')
@@ -88,4 +89,6 @@ export class User extends BaseEntity {
   @ManyToMany(() => User, (user) => user.following)
   @Exclude()
   followers: User[];
+  @OneToMany(() => Notificationheader, (notificationheader) => notificationheader.author)
+  notificationsheader: Notification[];
 }
