@@ -10,14 +10,11 @@
         <p>{{ community.followersCount }} followers</p>
         <p>{{ community.keywords }}</p>
       </div>
-      <ng-container *ngIf="!isAdmin">
+      <ng-container>
         <button (click)="followCommunity()" class="edit-button">
           {{ isFollowing ? 'Unfollow Community' : 'Follow Community' }}
         </button>
-      </ng-container>      
-      <ng-container *ngIf="isAdmin">
-        <button (click)="editCommunity()" class="edit-button">Edit Community</button>
-      </ng-container>
+      </ng-container>  
     </div>
     <div class="post-list">
       <app-post-list [posts]="community.posts"></app-post-list>
