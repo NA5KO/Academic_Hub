@@ -31,7 +31,6 @@ export class CommunityHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Listen for route changes
     this.route.paramMap.subscribe(params => {
       const communityName = params.get('name');
       if (communityName) {
@@ -43,6 +42,7 @@ export class CommunityHeaderComponent implements OnInit {
   loadCommunity(communityName: string) {
     this.communityService.getCommunity(communityName).subscribe((data) => {
       this.community = data;
+      console.log(this.community)
       this.checkIfFollowing();
     });
   }
