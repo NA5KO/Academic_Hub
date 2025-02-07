@@ -21,19 +21,23 @@ export class RightMenuComponent {
 
   ngOnInit(): void {
     // Extract community name from route
-    const communityName = this.route.snapshot.url[1]?.path; 
-    
-    if (communityName) {
-      // Fetch community details by name to get the ID
-      this.communityService.getCommunityByName(communityName).subscribe((community) => {
-        this.communityId = community.id; // Get the ID
-        console.log("hedha communityid"+this.communityId)
-        // Fetch related communities using the retrieved ID
-        this.feedService.getRelatedCommunities(this.communityId).subscribe((data) => {
-          console.log("hedhi related community "+data)
-          this.relatedCommunities = data;
+    this.route.paramMap.subscribe(params => {
+      const communityName = params.get('name'); // matekhdemch
+      
+      if (communityName) {
+        // Fetch community details by name to get the ID
+        this.communityService.getCommunityByName(communityName).subscribe((community) => {
+          this.communityId = community.id; // Get the ID
+          console.log("hedha communityid"+this.communityId)
+          // Fetch related communities using the retrieved ID
+          this.feedService.getRelatedCommunities(this.communityId).subscribe((data) => {
+            console.log("hedhi related community "+data)
+            this.relatedCommunities = data;
+          });
         });
-      });
-    }
+      }
+    })  
+    
+    
   }
 }

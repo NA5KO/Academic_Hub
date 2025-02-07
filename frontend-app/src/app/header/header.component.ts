@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from './services/notification.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +15,19 @@ export class HeaderComponent {
   notifications: Notification[] = [];
   
 
-  constructor(private router: Router, private notificationService: NotificationService) {}
+  constructor(
+    private router: Router, 
+    private notificationService: NotificationService,
+    private authService: AuthService
+  ) {}
 
   navigateToCreate(): void {
     this.router.navigate(['/create']);
+  }
+
+  navigateToLogout(): void {
+    this.authService.logout()
+    this.router.navigate(['/login']);
   }
 
   navigateToEditProfile(): void {

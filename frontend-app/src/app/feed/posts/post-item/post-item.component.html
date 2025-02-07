@@ -33,7 +33,7 @@
       ↑ {{ post.upvotes }}
     </button>
     <button (click)="handleVote('downvote')" [class.active]="isDownvoted" aria-label="Downvote post">
-      ↑ {{ post.downvotes }}
+      ↓ {{ post.downvotes }}
     </button>
     <button (click)="handleSave()" [class.saved]="isSaved" aria-label="Save post">
       {{ post.saves }} | {{ isSaved ? 'Unsave' : 'Save' }}

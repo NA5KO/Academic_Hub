@@ -46,18 +46,20 @@ export class CreateCommunityComponent {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      
-      // Create a temporary URL to preview the image
+  
       reader.onload = () => {
+        const base64String = reader.result as string;
         if (type === 'icon') {
-          this.formData.icon = URL.createObjectURL(file); // Temporary URL for preview
+          this.formData.icon = base64String; // Store as Base64
         } else if (type === 'banner') {
-          this.formData.banner = URL.createObjectURL(file); // Temporary URL for preview
+          this.formData.banner = base64String; // Store as Base64
         }
       };
-      reader.readAsDataURL(file); // This will show the image locally
+  
+      reader.readAsDataURL(file); // Convert to Base64
     }
   }
+  
   
   // Toggle a topic selection (add or remove from selectedKeywords)
   toggleTopic(topic: string) {

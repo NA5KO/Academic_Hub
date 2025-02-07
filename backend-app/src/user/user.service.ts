@@ -180,12 +180,7 @@ export class UserService {
   }
 
   async getFollowedCommunities(userId: string): Promise<Community[]> {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: [
-      'communities',
-      'communities.posts', 
-      'communities.posts.author', 
-      'communities.creator'  
-    ], });
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['communities']});
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -196,14 +191,7 @@ export class UserService {
 
   async getCreatedCommunities(userId: string) {
     const user = await this.userRepository.findOne({
-      where: { id: userId },
-      relations: [
-        'createdCommunities',
-        'createdCommunities.posts', 
-        'createdCommunities.posts.author', 
-        'createdCommunities.creator' 
-      ],
-    });
+      where: { id: userId }, relations: ['createdCommunities']});
   
     if (!user) {
       throw new NotFoundException('User not found');
@@ -219,6 +207,6 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    return user.communities.some(c => c.id === communityId);
+    return user.communities.some(c => c.id === communityId); // some() returns bool, thats why we didnt use find() instead
   }
 }
